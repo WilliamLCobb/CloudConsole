@@ -1,0 +1,5 @@
+platform :ios, '8.1'
+pod 'CocoaAsyncSocket'
+pod 'GPUImage'
+pod 'NXOAuth2Client'
+pod 'MBProgressHUD'

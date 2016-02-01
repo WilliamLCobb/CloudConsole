@@ -1,0 +1,13 @@
+PODS:
+  - CocoaAsyncSocket (7.4.2)
+  - NXOAuth2Client (1.2.8)
+
+DEPENDENCIES:
+  - CocoaAsyncSocket
+  - NXOAuth2Client
+
+SPEC CHECKSUMS:
+  CocoaAsyncSocket: f5783bdedd232d91b89769bc4b5a1580aed518ad
+  NXOAuth2Client: 98c4d4c594edd2b289cfc34a8928653e1dab7adf
+
+COCOAPODS: 0.39.0

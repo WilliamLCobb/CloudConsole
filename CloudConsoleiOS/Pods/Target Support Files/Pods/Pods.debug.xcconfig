@@ -1,0 +1,6 @@
+CLANG_MODULES_AUTOLINK = YES
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/CocoaAsyncSocket" "${PODS_ROOT}/Headers/Public/GPUImage" "${PODS_ROOT}/Headers/Public/NXOAuth2Client"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/CocoaAsyncSocket" -isystem "${PODS_ROOT}/Headers/Public/GPUImage" -isystem "${PODS_ROOT}/Headers/Public/NXOAuth2Client"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"CocoaAsyncSocket" -l"GPUImage" -l"NXOAuth2Client" -framework "AVFoundation" -framework "CFNetwork" -framework "CoreMedia" -framework "OpenGLES" -framework "QuartzCore" -framework "Security"
+PODS_ROOT = ${SRCROOT}/Pods

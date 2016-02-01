@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "6879B2FD74FA77506B2231FD551431D6D24A6C92",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "6879B2FD74FA77506B2231FD551431D6D24A6C92" : 0,
+    "078AE6B9AD7A8B29CC7D4B06DE4B2E3AB0C74B80" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "19FA986E-FC3E-4D6F-8155-D3594FF0C410",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "6879B2FD74FA77506B2231FD551431D6D24A6C92" : "CloudConsoleOSX\/",
+    "078AE6B9AD7A8B29CC7D4B06DE4B2E3AB0C74B80" : "..\/iNDS"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "CloudConsole",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "CloudConsole.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/WilliamLCobb\/iNDS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "078AE6B9AD7A8B29CC7D4B06DE4B2E3AB0C74B80"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/bitbucket.org\/cachemoney1\/cloudconsoleosx.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6879B2FD74FA77506B2231FD551431D6D24A6C92"
+    }
+  ]
+}
