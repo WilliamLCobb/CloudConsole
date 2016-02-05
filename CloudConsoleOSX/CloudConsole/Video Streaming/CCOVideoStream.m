@@ -140,6 +140,7 @@
 {
     NSLog(@"Closing Stream");
     streaming = NO;
+    [encoder stop];
     encoder = nil;
     [audioServer stop];
     [self.delegate streamClosed];
@@ -192,19 +193,18 @@
     [streamSocket sendData:frameData withTimeout:-1 CCtag:dataType];
 }
 
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withFilterContext:(id)filterContext
+- (void)CCSocket:(CCUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag
 {
     uint32_t *message = (uint32_t*)data.bytes;
-    switch (message[0]) {
+    switch (tag) {
         case CCNetworkDirectionalState:
         {
-            int8_t *direction = (int8_t *)data.bytes + 4;
-            [controller setLeftJoyX:direction[0] Y:direction[1]];
+            int8_t *joyData = (int8_t *)data.bytes;
+            [controller setJoy:joyData[0] X:joyData[1] Y:joyData[2]];
             break;
         }
-            
         case CCNetworkButtonState:
-            [controller setButtonState:(uint16_t)message[1]];
+            [controller setButtonState:(uint16_t)message[0]];
             break;
             
         default:
@@ -237,6 +237,7 @@
 
 - (BOOL)encodeFrame //Will convert into coded data
 {
+    if (!streaming) return NO;
     //NSLog(@"New Frame");
     CGImageRef capImage = [windowCapture captureFrame];
     if (![encoder encodeFrame:capImage frameNumber:frameCount++]) {

@@ -66,7 +66,7 @@
         }
         
         if(err == noErr) {
-            err = VTSessionSetProperty(compressionSession , kVTCompressionPropertyKey_AllowFrameReordering, kCFBooleanFalse);
+            err = VTSessionSetProperty(compressionSession, kVTCompressionPropertyKey_AllowFrameReordering, kCFBooleanFalse);
         } else {
             NSLog(@"Compression setup Error 3");
         }
@@ -78,7 +78,7 @@
 //        }
         
         if(err == noErr) {
-            const int v = 1024*3000; // 1Mbit per second
+            const int v = (8 * 1024) * 300; // KB/sec
             CFNumberRef ref = CFNumberCreate(NULL, kCFNumberSInt32Type, &v);
             err = VTSessionSetProperty(compressionSession, kVTCompressionPropertyKey_AverageBitRate, ref);
             if (err != noErr) NSLog(@"Setup Error: Average bitrate -> %d", err);
@@ -111,6 +111,7 @@
 
 - (BOOL)encodeFrame:(CGImageRef)captureImage frameNumber:(NSInteger)frameNumber
 {
+    if (!compressionSession) return NO;
     CVPixelBufferRef pixelBuffer = [self pixelBufferFromCGImage:captureImage];
     OSStatus status = VTCompressionSessionEncodeFrame(compressionSession, pixelBuffer, CMTimeMake(frameNumber, self.fps), CMTimeMake(1, self.fps), NULL, (__bridge void *)self, NULL);
     CVPixelBufferRelease(pixelBuffer);
@@ -143,6 +144,14 @@
     
 }
 
+- (void)stop
+{
+    NSLog(@"Stopped compression");
+    if (compressionSession) {
+        VTCompressionSessionInvalidate(compressionSession);
+        compressionSession = nil;
+    }
+}
 
 //http://stackoverflow.com/questions/28396622/extracting-h264-from-cmblockbuffer
 void vtCallback(void *outputCallbackRefCon,
@@ -245,7 +254,7 @@ void vtCallback(void *outputCallbackRefCon,
 
 - (void)dealloc
 {
-    VTCompressionSessionInvalidate(compressionSession);
+    [self stop];
 }
 
 @end

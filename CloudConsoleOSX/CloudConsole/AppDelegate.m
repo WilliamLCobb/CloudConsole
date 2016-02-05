@@ -20,23 +20,23 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    NSLog(@"Hey");
     if ([[NSProcessInfo processInfo] respondsToSelector:@selector(beginActivityWithOptions:reason:)]) {
         self.activity = [[NSProcessInfo processInfo] beginActivityWithOptions:0x00FFFFFF reason:@"receiving OSC messages"];
     }
+    [[CCOServer sharedInstance] start];
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:25.0];
-    NSImage *menuImage = [NSImage imageNamed:@"menuIconTemplate"];
-        self.statusItem.image = menuImage;
-    
+    self.statusItem.image = [NSImage imageNamed:@"menuIconTemplate"];
     NSMenu *menu = [[NSMenu alloc] initWithTitle:@"Cloud Console"];
     [menu addItemWithTitle:@"Cloud Console: Running" action:nil keyEquivalent:@""];
+    NSString *IP = [[CCOServer sharedInstance] currentIP];
+    [menu addItemWithTitle:[NSString stringWithFormat:@"IP: %@", IP] action:@selector(quitApplication) keyEquivalent:@""];
     [menu insertItem:[NSMenuItem separatorItem] atIndex:1];
     [menu addItemWithTitle:@"Quit" action:@selector(quitApplication) keyEquivalent:@"Q"];
     self.statusItem.menu = menu;
     
-    [[CCOServer sharedInstance] start];
-    
 }
+
+
 
 - (void)quitApplication
 {
@@ -102,6 +102,7 @@
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
+    self.statusItem.menu = nil;
 }
 
 

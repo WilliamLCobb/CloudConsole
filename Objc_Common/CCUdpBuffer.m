@@ -32,20 +32,20 @@
     uint32_t *message = (uint32_t *)data.bytes;
     switch (message[0]) {
         case CCNetworkStreamBeginBlock:
+            //NSLog(@"Begin");
             if (blocksRemaining != 0) {
-                NSLog(@"Lost a block of data");
+                NSLog(@"Lost a %d blocks of data", blocksRemaining);
             }
             blocksRemaining = message[1];
             totalBlocks = blocksRemaining;
             totalDataSize = message[2];
             /// Better way
             //NSLog(@"Begin: %lu, %d, %ld", data.length - 12, blocksRemaining, (long)totalDataSize);
-            buffer = [NSMutableData dataWithBytes:&_tag length:4];
             if (totalDataSize <= CCNetworkUDPDataSize) { //Single Packet
-                [buffer appendData:[NSMutableData dataWithBytes:(uint8_t *)data.bytes + 12 length:totalDataSize]];
+                buffer = [NSMutableData dataWithBytes:(uint8_t *)data.bytes + 12 length:totalDataSize];
             } else {
-                [buffer appendData:[NSMutableData dataWithLength:totalDataSize]];
-                [buffer replaceBytesInRange:NSMakeRange(4, CCNetworkUDPDataSize)
+                buffer = [NSMutableData dataWithLength:totalDataSize];
+                [buffer replaceBytesInRange:NSMakeRange(0, CCNetworkUDPDataSize)
                                   withBytes:(uint8_t *)data.bytes + 12 length:CCNetworkUDPDataSize];
             }
             blocksRemaining--;
@@ -66,7 +66,7 @@
                 //NSLog(@"Warning: Got blocks out of order: %ld, %d", blocksRemaining + blockNumber, totalBlocks);
             }
             //NSLog(@"Block: %lu, %d, %ld", data.length - 8, blocksRemaining, (long)blockNumber);
-            [buffer replaceBytesInRange:NSMakeRange(CCNetworkUDPDataSize * blockNumber + 4,  data.length - 8) withBytes:(uint8_t *)data.bytes + 8];
+            [buffer replaceBytesInRange:NSMakeRange(CCNetworkUDPDataSize * blockNumber,  data.length - 8) withBytes:(uint8_t *)data.bytes + 8];
             blocksRemaining--;
             break;
         }

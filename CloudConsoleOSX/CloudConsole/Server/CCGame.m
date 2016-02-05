@@ -120,7 +120,7 @@ NSArray *gameNames;
 +(NSArray <CCGame *> *)gamesAtPath:(NSString *)path
 {
     if (!gameNames) {
-        gameNames = @[@"Dolphin.app", @"Activity Monitor.app", @"Citra.app", @"VLC.app"]; //Load from file!
+        gameNames = @[@"Dolphin.app"];//, @"Activity Monitor.app", @"Citra.app", @"VLC.app"]; //Load from file!
     }
     NSError *error;
     NSArray * directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:&error];

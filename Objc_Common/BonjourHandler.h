@@ -1,6 +1,6 @@
 //
 //  BonjourHandler.h
-//  iMouseiOS
+//  CloudConsole
 //
 //  Created by Will Cobb on 1/22/15.
 //  Copyright (c) 2015 Apprentice Media LLC. All rights reserved.
@@ -12,6 +12,7 @@
 
 @interface BonjourHandler : NSObject <NSNetServiceDelegate, NSStreamDelegate, NSNetServiceBrowserDelegate>
 
+- (id)initWithName:(NSString *)deviceName;
 -(void) start;
 -(void) stop;
 -(void) connectToService:(NSNetService *) service;

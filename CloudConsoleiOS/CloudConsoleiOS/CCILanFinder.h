@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "BonjourHandler.h"
+#import "CCINetworkController.h"
+#import "ScanLAN.h"
 
 @protocol CCILanDelegate <NSObject>
 
@@ -15,7 +17,9 @@
 - (void)gotServiceDestination:(NSString *)host port:(uint16_t)port;
 @end
 
-@interface CCILanFinder : NSObject <BonjourDelegate>
+@class CCIDevice;
+
+@interface CCILanFinder : NSObject <BonjourDelegate, CCUdpSocketDelegate, ScanLANDelegate>
 
 @property id <CCILanDelegate>           delegate;
 @property (nonatomic) NSMutableArray    *devices;
@@ -24,5 +28,6 @@
 - (void)getServiceDestination:(NSNetService *)service;
 - (void)start;
 - (void)stop;
+- (void)saveDevice:(CCIDevice *)device;
 
 @end

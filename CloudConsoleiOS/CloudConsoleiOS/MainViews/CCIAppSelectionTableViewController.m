@@ -18,6 +18,8 @@
 @interface CCIAppSelectionTableViewController () {
     CCIGame                 *selectedGame;
     CCINetworkController    *networkController;
+    
+    BOOL applicationsLoaded;
 }
 
 @end
@@ -32,13 +34,48 @@
     
     [networkController addObserver:self forKeyPath:@"games" options:NSKeyValueObservingOptionNew context:nil];
     
+    self.tableView.tableFooterView = [UIView new];
+    self.tableView.tableFooterView.backgroundColor = [UIColor whiteColor];
+    
+    UILabel *searchingLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, self.view.frame.size.width - 40, 20)];
+    searchingLabel.text = @"Loading Applications";
+    searchingLabel.textAlignment = NSTextAlignmentCenter;
+    [self.tableView.tableFooterView addSubview:searchingLabel];
+    
+    UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [activity startAnimating];
+    activity.frame = CGRectMake(self.view.frame.size.width/2 - activity.frame.size.width/2, searchingLabel.frame.size.height + 20, activity.frame.size.width, activity.frame.size.height);
+    [self.tableView.tableFooterView addSubview:activity];
+    [self loadGames];
+}
+
+- (void)loadGames
+{
     [networkController updateAvaliableGames];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        if (!applicationsLoaded) {
+            NSLog(@"Loading Games");
+            [self loadGames];
+        } else {
+            NSLog(@"Not loading games");
+        }
+    });
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
+    NSLog(@"Reloading; %@", networkController.games);
     if ([keyPath isEqualToString:@"games"]) {
-        [self.tableView reloadData];
+        if (applicationsLoaded) {
+            return;
+        } else {
+            applicationsLoaded = YES;
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"Reloading Table");
+            [self.tableView reloadData];
+            self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+        });
     } else {
         NSLog(@"Unknown keypath: %@", keyPath);
     }
@@ -56,6 +93,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSLog(@"asked for rows: %ld", networkController.games.count);
     return networkController.games.count;
 }
 

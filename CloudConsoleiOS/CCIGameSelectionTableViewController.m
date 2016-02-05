@@ -9,7 +9,9 @@
 #import "CCIGameSelectionTableViewController.h"
 #import "AppDelegate.h"
 #import "CCIStreamViewController.h"
-@interface CCIGameSelectionTableViewController ()
+@interface CCIGameSelectionTableViewController () {
+    BOOL gamesLoaded;
+}
 
 @end
 
@@ -19,13 +21,31 @@
     [super viewDidLoad];
     [self.currentGame addObserver:self forKeyPath:@"subGames" options:NSKeyValueObservingOptionNew context:nil];
     [self.currentGame loadSubgames];
+    
+    // Set up loading text
     self.tableView.tableFooterView = [UIView new];
+    self.tableView.tableFooterView.backgroundColor = [UIColor whiteColor];
+    
+    UILabel *searchingLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, self.view.frame.size.width - 40, 20)];
+    searchingLabel.text = @"Loading Games";
+    searchingLabel.textAlignment = NSTextAlignmentCenter;
+    [self.tableView.tableFooterView addSubview:searchingLabel];
+    
+    UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [activity startAnimating];
+    activity.frame = CGRectMake(self.view.frame.size.width/2 - activity.frame.size.width/2, searchingLabel.frame.size.height + 20, activity.frame.size.width, activity.frame.size.height);
+    [self.tableView.tableFooterView addSubview:activity];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"subGames"]) {
         [self.tableView reloadData];
+        if (!gamesLoaded) {
+            gamesLoaded = YES;
+            self.tableView.tableFooterView = [UIView new];
+        }
+        
     } else {
         NSLog(@"Unknown keypath: %@", keyPath);
     }

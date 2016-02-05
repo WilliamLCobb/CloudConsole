@@ -11,6 +11,8 @@
 @interface CCDirectionalControl() {
     CALayer *buttonImage;
     CFTimeInterval lastMove;
+    
+    NSArray *dpadImages;
 }
 
 @property (readwrite, nonatomic) CCDirectionalControlDirection direction;
@@ -47,9 +49,11 @@
     return self;
 }
 
-- (id)initWithFrame:(CGRect)frame DPadImages:(NSArray <UIImage *> *)dpadImages;
+//Accepts 1, 5, or 9 images
+- (id)initWithFrame:(CGRect)frame DPadImages:(NSArray <UIImage *> *)images;
 {
     if (self = [super initWithFrame:frame]) {
+        dpadImages = images;
         // Initialization code
         _backgroundImageView = [[UIImageView alloc] initWithFrame:self.bounds];
         _backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
@@ -97,6 +101,12 @@
 
 - (CCDirectionalControlDirection)directionForTouch:(UITouch *)touch
 {
+    if (!touch) {
+        if (dpadImages.count == 9) {
+            self.backgroundImageView.image = dpadImages[0];
+        }
+        return 0;
+    }
     // convert coords to based on center of control
     CGPoint loc = [touch locationInView:self];
     //if (!CGRectContainsPoint(self.bounds, loc)) return 0;
@@ -106,6 +116,32 @@
     else if (loc.x < (self.bounds.size.width - self.deadZone.width)/2) direction |= CCDirectionalControlDirectionLeft;
     if (loc.y > (self.bounds.size.height + self.deadZone.height)/2) direction |= CCDirectionalControlDirectionDown;
     else if (loc.y < (self.bounds.size.height - self.deadZone.height)/2) direction |= CCDirectionalControlDirectionUp;
+    
+    if (dpadImages.count == 9) {
+        if (direction & CCDirectionalControlDirectionUp) {
+            if (direction & CCDirectionalControlDirectionRight) {
+                self.backgroundImageView.image = dpadImages[2]; //upleft
+            } else if (direction & CCDirectionalControlDirectionLeft) {
+                self.backgroundImageView.image = dpadImages[8]; //upright
+            } else {
+                self.backgroundImageView.image = dpadImages[1]; //up
+            }
+        } else if (direction & CCDirectionalControlDirectionDown) {
+            if (direction & CCDirectionalControlDirectionRight) {
+                self.backgroundImageView.image = dpadImages[4]; //downleft
+            } else if (direction & CCDirectionalControlDirectionLeft) {
+                self.backgroundImageView.image = dpadImages[6]; //downright
+            } else {
+                self.backgroundImageView.image = dpadImages[5]; //down
+            }
+        } else if (direction & CCDirectionalControlDirectionRight) {
+            self.backgroundImageView.image = dpadImages[3]; //right
+        } else if (direction & CCDirectionalControlDirectionLeft) {
+            self.backgroundImageView.image = dpadImages[7]; //left
+        } else {
+            self.backgroundImageView.image = dpadImages[0]; //None
+        }
+    }
     
     return direction;
 }
@@ -143,7 +179,7 @@
         }
         loc.x += self.bounds.size.width/2;
         loc.y += self.bounds.size.height/2;
-        if (CACurrentMediaTime() - lastMove > 0.033) { // increasing this value reduces refresh rate and greatly increases performance
+        if (CACurrentMediaTime() - lastMove > 0.030) { // increasing this value reduces refresh rate and greatly increases performance
             buttonImage.position = loc;
             lastMove = CACurrentMediaTime();
         }
@@ -160,7 +196,7 @@
     if (self.style == CCDirectionalControlStyleJoystick) {
         buttonImage.position = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
     } else {
-        self.direction = 0;
+        self.direction = [self directionForTouch:nil];
     }
     
     [self sendActionsForControlEvents:UIControlEventValueChanged];

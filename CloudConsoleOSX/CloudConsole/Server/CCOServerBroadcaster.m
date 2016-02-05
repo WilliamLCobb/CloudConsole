@@ -12,8 +12,11 @@
 #import "CCNetworkProtocol.h"
 
 @interface CCOServerBroadcaster () {
+    CCOServer       *server;
     BonjourHandler  *bonjourSocket;
     NSMutableDictionary *seenServices;
+    
+    NSString *deviceName;
 }
 
 @end
@@ -24,23 +27,40 @@
 {
     if (self = [super init]) {
         seenServices = [NSMutableDictionary new];
+        server = [CCOServer sharedInstance];
+        [server registerDelegate:self forBuffer:CCNetworkPing];
     }
     return self;
 }
 
-- (void)start
+- (void)startBroadcastWithName:(NSString *)name
 {
+    NSLog(@"Broadcast starting");
     if (kUseBonjour) {
-        bonjourSocket = [[BonjourHandler alloc] init];
+        bonjourSocket = [[BonjourHandler alloc] initWithName:name];
         bonjourSocket.delegate = self;
         [bonjourSocket start];
     }
+    deviceName = name;
 }
 
 - (void)stop
 {
     [bonjourSocket stop];
     bonjourSocket = nil;
+}
+
+#pragma mark - Ping Delegate
+
+- (void)CCSocket:(CCUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag
+{
+    if (tag != CCNetworkPing) {
+        NSLog(@"Error, ServerBroadcaster got unknown tag: %u", tag);
+        return;
+    }
+    NSString *host = [GCDAsyncSocket hostFromAddress:address];
+    uint16_t  port = [GCDAsyncSocket portFromAddress:address];
+    [sock sendData:[deviceName dataUsingEncoding:NSUTF8StringEncoding] toHost:host port:port withTimeout:-1 CCtag:CCNetworkPingResponse];
 }
 
 #pragma mark - Bonjour Delegate
@@ -60,7 +80,7 @@
     [sendData appendBytes:nameString length:strlen(nameString) + 1];
     
     //Give time for our streams to set up
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         [bonjourSocket send:sendData];
         [bonjourSocket closeStreams];
     });

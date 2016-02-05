@@ -16,7 +16,7 @@
 +(NSArray <CCGame *> *)gamesAtPaths:(NSArray *)plusPaths;
 +(NSArray <NSString *> *)defaultPaths;
 
--(id)initWithPath:(NSString *)path;
+- (id)initWithPath:(NSString *)path;
 - (NSData *)dataRepresentation;
 
 +(NSString *)applicationNameForPath:(NSString *)path;

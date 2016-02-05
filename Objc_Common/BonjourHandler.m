@@ -8,22 +8,16 @@
 
 #import "BonjourHandler.h"
 
-static NSString * kWiTapBonjourType = @"_CloudConsole._tcp.";
+static NSString * kCCBonjourType = @"_CloudConsole._tcp.";
 
 @implementation BonjourHandler
 
 
--(id) init
+-(id) initWithName:(NSString *)deviceName
 {
     if ((self = [super init]))
     {
-        //Mac
-#if TARGET_OS_IPHONE
-        NSString *deviceName = @"iphone";
-#elif TARGET_OS_MAC
-        NSString *deviceName = [NSString stringWithFormat:@"mac.%@", [[NSHost currentHost] localizedName]];
-#endif
-        self.server = [[NSNetService alloc] initWithDomain:@"local." type:kWiTapBonjourType name:deviceName port:0];
+        self.server = [[NSNetService alloc] initWithDomain:@"local." type:kCCBonjourType name:deviceName port:0];
         self.server.includesPeerToPeer = YES;
         [self.server setDelegate:self];
         [self.server publishWithOptions:NSNetServiceListenForConnections];
@@ -38,29 +32,19 @@ static NSString * kWiTapBonjourType = @"_CloudConsole._tcp.";
 
 - (void)setupForNewConnection
 {
-    NSLog(@"Setup");
-    // Reset our tap view state to avoid old taps appearing in the new game.
-    
-    //[self.tapViewController resetTouches];
-    
-    // If there's a connection, shut it down.
     
     [self closeStreams];
     
     // If our server is deregistered, reregister it.
     
-    if ( ! self.isServerStarted ) {
-        [self.server publishWithOptions:(NSNetServiceListenForConnections|NSNetServiceNoAutoRename)];
+    if (!self.isServerStarted) {
+        [self.server publishWithOptions:NSNetServiceListenForConnections];
         self.isServerStarted = YES;
     }
     
-    // And show the service picker.
-    
-    //[self presentPicker];
 }
 
 - (void)start
-// See comment in header.
 {
     NSLog(@"Bonjour Starting");
     assert([self.services count] == 0);
@@ -70,17 +54,19 @@ static NSString * kWiTapBonjourType = @"_CloudConsole._tcp.";
     self.browser = [[NSNetServiceBrowser alloc] init];
     self.browser.includesPeerToPeer = YES;
     [self.browser setDelegate:self];
-    [self.browser searchForServicesOfType:kWiTapBonjourType inDomain:@"local"];
+    [self.browser searchForServicesOfType:kCCBonjourType inDomain:@"local"];
 }
 
 - (void)stop
-// See comment in header.
 {
     NSLog(@"Bonjour Stopping");
     [self.browser stop];
     self.browser = nil;
     
     [self.server stop];
+    //[self.server stopMonitoring];
+    self.server = nil;
+    
     self.registeredName = nil;
     
     
@@ -103,9 +89,9 @@ static NSString * kWiTapBonjourType = @"_CloudConsole._tcp.";
     
     // Only update the UI once we get the no-more-coming indication.
     
-    if ( ! moreComing ) {
+    //if ( ! moreComing ) {
         [self.delegate bonjourHandler:self updatedServices:self.services];
-    }
+    //}
 }
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)browser didFindService:(NSNetService *)service moreComing:(BOOL)moreComing
@@ -122,18 +108,16 @@ static NSString * kWiTapBonjourType = @"_CloudConsole._tcp.";
     
     // Only update the UI once we get the no-more-coming indication.
     
-    if ( ! moreComing ) {
+    //if ( ! moreComing ) {
         [self.delegate bonjourHandler:self updatedServices:self.services];
-    }
+    //}
 }
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)browser didNotSearch:(NSDictionary *)errorDict
 {
     NSLog(@"%@", errorDict);
     assert(browser == self.browser);
-#pragma unused(browser)
     assert(errorDict != nil);
-#pragma unused(errorDict)
     //assert(NO);         // The usual reason for us not searching is a programming error.
 }
 
@@ -141,6 +125,10 @@ static NSString * kWiTapBonjourType = @"_CloudConsole._tcp.";
 // Called by the picker when the user has chosen a service for us to connect to.
 // The picker is already displaying its connection-in-progress UI.
 {
+    if (self.streamOpenCount != 0) {
+        NSLog(@"Warining, trying to connect to a service but we're already connected");
+        [self closeStreams];
+    }
     NSLog(@"Connecting to %@", service.name);
     BOOL                success;
     NSInputStream *     inStream;
@@ -206,7 +194,7 @@ static NSString * kWiTapBonjourType = @"_CloudConsole._tcp.";
     switch(eventCode) {
         case NSStreamEventOpenCompleted: {
             self.streamOpenCount += 1;
-            assert(self.streamOpenCount <= 2);
+            //assert(self.streamOpenCount <= 2);
             if (self.streamOpenCount == 1)
                 [self.delegate bonjourHandlerConnected:self];
             
@@ -218,8 +206,9 @@ static NSString * kWiTapBonjourType = @"_CloudConsole._tcp.";
         } break;
             
         case NSStreamEventHasSpaceAvailable: {
-            assert(stream == self.outputStream);
-            // do nothing
+            if (stream != self.outputStream) {
+                NSLog(@"Bonjour Error: NSStreamEventHasSpaceAvailable not self.outputStream");
+            }
         } break;
             
         case NSStreamEventHasBytesAvailable: {
@@ -227,7 +216,9 @@ static NSString * kWiTapBonjourType = @"_CloudConsole._tcp.";
             uint8_t    data[1024];
             NSInteger  bytesRead;
             
-            assert(stream == self.inputStream);
+            if (stream != self.inputStream) {
+                NSLog(@"Bonjour Error: NSStreamEventHasBytesAvailable not self.inputStream");
+            }
             bytesRead = [self.inputStream read:data maxLength:1024];
             if (bytesRead <= 0) {
                 // Do nothing; we'll handle EOF and error in the
@@ -241,7 +232,7 @@ static NSString * kWiTapBonjourType = @"_CloudConsole._tcp.";
         } break;
             
         default:
-            assert(NO);
+            //assert(NO);
             // fall through
         case NSStreamEventErrorOccurred: {
         }
@@ -293,17 +284,8 @@ static NSString * kWiTapBonjourType = @"_CloudConsole._tcp.";
 - (void)netServiceDidPublish:(NSNetService *)sender
 {
     assert(sender == self.server);
-#pragma unused(sender)
-    
+    NSLog(@"Bonjour Published");
     self.registeredName = self.server.name;
-    /*if (self.picker != nil) {
-     // If our server wasn't started when we brought up the picker, we
-     // left the picker stopped (because without our service name it can't
-     // filter us out of its list).  In that case we have to start the picker
-     // now.
-     
-     [self startPicker];
-     }*/
 }
 
 - (void)netService:(NSNetService *)sender didAcceptConnectionWithInputStream:(NSInputStream *)inputStream outputStream:(NSOutputStream *)outputStream
@@ -313,13 +295,12 @@ static NSString * kWiTapBonjourType = @"_CloudConsole._tcp.";
     // is the main queue).  Work around this by bouncing to the main queue.
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         assert(sender == self.server);
-#pragma unused(sender)
         assert(inputStream != nil);
         assert(outputStream != nil);
         
         assert( (self.inputStream != nil) == (self.outputStream != nil) );      // should either have both or neither
         
-        if (self.inputStream != nil) {
+        if (/* DISABLES CODE */ (NO) && self.inputStream != nil) {
             // We already have a game in place; reject this new one.
             [inputStream open];
             [inputStream close];

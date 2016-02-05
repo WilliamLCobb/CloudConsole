@@ -7,6 +7,7 @@
 //
 
 #import "CCIDevice.h"
+#import <UIKit/UIKit.h>
 
 @implementation CCIDevice
 
@@ -16,8 +17,28 @@
         self.name = name;
         self.host = host;
         self.port = port;
+        self.discoveryTime = CACurrentMediaTime();
     }
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)coder
+{
+    if (self = [super init]) {
+        self.name = [coder decodeObjectForKey:@"name"];
+        self.host = [coder decodeObjectForKey:@"host"];
+        self.port = (uint16_t)[coder decodeIntForKey:@"port"];
+        self.discoveryTime = [coder decodeDoubleForKey:@"time"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:self.name forKey:@"name"];
+    [coder encodeObject:self.host forKey:@"host"];
+    [coder encodeInteger:self.port forKey:@"port"];
+    [coder encodeDouble:self.discoveryTime forKey:@"time"];
 }
 
 - (BOOL) isEqual:(id)object

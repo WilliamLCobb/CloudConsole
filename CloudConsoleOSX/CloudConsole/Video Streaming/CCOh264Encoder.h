@@ -18,5 +18,5 @@
 
 - (id)initWithController:(CCOVideoStream *)controller ScreenSize:(CGSize) screenSize;
 - (BOOL)encodeFrame:(CGImageRef) captureImage frameNumber:(NSInteger) frameNumber;
-
+- (void)stop;
 @end

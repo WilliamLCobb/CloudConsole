@@ -18,8 +18,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#import <QuartzCore/QuartzCore.h> //For CACurrentMediaTime
-
 #define FOOHID_CREATE 0
 
 
@@ -137,13 +135,18 @@ struct gamepad_report_t
     return self;
 }
 
-- (void)setLeftJoyX:(int8_t) x Y:(int8_t)y
+- (void)setJoy:(int8_t)joyId X:(int8_t) x Y:(int8_t)y
 {
-    gamepad.left_x = x;
-    gamepad.left_y = y;
+    if (joyId == 0) {
+        gamepad.left_x = x;
+        gamepad.left_y = y;
+    } else {
+        gamepad.right_x = x;
+        gamepad.right_y = y;
+    }
     kern_return_t ret = IOConnectCallScalarMethod(connect, 2, input, 4, &output, &output_count);
     if (ret != KERN_SUCCESS) {
-        NSLog(@"Error sending left");
+        NSLog(@"Error sending joy");
     }
 }
 
@@ -153,16 +156,8 @@ struct gamepad_report_t
     //gamepad.buttons = (uint16_t)rand();
     kern_return_t ret = IOConnectCallScalarMethod(connect, 2, input, 4, &output, &output_count);
     if (ret != KERN_SUCCESS) {
-        NSLog(@"Error sending left");
+        NSLog(@"Error sending button state");
     }
-}
-
-- (void)pressA
-{
-    gamepad.buttons = gamepad.buttons & 1;
-    gamepad.buttons = gamepad.buttons & (1 << 2);
-    //printf("Ret %d\n", IOConnectCallScalarMethod(connect, 2, input, 4, &output, &output_count));
-    
 }
 
 //Fix later
@@ -199,6 +194,11 @@ struct gamepad_report_t
     /* Done, release the iterator */
     IOObjectRelease(iter);
     return 0;
+}
+
+- (void)dealloc
+{
+    
 }
 
 @end

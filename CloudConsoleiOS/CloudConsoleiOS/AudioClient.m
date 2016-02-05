@@ -27,7 +27,8 @@ static OSStatus OutputRenderCallback(void                        *inRefCon,
     
     TPCircularBuffer *circularBuffer = [output outputShouldUseCircularBuffer];
     if( !circularBuffer ){
-        AudioUnitSampleType *left  = (AudioUnitSampleType*)ioData->mBuffers[0].mData;
+        NSLog(@"Audio: no buffer");
+        AudioUnitSampleType *left  = (AudioUnitSampleType *)ioData->mBuffers[0].mData;
         for(int i = 0; i < inNumberFrames; i++ ){
             left[ i ] = 0.0f;
         }
@@ -63,26 +64,13 @@ static OSStatus OutputRenderCallback(void                        *inRefCon,
 
 -(void) start
 {
-//    _socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue: dispatch_get_main_queue()];
-//    
-//    NSError *err;
-//    
-//    ipAddress = ip;
-//    
-//    [UIApplication sharedApplication].idleTimerDisabled = YES;
-//    
-//    if(![_socket connectToHost:ipAddress onPort:[SM_Utils serverPort] error:&err])
-//    {
-//        
-//    }
-    
     [self setupAudioUnit];
 }
 
 
 -(void) setupAudioUnit
 {
-    
+    NSLog(@"Setting up audio");
     AudioComponentDescription desc;
     desc.componentType = kAudioUnitType_Output;
     desc.componentSubType = kAudioUnitSubType_RemoteIO;
@@ -155,7 +143,7 @@ static OSStatus OutputRenderCallback(void                        *inRefCon,
     AudioStreamBasicDescription audioDescription = {0};
     audioDescription.mFormatID          = kAudioFormatLinearPCM;
     audioDescription.mFormatFlags       = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked | kAudioFormatFlagsNativeEndian;
-    audioDescription.mChannelsPerFrame  = 2;
+    audioDescription.mChannelsPerFrame  = 1;
     audioDescription.mBytesPerPacket    = sizeof(SInt16)*audioDescription.mChannelsPerFrame;
     audioDescription.mFramesPerPacket   = 1;
     audioDescription.mBytesPerFrame     = sizeof(SInt16)*audioDescription.mChannelsPerFrame;
@@ -169,7 +157,6 @@ static OSStatus OutputRenderCallback(void                        *inRefCon,
     if(data.length > 0)
     {
         unsigned long len = [data length];
-        
         SInt16* byteData = (SInt16*)malloc(len);
         memcpy(byteData, [data bytes], len);
         
@@ -191,11 +178,15 @@ static OSStatus OutputRenderCallback(void                        *inRefCon,
             AudioBufferList *theDataBuffer = (AudioBufferList*) malloc(sizeof(AudioBufferList) *1);
             theDataBuffer->mNumberBuffers = 1;
             theDataBuffer->mBuffers[0].mDataByteSize = (UInt32)len;
-            theDataBuffer->mBuffers[0].mNumberChannels = 2;
+            theDataBuffer->mBuffers[0].mNumberChannels = 1;
             theDataBuffer->mBuffers[0].mData = (SInt16*)soundData;
             
             [self appendDataToCircularBuffer:&_circularBuffer fromAudioBufferList:theDataBuffer];
+        } else {
+            NSLog(@"Error, no sound data");
         }
+    } else {
+        NSLog(@"Audio: No data???");
     }
 }
 

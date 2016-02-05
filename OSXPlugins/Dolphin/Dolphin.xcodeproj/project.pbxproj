@@ -1,0 +1,263 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CA8C8FF51C55854D00FA7B61 /* DolphinController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA8C8FF41C55854D00FA7B61 /* DolphinController.mm */; };
+		CAE48C2B1C63E99E0085870A /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE48C2A1C63E99E0085870A /* AppKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		CA8C8FE61C557AFB00FA7B61 /* Dolphin.ccop */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Dolphin.ccop; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA8C8FE91C557AFB00FA7B61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA8C8FF31C55854D00FA7B61 /* DolphinController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DolphinController.h; sourceTree = "<group>"; };
+		CA8C8FF41C55854D00FA7B61 /* DolphinController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DolphinController.mm; sourceTree = "<group>"; };
+		CAE48C2A1C63E99E0085870A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CA8C8FE31C557AFB00FA7B61 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CAE48C2B1C63E99E0085870A /* AppKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CA8C8FDD1C557AFB00FA7B61 = {
+			isa = PBXGroup;
+			children = (
+				CAE48C2A1C63E99E0085870A /* AppKit.framework */,
+				CA8C8FE81C557AFB00FA7B61 /* Dolphin */,
+				CA8C8FE71C557AFB00FA7B61 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CA8C8FE71C557AFB00FA7B61 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CA8C8FE61C557AFB00FA7B61 /* Dolphin.ccop */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CA8C8FE81C557AFB00FA7B61 /* Dolphin */ = {
+			isa = PBXGroup;
+			children = (
+				CA8C8FE91C557AFB00FA7B61 /* Info.plist */,
+				CA8C8FF31C55854D00FA7B61 /* DolphinController.h */,
+				CA8C8FF41C55854D00FA7B61 /* DolphinController.mm */,
+			);
+			path = Dolphin;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CA8C8FE51C557AFB00FA7B61 /* Dolphin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA8C8FEC1C557AFB00FA7B61 /* Build configuration list for PBXNativeTarget "Dolphin" */;
+			buildPhases = (
+				CA8C8FE21C557AFB00FA7B61 /* Sources */,
+				CA8C8FE31C557AFB00FA7B61 /* Frameworks */,
+				CA8C8FE41C557AFB00FA7B61 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Dolphin;
+			productName = Dolphin;
+			productReference = CA8C8FE61C557AFB00FA7B61 /* Dolphin.ccop */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CA8C8FDE1C557AFB00FA7B61 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Will Cobb";
+				TargetAttributes = {
+					CA8C8FE51C557AFB00FA7B61 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = CA8C8FE11C557AFB00FA7B61 /* Build configuration list for PBXProject "Dolphin" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = CA8C8FDD1C557AFB00FA7B61;
+			productRefGroup = CA8C8FE71C557AFB00FA7B61 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CA8C8FE51C557AFB00FA7B61 /* Dolphin */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CA8C8FE41C557AFB00FA7B61 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CA8C8FE21C557AFB00FA7B61 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA8C8FF51C55854D00FA7B61 /* DolphinController.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		CA8C8FEA1C557AFB00FA7B61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		CA8C8FEB1C557AFB00FA7B61 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		CA8C8FED1C557AFB00FA7B61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Dolphin/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				PRODUCT_BUNDLE_IDENTIFIER = com.WilliamCobb.Dolphin;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = ccop;
+			};
+			name = Debug;
+		};
+		CA8C8FEE1C557AFB00FA7B61 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Dolphin/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				PRODUCT_BUNDLE_IDENTIFIER = com.WilliamCobb.Dolphin;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = ccop;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CA8C8FE11C557AFB00FA7B61 /* Build configuration list for PBXProject "Dolphin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA8C8FEA1C557AFB00FA7B61 /* Debug */,
+				CA8C8FEB1C557AFB00FA7B61 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA8C8FEC1C557AFB00FA7B61 /* Build configuration list for PBXNativeTarget "Dolphin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA8C8FED1C557AFB00FA7B61 /* Debug */,
+				CA8C8FEE1C557AFB00FA7B61 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CA8C8FDE1C557AFB00FA7B61 /* Project object */;
+}

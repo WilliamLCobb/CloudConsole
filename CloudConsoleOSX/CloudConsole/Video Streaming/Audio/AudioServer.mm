@@ -5,6 +5,7 @@
 //  Created by Will Cobb on 1/21/16.
 //  Copyright © 2016 Will Cobb. All rights reserved.
 //
+//  https://www.yotta.co.za/blog/2015/5/19/playing-audio-on-ios-from-a-socket-connection
 
 #import "CCNetworkProtocol.h"
 
@@ -15,6 +16,8 @@
 #import "AudioDevice.h"
 #import "AudioDeviceList.h"
 //#import "SM_Utils.h"
+
+// https://github.com/alexbw/novocaine
 
 static OSStatus recordingCallback(void *inRefCon,
                                   AudioUnitRenderActionFlags *ioActionFlags,
@@ -35,7 +38,7 @@ static OSStatus recordingCallback(void *inRefCon,
     
     bufferList.mNumberBuffers = 1;
     bufferList.mBuffers[0].mData = samples;
-    bufferList.mBuffers[0].mNumberChannels = 2;
+    bufferList.mBuffers[0].mNumberChannels = 1;
     bufferList.mBuffers[0].mDataByteSize = inNumberFrames*sizeof(SInt16);
     
     // Then:
@@ -52,6 +55,7 @@ static OSStatus recordingCallback(void *inRefCon,
     
     NSData *dataToSend = [NSData dataWithBytes:bufferList.mBuffers[0].mData length:bufferList.mBuffers[0].mDataByteSize];
     [server.delegate sendEncodedData:dataToSend type:CCNetworkAudioData];
+    NSLog(@"Sending: %@", dataToSend);
     return noErr;
 }
 
@@ -65,8 +69,9 @@ static OSStatus recordingCallback(void *inRefCon,
 -(void) start
 {
     NSLog(@"Audio Starting");
-    //[UIApplication sharedApplication].idleTimerDisabled = YES;
     // Create a new instance of AURemoteIO
+    OSStatus err = noErr;
+    
     
     AudioComponentDescription desc;
     desc.componentType = kAudioUnitType_Output;
@@ -104,43 +109,75 @@ static OSStatus recordingCallback(void *inRefCon,
         }
     }
     
-    
+    UInt32 one = 1;
     
     // Set the current device to the default input unit.
-    AudioUnitSetProperty(_audioUnit, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &inputDeviceID, sizeof(AudioDeviceID) );
+    err = AudioUnitSetProperty(_audioUnit, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &inputDeviceID, sizeof(AudioDeviceID) );
+    //err = AudioHardwareGetProperty( kAudioHardwarePropertyDefaultInputDevice, &one, &inputDeviceID );
+    if (err) {
+        NSLog(@"Audio Error: CurrentDevice: %d", err);
+    }
     /*  Back to normal  */
     
     //  Enable input and output on AURemoteIO
     //  Input is enabled on the input scope of the input element
     //  Output is enabled on the output scope of the output element
     
-    UInt32 one = 1;
-    AudioUnitSetProperty(_audioUnit, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Input, 1, &one, sizeof(one));
     
-    AudioUnitSetProperty(_audioUnit, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Output, 0, &one, sizeof(one));
+    err = AudioUnitSetProperty(_audioUnit, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Input, 1, &one, sizeof(one));
+    if (err) {
+        NSLog(@"Audio Error: 1: %d", err);
+    }
+    
+    err = AudioUnitSetProperty(_audioUnit, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Output, 0, &one, sizeof(one));
+    if (err) {
+        NSLog(@"Audio Error: 2: %d", err);
+    }
     
     // Explicitly set the input and output client formats
     // sample rate = 44100, num channels = 1, format = 32 bit floating point
     
     AudioStreamBasicDescription audioFormat = [self getAudioDescription];
-    AudioUnitSetProperty(_audioUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 2, &audioFormat, sizeof(audioFormat));
-    AudioUnitSetProperty(_audioUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 0, &audioFormat, sizeof(audioFormat));
+    /////
+    AudioStreamBasicDescription	deviceFormat;
+    UInt32 param = sizeof(AudioStreamBasicDescription);
+    err = AudioUnitGetProperty(_audioUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 1, &deviceFormat, &param );
+    if(err != noErr)
+    {
+        NSLog(@"Error getting stuff");
+    }
+    NSLog(@"%d", deviceFormat.mChannelsPerFrame);
+    /////
+    err = AudioUnitSetProperty(_audioUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 1, &audioFormat, sizeof(audioFormat));
+    if (err) {
+        NSLog(@"Audio Error: 3: %d", err);
+    }
+    
+    err = AudioUnitSetProperty(_audioUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 0, &audioFormat, sizeof(audioFormat));
+    if (err) {
+        NSLog(@"Audio Error: 4: %d", err);
+    }
     
     // Set the MaximumFramesPerSlice property. This property is used to describe to an audio unit the maximum number
     // of samples it will be asked to produce on any single given call to AudioUnitRender
     UInt32 maxFramesPerSlice = 4096;
-    AudioUnitSetProperty(_audioUnit, kAudioUnitProperty_MaximumFramesPerSlice, kAudioUnitScope_Global, 0, &maxFramesPerSlice, sizeof(UInt32));
+    err = AudioUnitSetProperty(_audioUnit, kAudioUnitProperty_MaximumFramesPerSlice, kAudioUnitScope_Global, 0, &maxFramesPerSlice, sizeof(UInt32));
+    if (err) {
+        NSLog(@"Audio Error: 5: %d", err);
+    }
     
     // Get the property value back from AURemoteIO. We are going to use this value to allocate buffers accordingly
     UInt32 propSize = sizeof(UInt32);
-    AudioUnitGetProperty(_audioUnit, kAudioUnitProperty_MaximumFramesPerSlice, kAudioUnitScope_Global, 0, &maxFramesPerSlice, &propSize);
-    
+    err = AudioUnitGetProperty(_audioUnit, kAudioUnitProperty_MaximumFramesPerSlice, kAudioUnitScope_Global, 0, &maxFramesPerSlice, &propSize);
+    if (err) {
+        NSLog(@"Audio Error: 6: %d", err);
+    }
     
     AURenderCallbackStruct renderCallback;
     renderCallback.inputProc = recordingCallback;
     renderCallback.inputProcRefCon = (__bridge void *)(self);
     
-    AudioUnitSetProperty(_audioUnit, kAudioOutputUnitProperty_SetInputCallback, kAudioUnitScope_Global, 0, &renderCallback, sizeof(renderCallback));
+    err = AudioUnitSetProperty(_audioUnit, kAudioOutputUnitProperty_SetInputCallback, kAudioUnitScope_Global, 0, &renderCallback, sizeof(renderCallback));
     
     
     // Initialize the AURemoteIO instance
@@ -155,7 +192,7 @@ static OSStatus recordingCallback(void *inRefCon,
     AudioStreamBasicDescription audioDescription = {0};
     audioDescription.mFormatID          = kAudioFormatLinearPCM;
     audioDescription.mFormatFlags       = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked | kAudioFormatFlagsNativeEndian;
-    audioDescription.mChannelsPerFrame  = 2;
+    audioDescription.mChannelsPerFrame  = 1;
     audioDescription.mBytesPerPacket    = sizeof(SInt16)*audioDescription.mChannelsPerFrame;
     audioDescription.mFramesPerPacket   = 1;
     audioDescription.mBytesPerFrame     = sizeof(SInt16)*audioDescription.mChannelsPerFrame;

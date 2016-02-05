@@ -27,6 +27,6 @@
 @property (nonatomic, assign) int ppsSize;
 
 - (id)initWithDelegate:(id <CCIStreamDecoderDisplayDelegate>) delegate;
--(void) receivedRawVideoFrame:(uint8_t *)frame withSize:(uint32_t)frameSize isIFrame:(int)isIFrame;
+-(void) receivedRawVideoFrame:(uint8_t *)frame withSize:(uint32_t)frameSize;
 -(void) screenshotOfVideoStream:(CVImageBufferRef)imageBuffer;
 @end

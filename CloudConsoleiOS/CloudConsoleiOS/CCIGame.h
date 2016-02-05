@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "CCINetworkController.h"
-@interface CCIGame : NSObject <CCINetworkDelegate>
+@interface CCIGame : NSObject <CCUdpSocketDelegate>
 
 @property (strong)  NSString    *path;
 @property (strong)  NSString    *name;

@@ -46,7 +46,7 @@
     return self;
 }
 
-- (void)setDestinationHost:(NSString *)aHost Port:(uint16_t)aPort
+- (void)setDestinationHost:(NSString *)aHost port:(uint16_t)aPort
 {
     host = aHost;
     port = aPort;
@@ -64,9 +64,17 @@
 - (void)sendData:(NSData *)data withTimeout:(NSTimeInterval)timeout tag:(long)tag
 {
     NSLog(@"Error, using wrong send");
+    //crash
+    int *x;
+    *x = 42;
 }
 
-- (void)sendData:(NSData *)data withTimeout:(NSTimeInterval)timeout CCtag:(uint32_t)tag
+- (void)sendData:(NSData *)data withTimeout:(NSTimeInterval)atimeout CCtag:(uint32_t)tag
+{
+    [self sendData:data toHost:host port:port withTimeout:atimeout CCtag:tag];
+}
+
+- (void)sendData:(NSData *)data toHost:(NSString *)ahost port:(uint16_t)aport withTimeout:(NSTimeInterval)atimeout CCtag:(uint32_t)tag
 {
     //NSLog(@"Sending Data");
     // Consider adding HMAC
@@ -92,7 +100,7 @@
         }
         
         offset += thisChunkSize;
-        [super sendData:chunk toHost:host port:port withTimeout:timeout tag:0];
+        [super sendData:chunk toHost:ahost port:aport withTimeout:atimeout tag:0];
         currentBlock++;
     } while (offset < length);
     
@@ -143,11 +151,15 @@
         sendingKeepAlives = NO;
         return;
     }
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self sendKeepAlives];
     });
 }
 
+- (void)pingHost:(NSString *)aHost port:(uint16_t)aPort
+{
+    [self sendData:[NSData data] toHost:aHost port:aPort withTimeout:-1 CCtag:CCNetworkPing];
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Delegate Helpers
@@ -157,47 +169,64 @@
     if (CACurrentMediaTime() - lastKeepAlive > 10) { //Not connected
         [self notifyDidConnectToAddress:address];
     }
-    lastKeepAlive = CACurrentMediaTime();
-    if (host.length == 0) { //Connect
-        [self setDestinationHost:[GCDAsyncSocket hostFromAddress:address] Port:[GCDAsyncSocket portFromAddress:address]];
-        [self notifyDidConnectToAddress:address];
-    }
-    //Server socket changed port
-    if ([host isEqualToString:[GCDAsyncSocket hostFromAddress:address]] && port != [GCDAsyncSocket portFromAddress:address]) {
-        NSLog(@"Changing Socket port to: %d", [GCDAsyncSocket portFromAddress:address]);
-        [self setDestinationHost:[GCDAsyncSocket hostFromAddress:address] Port:[GCDAsyncSocket portFromAddress:address]];
-    }
-    
     uint32_t *message = (uint32_t*)data.bytes;
-    switch (message[0]) {
-        case CCNetworkStreamKeepAlive:
+    uint32_t tag = message[0];
+    switch (tag) {
+        case CCNetworkStreamKeepAlive: {
             //NSLog(@"Got keep alive");
             if (message[4] != self.applicationState) {
                 wrongStateCount++;
-                if (wrongStateCount == 2) {
+                if (wrongStateCount == 3) {
                     NSLog(@"Warning, socket is in a different state");
                     NSLog(@"Me: %u them: %u", self.applicationState, message[4]);
                     [self.delegate performSelectorOnMainThread:@selector(wrongApplicationState) withObject:nil waitUntilDone:NO];
                 }
             } else {
                 wrongStateCount = 0;
-                timeout = 5;
+                timeout = 10;
             }
             break;
+        }
         default:
         {
-            NSString *tagString = [NSString stringWithFormat:@"%u", message[0]];
+            NSString *tagString = [NSString stringWithFormat:@"%u", tag];
             if (!buffers[tagString]) {
                 NSLog(@"Creating Buffer: %@", tagString);
-                [buffers setObject:[CCUdpBuffer bufferWithTag:message[0]] forKey:tagString];
+                [buffers setObject:[CCUdpBuffer bufferWithTag:tag] forKey:tagString];
             }
             CCUdpBuffer *buffer = buffers[tagString];
             NSData *bufferData = [buffer consumeData:[NSData dataWithBytesNoCopy:(uint8_t*)data.bytes+4 length:data.length-4 freeWhenDone:NO]];
             if (bufferData) {
-                [super notifyDidReceiveData:bufferData fromAddress:address withFilterContext:context];
+                [self notifyDidReceiveData:bufferData fromAddress:address withTag:tag];
             }
             break;
         }
+    }
+    
+    lastKeepAlive = CACurrentMediaTime();
+    if (host.length == 0) { //Connect
+        [self setDestinationHost:[GCDAsyncSocket hostFromAddress:address] port:[GCDAsyncSocket portFromAddress:address]];
+        [self notifyDidConnectToAddress:address];
+    }
+    //Server socket changed port
+    if ([host isEqualToString:[GCDAsyncSocket hostFromAddress:address]] && port != [GCDAsyncSocket portFromAddress:address]) {
+        NSLog(@"Changing Socket port to: %d", [GCDAsyncSocket portFromAddress:address]);
+        [self setDestinationHost:[GCDAsyncSocket hostFromAddress:address] port:[GCDAsyncSocket portFromAddress:address]];
+    }
+}
+
+- (void)notifyDidReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag
+{
+    SEL selector = @selector(CCSocket:didReceiveData:fromAddress:withTag:);
+    
+    if (self.delegateQueue && [self.delegate respondsToSelector:selector])
+    {
+        id theDelegate = self.delegate;
+        dispatch_async(self.delegateQueue, ^{
+            [theDelegate CCSocket:self didReceiveData:data fromAddress:address withTag:tag];
+        });
+    } else {
+        NSLog(@"Warining, CCUdpSocket not notifying");
     }
 }
 

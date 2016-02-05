@@ -15,9 +15,13 @@
 
 @interface CCOServer : NSObject <CCUdpSocketDelegate, CCVideoStreamDelegate>
 
+@property NSString *deviceName;
+
 + (id)sharedInstance;
 - (void)start;
 - (uint16_t)currentPort;
 - (NSString *)currentIP;
+- (void)registerDelegate:(id <CCUdpSocketDelegate>) delegate forBuffer:(uint32_t)bufferTag;
+
 
 @end

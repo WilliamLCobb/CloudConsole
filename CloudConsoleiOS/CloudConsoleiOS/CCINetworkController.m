@@ -6,8 +6,6 @@
 //  Copyright © 2016 Will Cobb. All rights reserved.
 //
 
-// Communication will be done over TCP
-// Streaming will be done over UDP
 #import "CCNetworkProtocol.h"
 #import "CCINetworkController.h"
 #import "CCIStreamDecoder.h"
@@ -20,6 +18,8 @@
     PortMapper          *portMapper;
     NSMutableData       *buffer;
     dispatch_queue_t    socketQueue;
+    
+    NSMutableDictionary *socketDelegates;
 }
 
 @end
@@ -29,13 +29,12 @@
 - (id)initWithHost:(NSString *)host port:(uint16_t)port
 {
     if (self = [super init]) {
-        self.socketDelegates = [NSMutableDictionary dictionary];
-        clientSocket = [[CCUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-        //clientSocket = [[CCUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)];
-        //socketQueue = dispatch_queue_create("Socket Queue", NULL);
-        //clientSocket = [[CCUdpSocket alloc] initWithDelegate:self delegateQueue:socketQueue];// socketQueue:socketQueue];
+        socketDelegates = [NSMutableDictionary dictionary];
+        socketQueue = dispatch_queue_create("Socket Queue", NULL);
+        clientSocket = [[CCUdpSocket alloc] initWithDelegate:self delegateQueue:socketQueue];
+        //clientSocket = [[CCUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
         
-        [clientSocket setDestinationHost:host Port:port]; //
+        [clientSocket setDestinationHost:host port:port]; //
 
         NSLog(@"Connected to server");
         /*portMapper = [[PortMapper alloc] initWithPort:CCNetworkInternalStreamPort];
@@ -79,38 +78,43 @@
     NSLog(@"Port is open on ip:%@, port: %hu", portMapper.publicAddress, portMapper.publicPort);
 }
 
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withFilterContext:(id)filterContext
+- (void)CCSocket:(CCUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag
 {
-    uint32_t *message = (uint32_t *)data.bytes;
-    switch (message[0]) {
+    switch (tag) {
         case CCNetworkGetAvaliableGames:
         {
-            [self willChangeValueForKey:@"games"];
-            self.games = [NSMutableArray new];
-            
             NSError *error;
-            NSArray *gamesArray = [NSJSONSerialization JSONObjectWithData:[NSData dataWithBytesNoCopy:(uint8_t *)data.bytes+4 length:data.length-4 freeWhenDone:NO] options:0 error:&error];
+            NSArray *gamesArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+            if (error)
+                return;
+            [self willChangeValueForKey:@"games"];
+            [self.games removeAllObjects];
             
+            
+            //NSLog(@"%@", gamesArray);
             for (NSDictionary *gameDict in gamesArray) {
                 [self.games addObject:[[CCIGame alloc] initWithDictionairy:gameDict]];
             }
             
+            if (error) {
+                NSLog(@"Error loading games: %@", [error description]);
+            }
+            
+            NSLog(@"Got %lu games (%ld)", (unsigned long)gamesArray.count, self.games.count);
             [self didChangeValueForKey:@"games"];
             break;
         }
             
         default:
         {
-            NSString *bufferTag = [NSString stringWithFormat:@"%u", message[0]];
-            id <CCINetworkDelegate> delegate = [self.socketDelegates objectForKey:bufferTag];
+            NSLog(@"Got something else");
+            NSString *bufferTag = [NSString stringWithFormat:@"%u", tag];
+            id <CCUdpSocketDelegate> delegate = [socketDelegates objectForKey:bufferTag];
             if (delegate) {
-                [delegate receivedData:[NSData dataWithBytesNoCopy:(uint8_t*)data.bytes+4
-                                                            length:data.length-4
-                                                      freeWhenDone:NO]
-                            fromBuffer:message[0]];
+                [delegate CCSocket:sock didReceiveData:data fromAddress:address withTag:tag];
                 return;
             }
-            NSLog(@"CCINetworkController got unknown tag: %d", message[0]);
+            NSLog(@"CCINetworkController got unknown tag: %d", tag);
             break;
         }
     }
@@ -125,29 +129,35 @@
 #pragma mark Calls To Server
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)setDelegate:(id<CCINetworkDelegate>)delegate forBuffer:(uint32_t)abuffer
+- (void)registerDelegate:(id<CCUdpSocketDelegate>)delegate forBuffer:(uint32_t)abuffer
 {
     NSString *bufferTag = [NSString stringWithFormat:@"%u", abuffer];
-    // Hopefully this works
     __weak id weakDel = delegate;
-    self.socketDelegates[bufferTag] = weakDel;
+    socketDelegates[bufferTag] = weakDel;
 }
 
 - (void)updateAvaliableGames
 {
     [clientSocket sendData:[NSData data] withTimeout:-1 CCtag:CCNetworkGetAvaliableGames];
+    NSLog(@"%@ Asked for apps", self);
 }
 
-- (void)getSubGamesForDelegate:(id<CCINetworkDelegate>)delegate
+- (void)getSubGamesForDelegate:(id<CCUdpSocketDelegate>)delegate
 {
-    [self setDelegate:delegate forBuffer:CCNetworkGetSubGames];
+    [self registerDelegate:delegate forBuffer:CCNetworkGetSubGames];
     [clientSocket sendData:[NSData data] withTimeout:-1 CCtag:CCNetworkGetSubGames];
 }
 
 - (void)dealloc
 {
-    [clientSocket setDestinationHost:nil Port:0]; //Debug this and find out why the socket is not being deallocated
-    NSLog(@"CCINetwork successfully deallocated");
+    [clientSocket setDestinationHost:nil port:0];
+    clientSocket = nil;
+}
+
+- (void)pingHost:(NSString *)host
+{
+    NSLog(@"Pinging: %@", host);
+    [clientSocket sendData:[NSData new] toHost:host port:CCNetworkServerPort withTimeout:-1 CCtag:CCNetworkPing];
 }
 
 @end

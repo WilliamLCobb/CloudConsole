@@ -61,7 +61,7 @@
 		CAE405E81C4DE5BF00AD464F /* gcpad_dpad_pressed_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE4059C1C4DE5BF00AD464F /* gcpad_dpad_pressed_right@2x.png */; };
 		CAE405E91C4DE5BF00AD464F /* gcpad_dpad_pressed_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE4059D1C4DE5BF00AD464F /* gcpad_dpad_pressed_up@2x.png */; };
 		CAE405EA1C4DE5BF00AD464F /* gcpad_dpad_pressed_upleft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE4059E1C4DE5BF00AD464F /* gcpad_dpad_pressed_upleft@2x.png */; };
-		CAE405EB1C4DE5BF00AD464F /* gcpad_dpad_upright@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE4059F1C4DE5BF00AD464F /* gcpad_dpad_upright@2x.png */; };
+		CAE405EB1C4DE5BF00AD464F /* gcpad_dpad_pressed_upright@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE4059F1C4DE5BF00AD464F /* gcpad_dpad_pressed_upright@2x.png */; };
 		CAE405EC1C4DE5BF00AD464F /* gcpad_joystick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE405A01C4DE5BF00AD464F /* gcpad_joystick@2x.png */; };
 		CAE405ED1C4DE5BF00AD464F /* gcpad_joystick_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE405A11C4DE5BF00AD464F /* gcpad_joystick_pressed@2x.png */; };
 		CAE405EE1C4DE5BF00AD464F /* gcpad_joystick_range@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE405A21C4DE5BF00AD464F /* gcpad_joystick_range@2x.png */; };
@@ -93,7 +93,7 @@
 		CAE406141C4DE5BF00AD464F /* gcpad_dpad_pressed_right.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE405C91C4DE5BF00AD464F /* gcpad_dpad_pressed_right.png */; };
 		CAE406151C4DE5BF00AD464F /* gcpad_dpad_pressed_up.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE405CA1C4DE5BF00AD464F /* gcpad_dpad_pressed_up.png */; };
 		CAE406161C4DE5BF00AD464F /* gcpad_dpad_pressed_upleft.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE405CB1C4DE5BF00AD464F /* gcpad_dpad_pressed_upleft.png */; };
-		CAE406171C4DE5BF00AD464F /* gcpad_dpad_upright.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE405CC1C4DE5BF00AD464F /* gcpad_dpad_upright.png */; };
+		CAE406171C4DE5BF00AD464F /* gcpad_dpad_pressed_upright.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE405CC1C4DE5BF00AD464F /* gcpad_dpad_pressed_upright.png */; };
 		CAE406181C4DE5BF00AD464F /* gcpad_joystick.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE405CD1C4DE5BF00AD464F /* gcpad_joystick.png */; };
 		CAE406191C4DE5BF00AD464F /* gcpad_joystick_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE405CE1C4DE5BF00AD464F /* gcpad_joystick_pressed.png */; };
 		CAE4061A1C4DE5BF00AD464F /* gcpad_joystick_range.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE405CF1C4DE5BF00AD464F /* gcpad_joystick_range.png */; };
@@ -133,6 +133,21 @@
 		CAE406581C4DE6F800AD464F /* CCDirectionalControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE406541C4DE6F800AD464F /* CCDirectionalControl.m */; };
 		CAE406591C4DE6F800AD464F /* CCMFIControllerSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAE406561C4DE6F800AD464F /* CCMFIControllerSupport.mm */; };
 		CAE4065F1C4DEEDD00AD464F /* CCIGameCubeControllerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE4065E1C4DEEDD00AD464F /* CCIGameCubeControllerView.m */; };
+		CAE48C261C627C8F0085870A /* ScanLAN.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE48C1F1C627C8F0085870A /* ScanLAN.m */; };
+		CAE48C271C627C8F0085870A /* SimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE48C211C627C8F0085870A /* SimplePing.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CAE48C281C627C8F0085870A /* SimplePingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE48C231C627C8F0085870A /* SimplePingHelper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CAE48C291C627C8F0085870A /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE48C251C627C8F0085870A /* Device.m */; };
+		CAE48C3C1C63F0B90085870A /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE48C2E1C63F0B90085870A /* UIImage+ImageEffects.m */; };
+		CAE48C3D1C63F0B90085870A /* SCLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE48C301C63F0B90085870A /* SCLAlertView.m */; };
+		CAE48C3E1C63F0B90085870A /* SCLButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE48C321C63F0B90085870A /* SCLButton.m */; };
+		CAE48C3F1C63F0B90085870A /* SCLAlertViewResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE48C341C63F0B90085870A /* SCLAlertViewResponder.m */; };
+		CAE48C401C63F0B90085870A /* SCLAlertViewStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE48C361C63F0B90085870A /* SCLAlertViewStyleKit.m */; };
+		CAE48C411C63F0B90085870A /* SCLTimerDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE48C391C63F0B90085870A /* SCLTimerDisplay.m */; };
+		CAE48C421C63F0B90085870A /* SCLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE48C3B1C63F0B90085870A /* SCLTextView.m */; };
+		CAE48C491C63F5570085870A /* NewDeviceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE48C481C63F5570085870A /* NewDeviceTableViewController.m */; };
+		CAE48C4C1C64000B0085870A /* Gear.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE48C4A1C64000B0085870A /* Gear.png */; };
+		CAE48C4D1C64000B0085870A /* Gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE48C4B1C64000B0085870A /* Gear@2x.png */; };
+		CAE48C521C6445350085870A /* CloudConsoleIcon-128@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE48C511C6445350085870A /* CloudConsoleIcon-128@2x.png */; };
 		CAFD47FD1C5AD89F00B1BB4D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAFD47FC1C5AD89F00B1BB4D /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
@@ -238,7 +253,7 @@
 		CAE4059C1C4DE5BF00AD464F /* gcpad_dpad_pressed_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcpad_dpad_pressed_right@2x.png"; sourceTree = "<group>"; };
 		CAE4059D1C4DE5BF00AD464F /* gcpad_dpad_pressed_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcpad_dpad_pressed_up@2x.png"; sourceTree = "<group>"; };
 		CAE4059E1C4DE5BF00AD464F /* gcpad_dpad_pressed_upleft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcpad_dpad_pressed_upleft@2x.png"; sourceTree = "<group>"; };
-		CAE4059F1C4DE5BF00AD464F /* gcpad_dpad_upright@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcpad_dpad_upright@2x.png"; sourceTree = "<group>"; };
+		CAE4059F1C4DE5BF00AD464F /* gcpad_dpad_pressed_upright@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcpad_dpad_pressed_upright@2x.png"; sourceTree = "<group>"; };
 		CAE405A01C4DE5BF00AD464F /* gcpad_joystick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcpad_joystick@2x.png"; sourceTree = "<group>"; };
 		CAE405A11C4DE5BF00AD464F /* gcpad_joystick_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcpad_joystick_pressed@2x.png"; sourceTree = "<group>"; };
 		CAE405A21C4DE5BF00AD464F /* gcpad_joystick_range@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcpad_joystick_range@2x.png"; sourceTree = "<group>"; };
@@ -270,7 +285,7 @@
 		CAE405C91C4DE5BF00AD464F /* gcpad_dpad_pressed_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gcpad_dpad_pressed_right.png; sourceTree = "<group>"; };
 		CAE405CA1C4DE5BF00AD464F /* gcpad_dpad_pressed_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gcpad_dpad_pressed_up.png; sourceTree = "<group>"; };
 		CAE405CB1C4DE5BF00AD464F /* gcpad_dpad_pressed_upleft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gcpad_dpad_pressed_upleft.png; sourceTree = "<group>"; };
-		CAE405CC1C4DE5BF00AD464F /* gcpad_dpad_upright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gcpad_dpad_upright.png; sourceTree = "<group>"; };
+		CAE405CC1C4DE5BF00AD464F /* gcpad_dpad_pressed_upright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gcpad_dpad_pressed_upright.png; sourceTree = "<group>"; };
 		CAE405CD1C4DE5BF00AD464F /* gcpad_joystick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gcpad_joystick.png; sourceTree = "<group>"; };
 		CAE405CE1C4DE5BF00AD464F /* gcpad_joystick_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gcpad_joystick_pressed.png; sourceTree = "<group>"; };
 		CAE405CF1C4DE5BF00AD464F /* gcpad_joystick_range.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gcpad_joystick_range.png; sourceTree = "<group>"; };
@@ -316,6 +331,34 @@
 		CAE4065D1C4DEEDD00AD464F /* CCIGameCubeControllerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIGameCubeControllerView.h; sourceTree = "<group>"; };
 		CAE4065E1C4DEEDD00AD464F /* CCIGameCubeControllerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCIGameCubeControllerView.m; sourceTree = "<group>"; };
 		CAE48BEC1C5FDCB90085870A /* CCNetworkProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CCNetworkProtocol.h; path = ../../Common/CCNetworkProtocol.h; sourceTree = "<group>"; };
+		CAE48C1E1C627C8F0085870A /* ScanLAN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanLAN.h; sourceTree = "<group>"; };
+		CAE48C1F1C627C8F0085870A /* ScanLAN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanLAN.m; sourceTree = "<group>"; };
+		CAE48C201C627C8F0085870A /* SimplePing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePing.h; sourceTree = "<group>"; };
+		CAE48C211C627C8F0085870A /* SimplePing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePing.m; sourceTree = "<group>"; };
+		CAE48C221C627C8F0085870A /* SimplePingHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePingHelper.h; sourceTree = "<group>"; };
+		CAE48C231C627C8F0085870A /* SimplePingHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePingHelper.m; sourceTree = "<group>"; };
+		CAE48C241C627C8F0085870A /* Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
+		CAE48C251C627C8F0085870A /* Device.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
+		CAE48C2D1C63F0B90085870A /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		CAE48C2E1C63F0B90085870A /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		CAE48C2F1C63F0B90085870A /* SCLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertView.h; sourceTree = "<group>"; };
+		CAE48C301C63F0B90085870A /* SCLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertView.m; sourceTree = "<group>"; };
+		CAE48C311C63F0B90085870A /* SCLButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLButton.h; sourceTree = "<group>"; };
+		CAE48C321C63F0B90085870A /* SCLButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLButton.m; sourceTree = "<group>"; };
+		CAE48C331C63F0B90085870A /* SCLAlertViewResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertViewResponder.h; sourceTree = "<group>"; };
+		CAE48C341C63F0B90085870A /* SCLAlertViewResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertViewResponder.m; sourceTree = "<group>"; };
+		CAE48C351C63F0B90085870A /* SCLAlertViewStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertViewStyleKit.h; sourceTree = "<group>"; };
+		CAE48C361C63F0B90085870A /* SCLAlertViewStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertViewStyleKit.m; sourceTree = "<group>"; };
+		CAE48C371C63F0B90085870A /* SCLMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLMacros.h; sourceTree = "<group>"; };
+		CAE48C381C63F0B90085870A /* SCLTimerDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLTimerDisplay.h; sourceTree = "<group>"; };
+		CAE48C391C63F0B90085870A /* SCLTimerDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLTimerDisplay.m; sourceTree = "<group>"; };
+		CAE48C3A1C63F0B90085870A /* SCLTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLTextView.h; sourceTree = "<group>"; };
+		CAE48C3B1C63F0B90085870A /* SCLTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLTextView.m; sourceTree = "<group>"; };
+		CAE48C471C63F5570085870A /* NewDeviceTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewDeviceTableViewController.h; path = CloudConsoleiOS/ViewControllers/NewDeviceTableViewController.h; sourceTree = "<group>"; };
+		CAE48C481C63F5570085870A /* NewDeviceTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewDeviceTableViewController.m; path = CloudConsoleiOS/ViewControllers/NewDeviceTableViewController.m; sourceTree = "<group>"; };
+		CAE48C4A1C64000B0085870A /* Gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gear.png; sourceTree = "<group>"; };
+		CAE48C4B1C64000B0085870A /* Gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Gear@2x.png"; sourceTree = "<group>"; };
+		CAE48C511C6445350085870A /* CloudConsoleIcon-128@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CloudConsoleIcon-128@2x.png"; sourceTree = "<group>"; };
 		CAFD47FC1C5AD89F00B1BB4D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -398,8 +441,8 @@
 				CA8C8F611C51A24600FA7B61 /* AudioClient.m */,
 				CA8C8F531C519FFE00FA7B61 /* TPCircularBuffer.c */,
 				CA8C8F541C519FFE00FA7B61 /* TPCircularBuffer.h */,
-				CA8C8F551C519FFE00FA7B61 /* TPCircularBuffer+AudioBufferList.c */,
 				CA8C8F561C519FFE00FA7B61 /* TPCircularBuffer+AudioBufferList.h */,
+				CA8C8F551C519FFE00FA7B61 /* TPCircularBuffer+AudioBufferList.c */,
 			);
 			name = Audio;
 			sourceTree = "<group>";
@@ -409,6 +452,7 @@
 			children = (
 				CAB676451C40382300518E8E /* CCIMainViewController.h */,
 				CAB676461C40382300518E8E /* CCIMainViewController.m */,
+				CAE48C431C63F5080085870A /* Main View Options */,
 				CA8C8FD61C547B5800FA7B61 /* CCIAppSelectionTableViewController.h */,
 				CA8C8FD71C547B5800FA7B61 /* CCIAppSelectionTableViewController.m */,
 				CA140D011C59B823000B947D /* CCIGameSelectionTableViewController.h */,
@@ -418,9 +462,10 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		CA8C8FF61C558D2900FA7B61 /* Bonjour */ = {
+		CA8C8FF61C558D2900FA7B61 /* Discovery */ = {
 			isa = PBXGroup;
 			children = (
+				CAE48C1D1C627C850085870A /* LanScan */,
 				CA8C8FF71C558D4B00FA7B61 /* Reachability.h */,
 				CA8C8FF81C558D4B00FA7B61 /* Reachability.m */,
 				CA1901AF1C56DCD7002BC8F9 /* BonjourHandler.h */,
@@ -430,7 +475,7 @@
 				CA140CDB1C589162000B947D /* CCIDevice.h */,
 				CA140CDC1C589162000B947D /* CCIDevice.m */,
 			);
-			name = Bonjour;
+			name = Discovery;
 			sourceTree = "<group>";
 		};
 		CAB676331C40382300518E8E = {
@@ -439,7 +484,6 @@
 				CAB676771C4047D900518E8E /* AVFoundation.framework */,
 				CAB676751C40475A00518E8E /* VideoToolbox.framework */,
 				CAB6763E1C40382300518E8E /* CloudConsoleiOS */,
-				CAE404C91C488C9800AD464F /* Images */,
 				CAB676581C40382300518E8E /* CloudConsoleiOSTests */,
 				CAB676631C40382300518E8E /* CloudConsoleiOSUITests */,
 				CAB6763D1C40382300518E8E /* Products */,
@@ -470,9 +514,11 @@
 				CAB676481C40382300518E8E /* Main.storyboard */,
 				CAB6764B1C40382300518E8E /* Assets.xcassets */,
 				CAB6764D1C40382300518E8E /* LaunchScreen.storyboard */,
+				CAE48C511C6445350085870A /* CloudConsoleIcon-128@2x.png */,
 				CAB676501C40382300518E8E /* Info.plist */,
 				CAB6763F1C40382300518E8E /* Supporting Files */,
 				CAE4058D1C4DE5BF00AD464F /* Images */,
+				CAE48C2C1C63F0A00085870A /* SCLAlertView */,
 			);
 			path = CloudConsoleiOS;
 			sourceTree = "<group>";
@@ -535,7 +581,7 @@
 		CAB6768C1C443ABC00518E8E /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				CA8C8FF61C558D2900FA7B61 /* Bonjour */,
+				CA8C8FF61C558D2900FA7B61 /* Discovery */,
 				CAE48BEC1C5FDCB90085870A /* CCNetworkProtocol.h */,
 				CAB6768E1C443AE500518E8E /* CCINetworkController.h */,
 				CAB6768F1C443AE500518E8E /* CCINetworkController.m */,
@@ -579,25 +625,10 @@
 			name = Controls;
 			sourceTree = "<group>";
 		};
-		CAE404C91C488C9800AD464F /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				CAE404CA1C488C9F00AD464F /* Controls */,
-			);
-			name = Images;
-			path = CloudConsoleiOS;
-			sourceTree = "<group>";
-		};
-		CAE404CA1C488C9F00AD464F /* Controls */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Controls;
-			sourceTree = "<group>";
-		};
 		CAE4058D1C4DE5BF00AD464F /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CAE48C4E1C6400120085870A /* Navigation */,
 				CA6E2CB21C585DE100B70EB1 /* Devices */,
 				CAE4058E1C4DE5BF00AD464F /* Controllers */,
 			);
@@ -639,7 +670,7 @@
 				CAE4059C1C4DE5BF00AD464F /* gcpad_dpad_pressed_right@2x.png */,
 				CAE4059D1C4DE5BF00AD464F /* gcpad_dpad_pressed_up@2x.png */,
 				CAE4059E1C4DE5BF00AD464F /* gcpad_dpad_pressed_upleft@2x.png */,
-				CAE4059F1C4DE5BF00AD464F /* gcpad_dpad_upright@2x.png */,
+				CAE4059F1C4DE5BF00AD464F /* gcpad_dpad_pressed_upright@2x.png */,
 				CAE405A01C4DE5BF00AD464F /* gcpad_joystick@2x.png */,
 				CAE405A11C4DE5BF00AD464F /* gcpad_joystick_pressed@2x.png */,
 				CAE405A21C4DE5BF00AD464F /* gcpad_joystick_range@2x.png */,
@@ -678,7 +709,7 @@
 				CAE405C91C4DE5BF00AD464F /* gcpad_dpad_pressed_right.png */,
 				CAE405CA1C4DE5BF00AD464F /* gcpad_dpad_pressed_up.png */,
 				CAE405CB1C4DE5BF00AD464F /* gcpad_dpad_pressed_upleft.png */,
-				CAE405CC1C4DE5BF00AD464F /* gcpad_dpad_upright.png */,
+				CAE405CC1C4DE5BF00AD464F /* gcpad_dpad_pressed_upright.png */,
 				CAE405CD1C4DE5BF00AD464F /* gcpad_joystick.png */,
 				CAE405CE1C4DE5BF00AD464F /* gcpad_joystick_pressed.png */,
 				CAE405CF1C4DE5BF00AD464F /* gcpad_joystick_range.png */,
@@ -722,6 +753,61 @@
 				CAE4063B1C4DE60500AD464F /* Start@2x.png */,
 			);
 			path = Default;
+			sourceTree = "<group>";
+		};
+		CAE48C1D1C627C850085870A /* LanScan */ = {
+			isa = PBXGroup;
+			children = (
+				CAE48C1E1C627C8F0085870A /* ScanLAN.h */,
+				CAE48C1F1C627C8F0085870A /* ScanLAN.m */,
+				CAE48C201C627C8F0085870A /* SimplePing.h */,
+				CAE48C211C627C8F0085870A /* SimplePing.m */,
+				CAE48C221C627C8F0085870A /* SimplePingHelper.h */,
+				CAE48C231C627C8F0085870A /* SimplePingHelper.m */,
+				CAE48C241C627C8F0085870A /* Device.h */,
+				CAE48C251C627C8F0085870A /* Device.m */,
+			);
+			name = LanScan;
+			sourceTree = "<group>";
+		};
+		CAE48C2C1C63F0A00085870A /* SCLAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				CAE48C2D1C63F0B90085870A /* UIImage+ImageEffects.h */,
+				CAE48C2E1C63F0B90085870A /* UIImage+ImageEffects.m */,
+				CAE48C2F1C63F0B90085870A /* SCLAlertView.h */,
+				CAE48C301C63F0B90085870A /* SCLAlertView.m */,
+				CAE48C311C63F0B90085870A /* SCLButton.h */,
+				CAE48C321C63F0B90085870A /* SCLButton.m */,
+				CAE48C331C63F0B90085870A /* SCLAlertViewResponder.h */,
+				CAE48C341C63F0B90085870A /* SCLAlertViewResponder.m */,
+				CAE48C351C63F0B90085870A /* SCLAlertViewStyleKit.h */,
+				CAE48C361C63F0B90085870A /* SCLAlertViewStyleKit.m */,
+				CAE48C371C63F0B90085870A /* SCLMacros.h */,
+				CAE48C381C63F0B90085870A /* SCLTimerDisplay.h */,
+				CAE48C391C63F0B90085870A /* SCLTimerDisplay.m */,
+				CAE48C3A1C63F0B90085870A /* SCLTextView.h */,
+				CAE48C3B1C63F0B90085870A /* SCLTextView.m */,
+			);
+			name = SCLAlertView;
+			sourceTree = "<group>";
+		};
+		CAE48C431C63F5080085870A /* Main View Options */ = {
+			isa = PBXGroup;
+			children = (
+				CAE48C471C63F5570085870A /* NewDeviceTableViewController.h */,
+				CAE48C481C63F5570085870A /* NewDeviceTableViewController.m */,
+			);
+			name = "Main View Options";
+			sourceTree = "<group>";
+		};
+		CAE48C4E1C6400120085870A /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				CAE48C4A1C64000B0085870A /* Gear.png */,
+				CAE48C4B1C64000B0085870A /* Gear@2x.png */,
+			);
+			name = Navigation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -835,6 +921,7 @@
 				CAE406471C4DE60500AD464F /* LTrigger@2x.png in Resources */,
 				CAE4060F1C4DE5BF00AD464F /* gcpad_dpad.png in Resources */,
 				CAE405E51C4DE5BF00AD464F /* gcpad_dpad_pressed_downleft@2x.png in Resources */,
+				CAE48C521C6445350085870A /* CloudConsoleIcon-128@2x.png in Resources */,
 				CAE4060E1C4DE5BF00AD464F /* gcpad_c_pressed.png in Resources */,
 				CAE405E41C4DE5BF00AD464F /* gcpad_dpad_pressed_down@2x.png in Resources */,
 				CAE405EE1C4DE5BF00AD464F /* gcpad_joystick_range@2x.png in Resources */,
@@ -843,6 +930,7 @@
 				CAE406161C4DE5BF00AD464F /* gcpad_dpad_pressed_upleft.png in Resources */,
 				CAE405F71C4DE5BF00AD464F /* gcpad_y@2x.png in Resources */,
 				CAB6764F1C40382300518E8E /* LaunchScreen.storyboard in Resources */,
+				CAE48C4C1C64000B0085870A /* Gear.png in Resources */,
 				CAE405E81C4DE5BF00AD464F /* gcpad_dpad_pressed_right@2x.png in Resources */,
 				CAE406151C4DE5BF00AD464F /* gcpad_dpad_pressed_up.png in Resources */,
 				CAE406231C4DE5BF00AD464F /* gcpad_y.png in Resources */,
@@ -857,6 +945,7 @@
 				CAE4063C1C4DE60500AD464F /* ABXYPad.png in Resources */,
 				CAE4060C1C4DE5BF00AD464F /* gcpad_b_pressed.png in Resources */,
 				CAE405F81C4DE5BF00AD464F /* gcpad_y_pressed@2x.png in Resources */,
+				CAE48C4D1C64000B0085870A /* Gear@2x.png in Resources */,
 				CA6E2CBA1C585DEB00B70EB1 /* iPad@2x.png in Resources */,
 				CA6E2CBC1C585DEB00B70EB1 /* iPhone_5@2x.png in Resources */,
 				CA6E2CB91C585DEB00B70EB1 /* iPad.png in Resources */,
@@ -869,7 +958,7 @@
 				CAE406011C4DE5BF00AD464F /* ic_gamecube.png in Resources */,
 				CAE4064D1C4DE60500AD464F /* Start@2x.png in Resources */,
 				CAE406411C4DE60500AD464F /* HideEmulator@2x.png in Resources */,
-				CAE405EB1C4DE5BF00AD464F /* gcpad_dpad_upright@2x.png in Resources */,
+				CAE405EB1C4DE5BF00AD464F /* gcpad_dpad_pressed_upright@2x.png in Resources */,
 				CAE406221C4DE5BF00AD464F /* gcpad_x_pressed.png in Resources */,
 				CAE405F61C4DE5BF00AD464F /* gcpad_x_pressed@2x.png in Resources */,
 				CAE406251C4DE5BF00AD464F /* gcpad_z.png in Resources */,
@@ -887,7 +976,7 @@
 				CAE405ED1C4DE5BF00AD464F /* gcpad_joystick_pressed@2x.png in Resources */,
 				CAE4061A1C4DE5BF00AD464F /* gcpad_joystick_range.png in Resources */,
 				CAE406201C4DE5BF00AD464F /* gcpad_start_pressed.png in Resources */,
-				CAE406171C4DE5BF00AD464F /* gcpad_dpad_upright.png in Resources */,
+				CAE406171C4DE5BF00AD464F /* gcpad_dpad_pressed_upright.png in Resources */,
 				CAE4060D1C4DE5BF00AD464F /* gcpad_c.png in Resources */,
 				CAE406481C4DE60500AD464F /* RTrigger.png in Resources */,
 				CAE406141C4DE5BF00AD464F /* gcpad_dpad_pressed_right.png in Resources */,
@@ -996,28 +1085,40 @@
 				CA140D031C59B823000B947D /* CCIGameSelectionTableViewController.m in Sources */,
 				CAE4065F1C4DEEDD00AD464F /* CCIGameCubeControllerView.m in Sources */,
 				CA8C8F621C51A24600FA7B61 /* AudioClient.m in Sources */,
+				CAE48C291C627C8F0085870A /* Device.m in Sources */,
 				CAB676901C443AE500518E8E /* CCINetworkController.m in Sources */,
 				CA8C8F571C519FFE00FA7B61 /* TPCircularBuffer.c in Sources */,
 				CAE406591C4DE6F800AD464F /* CCMFIControllerSupport.mm in Sources */,
+				CAE48C261C627C8F0085870A /* ScanLAN.m in Sources */,
 				CAB676961C44640B00518E8E /* PortMapper.m in Sources */,
 				CA8C8F731C52DFE600FA7B61 /* CCIGame.m in Sources */,
 				CA8C8FD21C539CD200FA7B61 /* CCIHeadTracker.m in Sources */,
 				CAE406501C4DE6DA00AD464F /* CCIControllerView.m in Sources */,
 				CA140CF61C597D97000B947D /* CCUdpBuffer.m in Sources */,
+				CAE48C411C63F0B90085870A /* SCLTimerDisplay.m in Sources */,
 				CAB676741C40470100518E8E /* CCIStreamDecoder.m in Sources */,
 				CA1901B11C56DCD7002BC8F9 /* BonjourHandler.m in Sources */,
 				CAB676471C40382300518E8E /* CCIMainViewController.m in Sources */,
+				CAE48C421C63F0B90085870A /* SCLTextView.m in Sources */,
 				CAE406581C4DE6F800AD464F /* CCDirectionalControl.m in Sources */,
 				CA8C8FFB1C558D4B00FA7B61 /* Reachability.m in Sources */,
 				CAB676871C439DA600518E8E /* CCIStreamViewController.m in Sources */,
+				CAE48C3E1C63F0B90085870A /* SCLButton.m in Sources */,
 				CA140CF71C597D97000B947D /* CCUdpSocket.m in Sources */,
+				CAE48C271C627C8F0085870A /* SimplePing.m in Sources */,
 				CAB676441C40382300518E8E /* AppDelegate.m in Sources */,
 				CAB676411C40382300518E8E /* main.m in Sources */,
+				CAE48C281C627C8F0085870A /* SimplePingHelper.m in Sources */,
 				CA6E2CC11C5885F100B70EB1 /* CCILanFinder.m in Sources */,
 				CA140CDD1C589162000B947D /* CCIDevice.m in Sources */,
 				CA8C8F581C519FFE00FA7B61 /* TPCircularBuffer+AudioBufferList.c in Sources */,
+				CAE48C3C1C63F0B90085870A /* UIImage+ImageEffects.m in Sources */,
+				CAE48C3F1C63F0B90085870A /* SCLAlertViewResponder.m in Sources */,
+				CAE48C491C63F5570085870A /* NewDeviceTableViewController.m in Sources */,
+				CAE48C401C63F0B90085870A /* SCLAlertViewStyleKit.m in Sources */,
 				CA8C8FD81C547B5800FA7B61 /* CCIAppSelectionTableViewController.m in Sources */,
 				CAE406571C4DE6F800AD464F /* CCButtonControl.m in Sources */,
+				CAE48C3D1C63F0B90085870A /* SCLAlertView.m in Sources */,
 				CAB6768B1C443AB700518E8E /* CCIStreamManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

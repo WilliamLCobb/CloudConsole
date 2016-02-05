@@ -23,7 +23,7 @@
 @property (assign, nonatomic) id <CCIStreamManagerDelegate> delegate;
 @property (assign, nonatomic) id <CCIStreamDecoderDisplayDelegate> outputDelegate;
 
-- (void)sendDirectionalState:(CGPoint)directionalState;
+- (void)sendDirectionalState:(CGPoint)directionalState forJoy:(uint8_t)joyId;
 - (void)sendButtonState:(uint32_t)buttonState;
 - (void)closeStream;
 @end

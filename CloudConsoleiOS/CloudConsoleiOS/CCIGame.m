@@ -33,6 +33,7 @@
             NSData *pictureData = [[NSData alloc] initWithBase64EncodedString:dictionairy[@"image"] options:0];
             self.icon = [UIImage imageWithData:pictureData];
         }
+        self.subGames = [NSMutableArray new];
     }
     
     return self;
@@ -55,11 +56,11 @@
     [networkController getSubGamesForDelegate:self];
 }
 
-- (void)receivedData:(NSData *)data fromBuffer:(uint32_t)buffer
+- (void)CCSocket:(CCUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag
 {
-    if (buffer == CCNetworkGetSubGames) {
+    if (tag == CCNetworkGetSubGames) {
         [self willChangeValueForKey:@"subGames"];
-        self.subGames = [NSMutableArray array];
+        [self.subGames removeAllObjects];
         
         NSError *error;
         NSArray *gamesArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];

@@ -33,15 +33,19 @@
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
     self.tableView.tableFooterView.backgroundColor = [UIColor whiteColor];
-    UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    [activity startAnimating];
-    activity.frame = CGRectMake(self.view.frame.size.width/2 - activity.frame.size.width/2, 50, activity.frame.size.width, activity.frame.size.height);
-    [self.tableView.tableFooterView addSubview:activity];
     
     UILabel *searchingLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, self.view.frame.size.width - 40, 20)];
-    searchingLabel.text = [NSString stringWithFormat:@"Searching for devices on %@", [self currentWifiSSID]];
+    searchingLabel.text = [NSString stringWithFormat:@"Searching for devices %@", [self currentWifiSSID]];
     searchingLabel.textAlignment = NSTextAlignmentCenter;
+    searchingLabel.numberOfLines = 0;
+    [searchingLabel sizeToFit];
+    searchingLabel.center = CGPointMake(self.view.center.x, searchingLabel.center.y);
     [self.tableView.tableFooterView addSubview:searchingLabel];
+    
+    UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [activity startAnimating];
+    activity.frame = CGRectMake(self.view.frame.size.width/2 - activity.frame.size.width/2, searchingLabel.frame.size.height + 20, activity.frame.size.width, activity.frame.size.height);
+    [self.tableView.tableFooterView addSubview:activity];
     
     deviceFinder = [[CCILanFinder alloc] init];
     deviceFinder.delegate = self;
@@ -57,6 +61,12 @@
 - (void)devicesFound
 {
     [self.tableView reloadData];
+}
+
+- (void)gotServiceDestination:(NSString *)host port:(uint16_t)port
+{
+    AppDelegate.sharedInstance.networkController = [[CCINetworkController alloc] initWithHost:host port:port];
+    [self performSegueWithIdentifier:@"ToApps" sender:self];
 }
 
 #pragma mark - Table Delegate

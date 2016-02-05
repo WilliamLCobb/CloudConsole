@@ -26,7 +26,7 @@ extern NSString * const NXOAuth2ClientConnectionContextTokenRefresh;
  * Only supports WebServer & Password flow at the moment
  *
  * - oauth2 draft 10 http://tools.ietf.org/html/draft-ietf-oauth-v2-10
- * - not thread save
+ * - not thread safe
  */
 
 //TODO: Link to documentation
@@ -120,7 +120,7 @@ extern NSString * const NXOAuth2ClientConnectionContextTokenRefresh;
  *---------------------------------*/
 
 /*!
- * Authenticate usind a web URL (Web Server Flow)
+ * Authenticate using a web URL (Web Server Flow)
  * returns the URL to be opened to get access grant
  */
 - (NSURL *)authorizationURLWithRedirectURL:(NSURL *)redirectURL;

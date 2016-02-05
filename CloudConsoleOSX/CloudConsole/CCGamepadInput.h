@@ -10,7 +10,7 @@
 
 @interface CCGamepadInput : NSObject
 
-- (void)setLeftJoyX:(int8_t) x Y:(int8_t)y;
+- (void)setJoy:(int8_t)joyId X:(int8_t) x Y:(int8_t)y;
 - (void)pressA;
 - (void)setButtonState:(uint16_t)buttonState;
 

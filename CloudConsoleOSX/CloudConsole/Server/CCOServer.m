@@ -27,6 +27,8 @@
     NSRunningApplication *currentApplication;
     
     CCPlugin            *currentPlugin;
+    
+   NSMutableDictionary  *socketDelegates;
 }
 
 @end
@@ -45,19 +47,22 @@
 - (id)init
 {
     if (self = [super init]) {
+        self.deviceName = [NSString stringWithFormat:@"mac.%@", [[NSHost currentHost] localizedName]];
+        socketDelegates = [NSMutableDictionary dictionary];
         currentGames = [CCGame gamesAtPaths:[CCGame defaultPaths]];
-        broadcaster = [[CCOServerBroadcaster alloc] init];
     }
     return self;
 }
 
 - (void)start
 {
+    NSLog(@"Starting");
     if (running) return;
     running = YES;
     NSLog(@"Server Started");
     [self mapSocket];
-    [broadcaster start];
+    broadcaster = [[CCOServerBroadcaster alloc] init];
+    [broadcaster startBroadcastWithName:self.deviceName];
 }
 
 - (void)mapSocket
@@ -65,7 +70,7 @@
     serverSocket = [[CCUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     serverSocket.applicationState = CCStateHome;
     NSError *error = nil;
-    [serverSocket bindToPort:5467 error:&error];
+    [serverSocket bindToPort:CCNetworkServerPort error:&error];
     if (error) {
         NSLog(@"Error starting server (bind): %@", error);
         return;
@@ -94,15 +99,20 @@
 
 #pragma mark - Network
 
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withFilterContext:(id)filterContext
+- (void) CCSocket:(CCUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag
 {
+    NSLog(@"Data2");
     uint32_t *message = (uint32_t *)data.bytes;
-    switch (message[0]) {
+    switch (tag) {
         case CCNetworkOpenStream: {
             [broadcaster stop];
-            uint32_t port = message[1];
-            NSString *applicationPath = [NSString stringWithCString:(void *)message+12 encoding:NSUTF8StringEncoding];
+            //Switch to JSON later
+            
+            uint32_t port = message[0];
+            NSString *applicationPath = [NSString stringWithCString:(void *)message+8 encoding:NSUTF8StringEncoding];
             //NSString *applicationName = [[CCGame applicationNameForPath:applicationPath] stringByDeletingPathExtension];
+            //currentPlugin = [[CCPlugin alloc] initWithName:applicationName];
+            
             NSLog(@"Open Data: %@", data);
             NSLog(@"Launch: %@", applicationPath);
             
@@ -111,7 +121,7 @@
             if (!currentApplication) {
                 NSLog(@"Plugin couldn't launch game");
                 [serverSocket sendData:[NSData data] withTimeout:-1 CCtag:CCNetworkStreamOpenFailure];
-                [broadcaster start];
+                [broadcaster startBroadcastWithName:self.deviceName];
                 return;
             }
             serverSocket.applicationState = CCStateInStream;
@@ -149,11 +159,15 @@
                 NSLog(@"Got an error creating json: %@", error);
                 return;
             }
-            [serverSocket sendData:jsonData withTimeout:-1 CCtag:CCNetworkGetAvaliableGames];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [serverSocket sendData:jsonData withTimeout:-1 CCtag:CCNetworkGetAvaliableGames];
+            });
+            
             break;
         }
         case CCNetworkGetSubGames: {
-            NSString *applicationPath = [NSString stringWithCString:(void *)message+8 encoding:NSUTF8StringEncoding];
+            //Switch to JSON
+            NSString *applicationPath = [NSString stringWithCString:(void *)message+4 encoding:NSUTF8StringEncoding];
             NSString *applicationName = [[CCGame applicationNameForPath:applicationPath] stringByDeletingPathExtension];
             /*  Load Plugin  */
             currentPlugin = [[CCPlugin alloc] initWithName:applicationName];
@@ -177,9 +191,24 @@
             break;
         }
         default:
-            NSLog(@"CCOServer got unknown Tag: %u", message[0]);
+        {
+            NSString *bufferTag = [NSString stringWithFormat:@"%u", message[0]];
+            id <CCUdpSocketDelegate> delegate = [socketDelegates objectForKey:bufferTag];
+            if (delegate) {
+                [delegate CCSocket:sock didReceiveData:data fromAddress:address withTag:tag];
+                return;
+            }
+            NSLog(@"CCOServer got unknown tag: %d", tag);
             break;
+        }
     }
+}
+
+- (void)registerDelegate:(id<CCUdpSocketDelegate>)delegate forBuffer:(uint32_t)abuffer
+{
+    NSString *bufferTag = [NSString stringWithFormat:@"%u", abuffer];
+    __weak id weakDel = delegate;
+    socketDelegates[bufferTag] = weakDel;
 }
 
 #pragma mark - Socket Delegate
@@ -210,6 +239,7 @@
     videoStream = nil;
     serverSocket.applicationState = CCStateHome;
     NSLog(@"Closed stream");
+    [broadcaster startBroadcastWithName:self.deviceName];
 }
 
 - (NSString *)currentIP

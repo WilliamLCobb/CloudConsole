@@ -80,11 +80,8 @@ NSString * const naluTypesStrings[] =
     return 0;
 }
 
--(void) receivedRawVideoFrame:(uint8_t *)frame withSize:(uint32_t)frameSize isIFrame:(int)isIFrame
+-(void) receivedRawVideoFrame:(uint8_t *)frame withSize:(uint32_t)frameSize
 {
-    // I know what my H.264 data source's NALUs look like so I know start code index is always 0.
-    // if you don't know where it starts, you can use a for loop similar to how i find the 2nd and 3rd start codes
-    
     int naluType = 0;
     uint32_t offset = 0;//[self nextFrameOffset:frame remainingSize:frameSize];
     BOOL shouldDecode = NO; //If we shoudl encode at the end of the data
@@ -272,21 +269,10 @@ NSString * const naluTypesStrings[] =
     _decompressionSession = NULL;
     VTDecompressionOutputCallbackRecord callBackRecord;
     callBackRecord.decompressionOutputCallback = decompressionSessionDecodeFrameCallback;
-    
-    // this is necessary if you need to make calls to Objective C "self" from within in the callback method.
     callBackRecord.decompressionOutputRefCon = (__bridge void *)self.outputDelegate;
     
-    // you can set some desired attributes for the destination pixel buffer.  I didn't use this but you may
-    // if you need to set some attributes, be sure to uncomment the dictionary in VTDecompressionSessionCreate
     NSDictionary *destinationImageBufferAttributes = @{(id)kCVPixelBufferOpenGLESCompatibilityKey: [NSNumber numberWithBool:YES],
                                                        (id)kVTDecompressionPropertyKey_RealTime: [NSNumber numberWithBool:YES]};
-                                                       
-//                                                       }[NSDictionary dictionaryWithObjectsAndKeys:
-//                                                      [NSNumber numberWithBool:YES],
-//                                                      (id)kCVPixelBufferOpenGLESCompatibilityKey,
-//                                                      //[NSNumber numberWithBool:YES],
-//                                                      //kVTDecompressionPropertyKey_RealTime,
-//                                                      nil];
     
     OSStatus status =  VTDecompressionSessionCreate(NULL, _formatDesc, NULL,
                                                     (__bridge CFDictionaryRef)(destinationImageBufferAttributes),
@@ -294,7 +280,6 @@ NSString * const naluTypesStrings[] =
     if (status != noErr) {
         NSError *error = [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil];
         NSLog(@"Error creating session!!! Bad: %@", error);
-        //int x = 1;
         //[self.outputDelegate closedStream];
     }
 }
@@ -307,9 +292,6 @@ void decompressionSessionDecodeFrameCallback(void *decompressionOutputRefCon,
                                              CMTime presentationTimeStamp,
                                              CMTime presentationDuration)
 {
-    
-    //NSLog(@"FPS: %f", 1/(CACurrentMediaTime() - now));
-    
     id <CCIStreamDecoderDisplayDelegate> streamDisplayer = (__bridge id)(decompressionOutputRefCon);
     if (status != noErr) {
         NSError *error = [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil];
@@ -319,5 +301,9 @@ void decompressionSessionDecodeFrameCallback(void *decompressionOutputRefCon,
     }
 }
 
+- (void)dealloc
+{
+    VTDecompressionSessionInvalidate(_decompressionSession);
+}
 
 @end

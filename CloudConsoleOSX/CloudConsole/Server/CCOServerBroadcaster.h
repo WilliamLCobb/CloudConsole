@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "BonjourHandler.h"
+#import "CCUdpSocket.h"
 
+@interface CCOServerBroadcaster : NSObject <BonjourDelegate, CCUdpSocketDelegate>
 
-@interface CCOServerBroadcaster : NSObject <BonjourDelegate>
-
-- (void)start;
+- (void)startBroadcastWithName:(NSString *)name;
 - (void)stop;
 
 @end

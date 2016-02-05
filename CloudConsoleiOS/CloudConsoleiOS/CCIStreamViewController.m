@@ -126,7 +126,7 @@
 
 - (void)joystick:(NSInteger)joyid movedToPosition:(CGPoint)joyPosition
 {
-    [self.streamManager sendDirectionalState:joyPosition];
+    [self.streamManager sendDirectionalState:joyPosition forJoy:joyid];
 }
 
 #pragma mark - Callbacks

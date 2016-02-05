@@ -10,8 +10,9 @@
 #define CCNetworkProtocol_h
 
 /*  General  */
-
+#define kCCNetworkProtocolVersion @"1.0.0"
 #define kUseBonjour YES
+#define kEnableAudio YES
 
 // A block can never be more than MTU Size with we can assume is greater than 1024
 #define CCNetworkUDPDataSize        8192
@@ -21,7 +22,9 @@
 
 #define CCNetworkServerPort         57901
 
-/* Bonjour  */
+/*  Discovery  */
+#define CCNetworkPing               (uint32_t)1011
+#define CCNetworkPingResponse       (uint32_t)1012
 #define CCBonjourServerAddress      (uint32_t)0101
 
 /*  Information  */

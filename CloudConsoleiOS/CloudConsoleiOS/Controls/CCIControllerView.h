@@ -30,5 +30,5 @@ typedef NS_ENUM(NSInteger, CCControllerStyle) {
 - (void)addButtonWithFrame:(CGRect)frame Tag:(NSInteger) tag Image:(NSString *) image PressedImage:(NSString *)pressedImage;
 
 - (void)joystickMoved:(CCDirectionalControl *)joystick;
-
+- (void)dpadChanged:(CCDirectionalControl *)dpad;
 @end

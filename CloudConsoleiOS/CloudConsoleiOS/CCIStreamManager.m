@@ -51,12 +51,12 @@
     streamDecoder.outputDelegate = delegate;
 }
 
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withFilterContext:(id)filterContext
+- (void)CCSocket:(CCUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag
 {
     //NSLog(@"Recieved Data From: %@, %ld", address, data.length);
-    uint32_t *frameData = (uint32_t*)data.bytes;
+    //uint32_t *frameData = (uint32_t*)data.bytes;
     senderAddress = address;
-    switch (frameData[0]) {
+    switch (tag) {
         case CCNetworkVideoData:
         {
             // Lag detection
@@ -67,14 +67,8 @@
             }
             now = CACurrentMediaTime();
             ///
-            static long frameNumber = 0;
-            frameNumber++;
-            //NSLog(@"--Got frame: %ld", frameNumber);
             dispatch_async(videoDecodeQueue, ^{
-                static long frameNumber2 = 0;
-                frameNumber2++;
-                //NSLog(@"--Decoding frame: %ld", frameNumber2);
-                [streamDecoder receivedRawVideoFrame:(uint8_t*)data.bytes+4 withSize:(uint32_t)data.length-4 isIFrame:0];
+                [streamDecoder receivedRawVideoFrame:data.bytes withSize:data.length];
             });
             
             break;
@@ -82,7 +76,7 @@
         case CCNetworkAudioData:
         {
             dispatch_async(audioDecodeQueue, ^{
-                [audioClient parseData:[NSData dataWithBytesNoCopy:(uint8_t*)data.bytes+4 length:data.length-4 freeWhenDone:NO]];
+                [audioClient parseData:data];
             });
             break;
         }
@@ -121,11 +115,11 @@
 
 #pragma mark - Controls
 
-- (void)sendDirectionalState:(CGPoint)directionalState
+- (void)sendDirectionalState:(CGPoint)directionalState forJoy:(uint8_t)joyId
 {
-    int8_t direction[2] = {(int8_t)(directionalState.x * 127), (int8_t)(directionalState.y * 127)};
+    int8_t data[3] = {joyId, (int8_t)(directionalState.x * 127), (int8_t)(directionalState.y * 127)};
     NSMutableData * directionalData = [NSMutableData data];
-    [directionalData appendBytes:direction length:2];
+    [directionalData appendBytes:data length:3];
     [self.streamSocket sendData:directionalData withTimeout:10 CCtag:CCNetworkDirectionalState];
 }
 

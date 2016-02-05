@@ -13,6 +13,7 @@
 @property NSString *name;
 @property NSString *host;
 @property uint16_t  port;
+@property CFTimeInterval discoveryTime;
 
 - (id)initWithName:(NSString *)name host:(NSString *)host port:(uint16_t)port;
 @end
