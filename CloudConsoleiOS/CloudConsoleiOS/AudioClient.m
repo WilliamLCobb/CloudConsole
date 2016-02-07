@@ -40,8 +40,16 @@ static OSStatus OutputRenderCallback(void                        *inRefCon,
     
     int32_t availableBytes;
     SInt16 *sourceBuffer = TPCircularBufferTail(circularBuffer, &availableBytes);
-    
-    int32_t amount = MIN(bytesToCopy,availableBytes);
+    ///
+    // Add missing bytes to prevent white noise
+    if (availableBytes < bytesToCopy) {
+        //printf("Adding %d\n", bytesToCopy - availableBytes);
+        void *src = calloc(bytesToCopy - availableBytes, 1);
+        TPCircularBufferProduceBytes(circularBuffer, src, bytesToCopy - availableBytes);
+        sourceBuffer = TPCircularBufferTail(circularBuffer, &availableBytes);
+    }
+    ///
+    int32_t amount = bytesToCopy;//MIN(bytesToCopy,availableBytes);
     memcpy(outputBuffer, sourceBuffer, amount);
     
     TPCircularBufferConsume(circularBuffer,amount);

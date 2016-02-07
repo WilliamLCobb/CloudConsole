@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "BonjourHandler.h"
-#import "CCINetworkController.h"
+#import "CCUdpSocket.h"
 #import "ScanLAN.h"
 
 @protocol CCILanDelegate <NSObject>
 
 - (void)devicesFound;
 - (void)gotServiceDestination:(NSString *)host port:(uint16_t)port;
+- (void)scanFinished;
+- (void)scanStarted;
 @end
 
 @class CCIDevice;

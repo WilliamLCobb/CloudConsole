@@ -79,8 +79,8 @@
         streamView.frame = streamRect;
         CGSize displaySize = [self currentScreenSizeAlwaysLandscape:YES];
         streamView.center = CGPointMake(displaySize.width/2, displaySize.height/2);
+        greenLineHider.frame = CGRectMake(streamView.frame.origin.x + streamView.frame.size.width-2, 0, 2, self.view.frame.size.height);
     });
-    greenLineHider.frame = CGRectMake(streamView.frame.origin.x + streamView.frame.size.width-2, 0, 2, self.view.frame.size.height);
 }
 
 - (void)displayFrame:(CVImageBufferRef)frame

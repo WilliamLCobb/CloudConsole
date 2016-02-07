@@ -9,7 +9,7 @@
 #import "CCILanFinder.h"
 #import "CCNetworkProtocol.h"
 #import "CCIDevice.h"
-#import "GCDAsyncUdpSocket.h"
+#import "CCIGame.h"
 
 #import <UIKit/UIKit.h>
 
@@ -17,7 +17,9 @@
     BonjourHandler  *bonjourSocket;
     NSString        *connectingName;
     ScanLAN         *lanScanner;
-    GCDAsyncUdpSocket *pingSocket;
+    CCUdpSocket     *pingSocket;
+    
+    BOOL            scanning;
 }
 
 @end
@@ -27,10 +29,7 @@
 - (id)init
 {
     if (self = [super init]) {
-        pingSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-        if (![pingSocket beginReceiving:nil]) {
-            NSLog(@"Error creating ping socket");
-        }
+        pingSocket = [[CCUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
         lanScanner = [[ScanLAN alloc] initWithDelegate:self];
     }
     return self;
@@ -41,16 +40,26 @@
     self.services = [NSMutableArray new];
     self.devices = [NSMutableArray new];
     
+    // Reset saved
+    //[[NSUserDefaults standardUserDefaults] setObject:[NSMutableDictionary new] forKey:@"Devices"];
+    
     //Load Saved devices
     NSMutableDictionary *deviceDictionairy = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"Devices"] mutableCopy];
+    NSMutableArray *keysToRemove = [NSMutableArray new];
     if (deviceDictionairy) {
         for (NSString *key in deviceDictionairy.allKeys) {
             NSData *deviceData = deviceDictionairy[key];
-            [self.devices addObject:[NSKeyedUnarchiver unarchiveObjectWithData:deviceData]];
+            CCIDevice *savedDevice =[NSKeyedUnarchiver unarchiveObjectWithData:deviceData];
+            if (savedDevice.discoveryTime > 0 && CACurrentMediaTime() > savedDevice.discoveryTime + 3600) {
+                [keysToRemove addObject:key];
+            } else {
+                [self addDevice:[NSKeyedUnarchiver unarchiveObjectWithData:deviceData]];
+            }
         }
         [self.delegate devicesFound];
     }
-    
+    [deviceDictionairy removeObjectsForKeys:keysToRemove];
+   
     if (![lanScanner startScan] && kUseBonjour) {
         NSLog(@"Lan Scanner not working, trying bonjour");
         NSString *name = [NSString stringWithFormat:@"iphone.%@", [[UIDevice currentDevice] name]];
@@ -58,6 +67,7 @@
         bonjourSocket.delegate = self;
         [bonjourSocket start];
     }
+    scanning = YES;
 }
 
 - (void)stop
@@ -67,15 +77,17 @@
         bonjourSocket = nil;
     }
     [lanScanner stopScan];
+    scanning = NO;
 }
 
 - (void)addDevice:(CCIDevice *)device
 {
-    if (![self.devices containsObject:device]) {
+    device.discoveryTime = CACurrentMediaTime();
+    if ([self.devices containsObject:device]) {
         [self.devices removeObject:device];
         [self.devices addObject:device]; // This updates the port and host
     } else {
-        NSLog(@"%@ already in device list", device);
+        [self.devices addObject:device];
     }
     //Remove Dupe services
     for (NSNetService *s in self.services) {
@@ -114,22 +126,25 @@
 
 - (void)scanLANDidFindNewAdrress:(NSString *)address havingHostName:(NSString *)hostName
 {
-    NSLog(@"Ping %@", address);
-    uint32_t pingTag = CCNetworkPing;
-    [pingSocket sendData:[NSData dataWithBytes:&pingTag length:4] toHost:address port:CCNetworkServerPort withTimeout:-1 tag:0];
+    [pingSocket sendData:[NSData new] toHost:address port:CCNetworkServerPort withTimeout:10 CCtag:CCNetworkPing];
 }
 
 - (void)scanLANDidFinishScanning
 {
-    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        if (scanning) {
+            [lanScanner startScan];
+        }
+    });
 }
 
 - (void)CCSocket:(CCUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag
 {
+    INFO_LOG(@"Got ping respose");
     NSString *host = [CCUdpSocket hostFromAddress:address];
     uint16_t port  = [CCUdpSocket portFromAddress:address];
-    CCIDevice *newDevice = [[CCIDevice alloc] initWithName:@"Pinged device" host:host port:port];
-    [self.devices addObject:newDevice];
+    CCIDevice *newDevice = [[CCIDevice alloc] initWithName:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] host:host port:port];
+    [self addDevice:newDevice];
 }
 
 #pragma mark - Bonjour Delegate
@@ -163,15 +178,26 @@
     switch (message[0]) {
         case CCBonjourServerAddress:
         {
-            uint16_t  port = message[1];
-            NSString *host = [NSString stringWithCString:(char *)&message[2] encoding:NSUTF8StringEncoding];
-            NSString *name = [NSString stringWithCString:(char *)&message[2] + host.length + 1 encoding:NSUTF8StringEncoding];
+            NSError *error;
+            NSDictionary *deviceDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+            if (error) {
+                NSLog(@"CCBonjourServerAddress json error");
+            }
+            
+            NSString    *name = deviceDict[@"name"];
+            NSString    *host = deviceDict[@"host"];
+            uint16_t     port = [deviceDict[@"port"] integerValue];
+            
             if (name == connectingName) {
                 NSLog(@"Got info for selected device");
                 [self.delegate gotServiceDestination:host port:port];
             } else {
                 NSLog(@"Adding device");
                 CCIDevice *newDevice = [[CCIDevice alloc] initWithName:name host:host port:port];
+                if (deviceDict[@"currentGame"]) {
+                    CCIGame *currentGame = [[CCIGame alloc] initWithDictionairy:deviceDict[@"currentGame"]];
+                    newDevice.currentGame = currentGame;
+                }
                 [self addDevice:newDevice];
             }
             break;

@@ -13,11 +13,14 @@
 @property (strong)  NSString    *path;
 @property (strong)  NSString    *name;
 @property (strong)  NSImage     *icon;
+@property BOOL running;
 +(NSArray <CCGame *> *)gamesAtPaths:(NSArray *)plusPaths;
 +(NSArray <NSString *> *)defaultPaths;
++(NSString *)applicationNameForPath:(NSString *)path;
++(NSString *)processPathFromPid:(pid_t)apid;
 
 - (id)initWithPath:(NSString *)path;
-- (NSData *)dataRepresentation;
+- (NSDictionary *)dataRepresentation;
 
-+(NSString *)applicationNameForPath:(NSString *)path;
+
 @end

@@ -12,6 +12,8 @@
 #import <mach/mach.h>
 #import <mach/mach_time.h>
 
+#import "SCLAlertView.h"
+
 @interface AppDelegate () {
     mach_timebase_info_data_t _mach_timebase;
 }
@@ -32,6 +34,33 @@
     mach_timebase_info(&_mach_timebase);
     
     return YES;
+}
+
+- (void)showWarning:(NSString *)error withTitle:(NSString *)title
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        SCLAlertView * alertView = [[SCLAlertView alloc] init];
+        alertView.shouldDismissOnTapOutside = YES;
+        [alertView showWarning:[self topMostController] title:title subTitle:error closeButtonTitle:@"Okay" duration:0.0];
+    });
+}
+
+- (void)showError:(NSString *)error withTitle:(NSString *)title
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        SCLAlertView * alertView = [[SCLAlertView alloc] init];
+        alertView.shouldDismissOnTapOutside = YES;
+        [alertView showError:[self topMostController] title:title subTitle:error closeButtonTitle:@"Okay" duration:0.0];
+    });
+}
+
+- (UIViewController*) topMostController
+{
+    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+    return topController;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

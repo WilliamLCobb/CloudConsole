@@ -131,6 +131,10 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <action selector="textChanged:" destination="20G-bV-dSm" eventType="valueChanged" id="PbQ-s9-gAH"/>
+                                                        <action selector="textChanged:" destination="20G-bV-dSm" eventType="editingChanged" id="Q2g-X9-Qso"/>
+                                                    </connections>
                                                 </textField>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fG6-gb-YMh">
                                                     <rect key="frame" x="15" y="0.0" width="345" height="53.5"/>
@@ -154,6 +158,10 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <action selector="textChanged:" destination="20G-bV-dSm" eventType="valueChanged" id="7ej-8W-uaZ"/>
+                                                        <action selector="textChanged:" destination="20G-bV-dSm" eventType="editingChanged" id="Gjn-l9-2Yn"/>
+                                                    </connections>
                                                 </textField>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="IP:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OZ5-ki-xno">
                                                     <rect key="frame" x="15" y="0.0" width="345" height="53.5"/>
@@ -189,6 +197,7 @@
                     <connections>
                         <outlet property="deviceIP" destination="ujV-9X-ugQ" id="rg6-22-O3g"/>
                         <outlet property="deviceName" destination="zvG-dB-0rA" id="aez-Mv-agB"/>
+                        <outlet property="saveButton" destination="bu2-5K-vhk" id="cg5-fw-IzE"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t2p-bP-HAS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -220,7 +229,7 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Item" id="uA1-jh-mQY"/>
                     <navigationItem key="navigationItem" title="Devices" id="w2m-lw-k2y">
-                        <barButtonItem key="leftBarButtonItem" image="Gear.png" id="Zt3-Qc-gnB">
+                        <barButtonItem key="leftBarButtonItem" enabled="NO" image="Gear.png" id="Zt3-Qc-gnB">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="sGb-mb-WN8">

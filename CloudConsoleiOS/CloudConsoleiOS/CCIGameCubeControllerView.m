@@ -13,6 +13,7 @@
 - (id)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
+        self.multipleTouchEnabled = YES;
         /*  Set up Buttons  */
         //A
         [self addButtonWithFrame:CGRectMake(frame.size.width - 135,
@@ -122,8 +123,7 @@
         cJoy.tag = 1;
         [self addSubview:cJoy];
         [cJoy addTarget:self action:@selector(joystickMoved:) forControlEvents:UIControlEventValueChanged];
-        
-        
+        self.alpha = 0.7;
     }
     return self;
 }

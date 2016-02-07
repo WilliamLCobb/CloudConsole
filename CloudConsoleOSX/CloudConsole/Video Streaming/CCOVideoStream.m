@@ -56,6 +56,7 @@
     CCUdpSocket         *streamSocket;
     CCOh264Encoder      *encoder;
     
+    
     mach_timebase_info_data_t _mach_timebase;
     
     BOOL streaming;

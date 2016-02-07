@@ -22,9 +22,11 @@
 - (id)initWithHost:(NSString *)host port:(uint16_t)port;
 - (CCIStreamManager *)startStreamWithGame:(CCIGame *)game;
 
-- (void)registerDelegate:(id <CCUdpSocketDelegate>)delegate forBuffer:(uint32_t)bufferTag;
-- (void)updateAvaliableGames;
-- (void)getSubGamesForDelegate:(id<CCUdpSocketDelegate>)delegate;
+
+- (BOOL)registerDelegate:(id <CCUdpSocketDelegate>)delegate forBuffer:(uint32_t)bufferTag;
+- (BOOL)updateAvaliableGames;
+- (BOOL)getSubGamesForDelegate:(id<CCUdpSocketDelegate>)delegate;
 - (void)pingHost:(NSString *)host;
+- (BOOL)isConnected;
 
 @end

@@ -40,13 +40,13 @@
     NSLog(@"start scan");
     self.localAddress = [self localIPAddress];
     //This is used to test on the simulator
-    //self.localAddress = @"192.168.1.8";
+    //self.localAddress = @"10.20.36.0";
     //self.netMask = @"255.255.255.0";
     //NSLog(@"Local Addr: %@", self.localAddress);
     //NSLog(@"Mask: %@", self.netMask);
     NSArray *a = [self.localAddress componentsSeparatedByString:@"."];
     NSArray *b = [self.netMask componentsSeparatedByString:@"."];
-    if ([b[2] integerValue] < 100) { //Search space too big. Not worth wasting the time
+    if ([b[2] integerValue] < 0) { //Search space too big. Not worth wasting the time
         NSLog(@"Search space too big");
         return NO;
     }
@@ -62,7 +62,7 @@
                 self.baseAddressEnd = and;
             }
         }
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(pingAddress) userInfo:nil repeats:YES];
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:0.02 target:self selector:@selector(pingAddress) userInfo:nil repeats:YES];
     }
     return YES;
 }
@@ -96,9 +96,9 @@
 - (void)pingResult:(NSString*)address {
     self.timerIterationNumber++;
     if (address) {
-        //NSString *deviceIPAddress = [[[[NSString stringWithFormat:@"%@%ld", self.baseAddress, self.currentHostAddress] stringByReplacingOccurrencesOfString:@".0" withString:@"."] stringByReplacingOccurrencesOfString:@".00" withString:@"."] stringByReplacingOccurrencesOfString:@".." withString:@".0."];
-        //NSString *deviceName = [self getHostFromIPAddress:[[NSString stringWithFormat:@"%@%ld", self.baseAddress, self.currentHostAddress] cStringUsingEncoding:NSASCIIStringEncoding]];
         [self.delegate scanLANDidFindNewAdrress:address havingHostName:nil];
+    } else {
+        return;
     }
     NSArray *a = [[self.baseAddress componentsSeparatedByString:@"."] mutableCopy];
     NSArray *b = [self.netMask componentsSeparatedByString:@"."];

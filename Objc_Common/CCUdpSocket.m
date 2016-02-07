@@ -72,6 +72,11 @@
 - (void)sendData:(NSData *)data withTimeout:(NSTimeInterval)atimeout CCtag:(uint32_t)tag
 {
     [self sendData:data toHost:host port:port withTimeout:atimeout CCtag:tag];
+    if (!self.connected) {
+        NSLog(@"Sending data to non-connected socket");
+        //Maybe notify did not send data
+        return;
+    }
 }
 
 - (void)sendData:(NSData *)data toHost:(NSString *)ahost port:(uint16_t)aport withTimeout:(NSTimeInterval)atimeout CCtag:(uint32_t)tag
@@ -103,12 +108,6 @@
         [super sendData:chunk toHost:ahost port:aport withTimeout:atimeout tag:0];
         currentBlock++;
     } while (offset < length);
-    
-    if (!self.connected) {
-        NSLog(@"Sending data to non-connected socket");
-        //Maybe notify did not send data
-        return;
-    }
     
     if (self.localPort != 0 && self.localPort != boundPort) {
         NSError *err;
@@ -166,9 +165,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)notifyDidReceiveData:(NSData *)data fromAddress:(NSData *)address withFilterContext:(id)context
 {
-    if (CACurrentMediaTime() - lastKeepAlive > 10) { //Not connected
-        [self notifyDidConnectToAddress:address];
-    }
+    lastKeepAlive = CACurrentMediaTime();
     uint32_t *message = (uint32_t*)data.bytes;
     uint32_t tag = message[0];
     switch (tag) {
@@ -187,6 +184,14 @@
             }
             break;
         }
+        case CCNetworkConnect: {
+            if (self.connected) {
+                NSLog(@"CCudpSocket: Warning, connecting to new host but still connected to old");
+            }
+            [self setDestinationHost:[GCDAsyncSocket hostFromAddress:address] port:[GCDAsyncSocket portFromAddress:address]];
+            [self notifyDidConnectToAddress:address];
+            break;
+        }
         default:
         {
             NSString *tagString = [NSString stringWithFormat:@"%u", tag];
@@ -203,16 +208,16 @@
         }
     }
     
-    lastKeepAlive = CACurrentMediaTime();
+    /*
     if (host.length == 0) { //Connect
         [self setDestinationHost:[GCDAsyncSocket hostFromAddress:address] port:[GCDAsyncSocket portFromAddress:address]];
         [self notifyDidConnectToAddress:address];
-    }
+    }*/
     //Server socket changed port
-    if ([host isEqualToString:[GCDAsyncSocket hostFromAddress:address]] && port != [GCDAsyncSocket portFromAddress:address]) {
+    /*if ([host isEqualToString:[GCDAsyncSocket hostFromAddress:address]] && port != [GCDAsyncSocket portFromAddress:address]) {
         NSLog(@"Changing Socket port to: %d", [GCDAsyncSocket portFromAddress:address]);
         [self setDestinationHost:[GCDAsyncSocket hostFromAddress:address] port:[GCDAsyncSocket portFromAddress:address]];
-    }
+    }*/
 }
 
 - (void)notifyDidReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag

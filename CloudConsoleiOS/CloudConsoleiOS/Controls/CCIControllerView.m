@@ -57,12 +57,8 @@
 
 - (void)dpadChanged:(CCDirectionalControl *)dpad
 {
-    NSLog(@"DPad Changed");
-    NSLog(@"A: %@", [self getBitStringFor32:_buttonState]);
     _buttonState &=  ~(15 << dpad.tag); //Clear the 4 bits
-    NSLog(@"B: %@", [self getBitStringFor32:_buttonState]);
     _buttonState |= (dpad.direction << dpad.tag); //Set the 4 bits
-    NSLog(@"C: %@", [self getBitStringFor32:_buttonState]);
     if ([self.delegate respondsToSelector:@selector(buttonStateChanged:)]) {
         [self.delegate buttonStateChanged:self.buttonState];
     } else {
@@ -71,7 +67,6 @@
 }
 
 - (NSString *)getBitStringFor32:(uint32_t)value {
-    
     NSString *bits = @"";
     
     for(int i = 0; i < 32; i ++) {
@@ -104,15 +99,17 @@
 
 - (void)trackTouches:(NSSet<UITouch *> *)touches
 {
+    uint32_t added = 0;
     CGPoint touchPoint;
-    for (UITouch *touch in touches) {
-        for (UIButton *button in buttons) {
+    for (UIButton *button in buttons) {
+        for (UITouch *touch in touches) {
             touchPoint = [touch locationInView:self];
             if (CGRectContainsPoint(button.frame, touchPoint)) {
                 //NSLog(@"Pressing Button: %ld", button.tag);
                 _buttonState |= button.tag;
+                added |= button.tag;
                 button.highlighted = YES;
-            } else {
+            } else if (!button & added) {
                 //NSLog(@"%@ not in %@", NSStringFromCGPoint(touchPoint), NSStringFromCGRect(button.frame));
                 _buttonState &= ~button.tag;
                 button.highlighted = NO;

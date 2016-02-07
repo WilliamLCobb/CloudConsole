@@ -29,6 +29,8 @@
     [super viewDidLoad];
     networkController = AppDelegate.sharedInstance.networkController;
     
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
     NSLog(@"Starting");
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
@@ -54,6 +56,11 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [deviceFinder start];
+}
+
+- (void)connectToDevice:(CCIDevice *)device
+{
+    
 }
 
 #pragma mark - Device Finder Delegate
@@ -94,7 +101,7 @@
     NSString *name;
     if (indexPath.section == 0) {
         CCIDevice *device = [deviceFinder.devices objectAtIndex:indexPath.row];
-        name = [NSString stringWithFormat:@"%@(*)", device.name];
+        name = device.name;
     } else {
         NSNetService *service = [deviceFinder.services objectAtIndex:indexPath.row];
         name = service.name;
@@ -122,6 +129,15 @@
     if (indexPath.section == 0) {
         [deviceFinder stop];
         CCIDevice *device = [deviceFinder.devices objectAtIndex:indexPath.row];
+        //Add to recents
+        NSMutableDictionary *deviceDictionairy = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"Devices"] mutableCopy];
+        if (!deviceDictionairy) {
+            deviceDictionairy = [NSMutableDictionary new];
+        }
+        deviceDictionairy[device.name] = [NSKeyedArchiver archivedDataWithRootObject:device];
+        [[NSUserDefaults standardUserDefaults] setObject:deviceDictionairy forKey:@"Devices"];
+        
+        //connect
         AppDelegate.sharedInstance.networkController = [[CCINetworkController alloc] initWithHost:device.host port:device.port];
         [self performSegueWithIdentifier:@"ToApps" sender:self];
     } else {

@@ -19,6 +19,7 @@
     CCIGame                 *selectedGame;
     CCINetworkController    *networkController;
     
+    BOOL currentView;
     BOOL applicationsLoaded;
 }
 
@@ -29,6 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     networkController = AppDelegate.sharedInstance.networkController;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
     NSLog(@"%@", networkController);
     
@@ -47,24 +49,33 @@
     activity.frame = CGRectMake(self.view.frame.size.width/2 - activity.frame.size.width/2, searchingLabel.frame.size.height + 20, activity.frame.size.width, activity.frame.size.height);
     [self.tableView.tableFooterView addSubview:activity];
     [self loadGames];
+    currentView = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (!AppDelegate.sharedInstance.networkController.isConnected) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    currentView = NO;
 }
 
 - (void)loadGames
 {
     [networkController updateAvaliableGames];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        if (!applicationsLoaded) {
-            NSLog(@"Loading Games");
+        if (!applicationsLoaded && currentView) {
             [self loadGames];
-        } else {
-            NSLog(@"Not loading games");
         }
     });
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
-    NSLog(@"Reloading; %@", networkController.games);
     if ([keyPath isEqualToString:@"games"]) {
         if (applicationsLoaded) {
             return;
@@ -72,7 +83,6 @@
             applicationsLoaded = YES;
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"Reloading Table");
             [self.tableView reloadData];
             self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
         });
@@ -93,7 +103,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"asked for rows: %ld", networkController.games.count);
     return networkController.games.count;
 }
 

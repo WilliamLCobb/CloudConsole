@@ -9,9 +9,16 @@
 #ifndef CCNetworkProtocol_h
 #define CCNetworkProtocol_h
 
+/*  Logging  */
+#define LOG_LEVEL 3   /* 1-error 2-warning 3-info */
+#define INFO_LOG      if(LOG_LEVEL < 3) ; else NSLog
+#define WARNING_LOG   if(LOG_LEVEL < 2) ; else NSLog
+#define ERROR_LOG     if(LOG_LEVEL < 1) ; else NSLog
+
+
 /*  General  */
 #define kCCNetworkProtocolVersion @"1.0.0"
-#define kUseBonjour YES
+#define kUseBonjour NO
 #define kEnableAudio YES
 
 // A block can never be more than MTU Size with we can assume is greater than 1024
@@ -23,9 +30,10 @@
 #define CCNetworkServerPort         57901
 
 /*  Discovery  */
-#define CCNetworkPing               (uint32_t)1011
-#define CCNetworkPingResponse       (uint32_t)1012
-#define CCBonjourServerAddress      (uint32_t)0101
+#define CCNetworkPing               (uint32_t)10011
+#define CCNetworkPingResponse       (uint32_t)10012
+#define CCNetworkConnect            (uint32_t)10111
+#define CCBonjourServerAddress      (uint32_t)10101
 
 /*  Information  */
 #define CCNetworkGetAvaliableGames  (uint32_t)5001
@@ -33,8 +41,9 @@
 
 /*  Stream Start */
 #define CCNetworkOpenStream         (uint32_t)2010
-#define CCNetworkStreamOpenSuccess  (uint32_t)2011
-#define CCNetworkStreamOpenFailure  (uint32_t)2012
+#define CCNetworkReopenStream       (uint32_t)2011
+#define CCNetworkStreamOpenSuccess  (uint32_t)2012
+#define CCNetworkStreamOpenFailure  (uint32_t)2013
 #define CCNetworkStreamReceivePort  (uint32_t)2020
 #define CCNetworkCloseStream        (uint32_t)2021
 

@@ -9,6 +9,8 @@
 #import "CCIGameSelectionTableViewController.h"
 #import "AppDelegate.h"
 #import "CCIStreamViewController.h"
+#import "CCNetworkProtocol.h"
+
 @interface CCIGameSelectionTableViewController () {
     BOOL gamesLoaded;
 }
@@ -35,6 +37,13 @@
     [activity startAnimating];
     activity.frame = CGRectMake(self.view.frame.size.width/2 - activity.frame.size.width/2, searchingLabel.frame.size.height + 20, activity.frame.size.width, activity.frame.size.height);
     [self.tableView.tableFooterView addSubview:activity];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (!AppDelegate.sharedInstance.networkController.isConnected) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context

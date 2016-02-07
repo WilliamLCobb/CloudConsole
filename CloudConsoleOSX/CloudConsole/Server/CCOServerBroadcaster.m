@@ -54,12 +54,14 @@
 
 - (void)CCSocket:(CCUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag
 {
+    NSLog(@"GOT PING");
     if (tag != CCNetworkPing) {
-        NSLog(@"Error, ServerBroadcaster got unknown tag: %u", tag);
+        ERROR_LOG(@"Error, ServerBroadcaster got unknown tag: %u", tag);
         return;
     }
     NSString *host = [GCDAsyncSocket hostFromAddress:address];
     uint16_t  port = [GCDAsyncSocket portFromAddress:address];
+    INFO_LOG(@"Responding from ping to: %@:%u", host, port);
     [sock sendData:[deviceName dataUsingEncoding:NSUTF8StringEncoding] toHost:host port:port withTimeout:-1 CCtag:CCNetworkPingResponse];
 }
 
@@ -69,19 +71,24 @@
 {
     NSLog(@"Bonjour Connection Established");
     
-    uint32_t udpInfo = CCBonjourServerAddress;
-    NSMutableData *sendData = [NSMutableData dataWithBytes:&udpInfo length:4];
-    uint32_t port = [[CCOServer sharedInstance] currentPort];
-    [sendData appendBytes:&port length:4];
-    
-    const char *IPString = [[[CCOServer sharedInstance] currentIP] UTF8String];
-    [sendData appendBytes:IPString length:strlen(IPString) + 1];
-    const char *nameString = [bonjourSocket.server.name UTF8String];
-    [sendData appendBytes:nameString length:strlen(nameString) + 1];
-    
+    NSMutableDictionary *connectData = [NSMutableDictionary new];
+    connectData[@"port"] = [NSNumber numberWithInteger:[[CCOServer sharedInstance] currentPort]];
+    connectData[@"host"] = [[CCOServer sharedInstance] currentIP];
+    connectData[@"name"] = bonjourSocket.server.name;
+    if ([[CCOServer sharedInstance] currentGame]) {
+        connectData[@"currentGame"] = [[CCOServer sharedInstance] currentGameInfo];
+    }
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:connectData
+                                                       options:0
+                                                         error:&error];
+    if (!jsonData) {
+        NSLog(@"Bonjour got an error creating json: %@", error);
+        return;
+    }
     //Give time for our streams to set up
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [bonjourSocket send:sendData];
+        [bonjourSocket send:jsonData];
         [bonjourSocket closeStreams];
     });
 }
@@ -96,8 +103,8 @@
     //NSLog(@"Devices avaliable: %@", services);
     for (NSNetService *s in services) {
         NSString *serviceHash = s.name;//[self serviceHash:s];
-        if ((!seenServices[serviceHash] || CACurrentMediaTime() - [seenServices[serviceHash] floatValue] > 1.5) && bonjourSocket.streamOpenCount == 0) {
-            NSLog(@"Connecting");
+        if ((!seenServices[serviceHash] || CACurrentMediaTime() - [seenServices[serviceHash] floatValue] > 3) && bonjourSocket.streamOpenCount == 0) {
+            NSLog(@"Bonjour connecting to receiver");
             [bonjourSocket connectToService:s];
             seenServices[serviceHash] = [NSNumber numberWithFloat:CACurrentMediaTime()];
             return;

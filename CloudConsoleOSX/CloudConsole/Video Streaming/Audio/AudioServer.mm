@@ -55,7 +55,6 @@ static OSStatus recordingCallback(void *inRefCon,
     
     NSData *dataToSend = [NSData dataWithBytes:bufferList.mBuffers[0].mData length:bufferList.mBuffers[0].mDataByteSize];
     [server.delegate sendEncodedData:dataToSend type:CCNetworkAudioData];
-    NSLog(@"Sending: %@", dataToSend);
     return noErr;
 }
 
@@ -138,16 +137,7 @@ static OSStatus recordingCallback(void *inRefCon,
     // sample rate = 44100, num channels = 1, format = 32 bit floating point
     
     AudioStreamBasicDescription audioFormat = [self getAudioDescription];
-    /////
-    AudioStreamBasicDescription	deviceFormat;
-    UInt32 param = sizeof(AudioStreamBasicDescription);
-    err = AudioUnitGetProperty(_audioUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 1, &deviceFormat, &param );
-    if(err != noErr)
-    {
-        NSLog(@"Error getting stuff");
-    }
-    NSLog(@"%d", deviceFormat.mChannelsPerFrame);
-    /////
+    
     err = AudioUnitSetProperty(_audioUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 1, &audioFormat, sizeof(audioFormat));
     if (err) {
         NSLog(@"Audio Error: 3: %d", err);

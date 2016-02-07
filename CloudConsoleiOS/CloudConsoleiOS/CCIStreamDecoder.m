@@ -12,6 +12,8 @@
 // Currently decodes 264 with hardware acceleration
 
 #import "CCIStreamDecoder.h"
+#import "AppDelegate.h"
+
 
 @interface CCIStreamDecoder () {
     uint8_t *pps;
@@ -20,6 +22,8 @@
     uint32_t ppsSize;
     
     CMBlockBufferRef blockBuffer;
+    
+    BOOL decodeErrorShown;
 }
 
 @end
@@ -280,7 +284,11 @@ NSString * const naluTypesStrings[] =
     if (status != noErr) {
         NSError *error = [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil];
         NSLog(@"Error creating session!!! Bad: %@", error);
-        //[self.outputDelegate closedStream];
+        if (status == -12911 && !decodeErrorShown) {
+            decodeErrorShown = YES;
+            [AppDelegate.sharedInstance showError:@"The hardware video decoder in your iPhone is malfunctioning. I don't really know what causes this and the only way I know to fix this is to restart your phone. If this message does not go away, please tell me" withTitle:@"Device Malfunction"];
+            //[self.outputDelegate closedStream];
+        }
     }
 }
 

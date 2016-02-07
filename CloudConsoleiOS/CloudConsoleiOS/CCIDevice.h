@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "BonjourHandler.h"
+@class CCIGame;
 @interface CCIDevice : NSObject <BonjourDelegate>
 
 @property NSString *name;
 @property NSString *host;
 @property uint16_t  port;
+@property CCIGame  *currentGame;
 @property CFTimeInterval discoveryTime;
 
 - (id)initWithName:(NSString *)name host:(NSString *)host port:(uint16_t)port;

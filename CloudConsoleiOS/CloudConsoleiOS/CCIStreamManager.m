@@ -9,6 +9,8 @@
 #import "CCIStreamManager.h"
 #import "CCNetworkProtocol.h"
 #import "AudioClient.h"
+#import "AppDelegate.h"
+
 @interface CCIStreamManager () {
     CCIStreamDecoder    *streamDecoder;
     BOOL                streaming;
@@ -88,7 +90,12 @@
 
 - (void)udpSocketDidClose:(GCDAsyncUdpSocket *)sock withError:(NSError *)error
 {
-    NSLog(@"Socket Disconnected");
+    NSLog(@"Socket Disconnected: %@", error);
+    if (streamDecoder) { //first call
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [AppDelegate.sharedInstance showWarning:@"Lost connection to the server" withTitle:@"Disconnected"];
+        });
+    }
     [self streamClosed];
 }
 

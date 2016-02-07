@@ -80,8 +80,6 @@
         NSLog(@"Error starting server (receive): %@", error);
         return;
     }
-    NSLog(@"Opened socket to: %d", serverSocket.localPort);
-    
     // Not working
     
     portMapper = [[PortMapper alloc] initWithPort:serverSocket.localPort];
@@ -98,22 +96,38 @@
 }
 
 #pragma mark - Network
-
 - (void) CCSocket:(CCUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag
 {
-    NSLog(@"Data2");
     uint32_t *message = (uint32_t *)data.bytes;
     switch (tag) {
+        case CCNetworkReopenStream: {
+            [broadcaster stop];
+            NSLog(@"Reopening not supported");
+        }
         case CCNetworkOpenStream: {
             [broadcaster stop];
             //Switch to JSON later
             
             uint32_t port = message[0];
             NSString *applicationPath = [NSString stringWithCString:(void *)message+8 encoding:NSUTF8StringEncoding];
-            //NSString *applicationName = [[CCGame applicationNameForPath:applicationPath] stringByDeletingPathExtension];
-            //currentPlugin = [[CCPlugin alloc] initWithName:applicationName];
             
-            NSLog(@"Open Data: %@", data);
+            // Reopen running game
+            if ([applicationPath isEqualToString:self.currentGame.path]) {
+                [self startCaptureFromProcess:currentApplication.processIdentifier
+                                       ToHost:[GCDAsyncUdpSocket hostFromAddress:address]
+                                         Port:port];
+                return;
+            }
+            
+            // Launch new game
+            if (currentApplication) {
+                if (![currentApplication terminate]) {
+                    NSLog(@"Force Quitting");
+                    [currentApplication forceTerminate];
+                }
+            }
+            self.currentGame = nil;
+            
             NSLog(@"Launch: %@", applicationPath);
             
             
@@ -123,10 +137,17 @@
                 [serverSocket sendData:[NSData data] withTimeout:-1 CCtag:CCNetworkStreamOpenFailure];
                 [broadcaster startBroadcastWithName:self.deviceName];
                 return;
+            } else {
+                for (CCGame *game in currentGames) {
+                    if ([game.path isEqualToString:[CCGame processPathFromPid:currentApplication.processIdentifier]]) {
+                        self.currentGame = game;
+                        break;
+                    }
+                }
             }
             serverSocket.applicationState = CCStateInStream;
             
-            //Wait for app to start
+            // Wait for app to start
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 NSLog(@"Waiting for game to start");
                 for (int i = 0; i < 10 && !currentApplication.finishedLaunching; i++) {
@@ -192,13 +213,13 @@
         }
         default:
         {
-            NSString *bufferTag = [NSString stringWithFormat:@"%u", message[0]];
+            NSString *bufferTag = [NSString stringWithFormat:@"%u", tag];
             id <CCUdpSocketDelegate> delegate = [socketDelegates objectForKey:bufferTag];
             if (delegate) {
                 [delegate CCSocket:sock didReceiveData:data fromAddress:address withTag:tag];
                 return;
             }
-            NSLog(@"CCOServer got unknown tag: %d", tag);
+            WARNING_LOG(@"CCOServer got unknown tag: %@", bufferTag);
             break;
         }
     }
@@ -211,21 +232,27 @@
     socketDelegates[bufferTag] = weakDel;
 }
 
+- (NSDictionary *)currentGameInfo
+{
+    if (!self.currentGame)
+        return nil;
+    return [self.currentGame dataRepresentation];
+}
+
 #pragma mark - Socket Delegate
 
 - (void)udpSocketDidClose:(GCDAsyncUdpSocket *)sock withError:(NSError *)error
 {
-    NSLog(@"Socket closed");
+    INFO_LOG(@"Socket closed");
 }
 
 - (void)udpSocket:(GCDAsyncUdpSocket *)sock didConnectToAddress:(NSData *)address
 {
-    NSLog(@"Server connected to client");
+    INFO_LOG(@"Server connected to client");
 }
 - (void)portMapChanged: (NSNotification*)n
 {
-    NSLog(@"%@", n);
-    NSLog(@"Port is open on ip:%@, port: %hu", portMapper.publicAddress, portMapper.publicPort);
+    INFO_LOG(@"Port is open on ip:%@, port: %hu", portMapper.publicAddress, portMapper.publicPort);
 }
 
 - (void)wrongApplicationState
@@ -238,8 +265,23 @@
     serverSocket.delegate = self;
     videoStream = nil;
     serverSocket.applicationState = CCStateHome;
-    NSLog(@"Closed stream");
+    INFO_LOG(@"Back in CCOServer");
     [broadcaster startBroadcastWithName:self.deviceName];
+    NSRunningApplication *applicationToClose = currentApplication;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 20 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        if (!serverSocket.connected && currentApplication && currentApplication == applicationToClose) {
+            INFO_LOG(@"CLosing App");
+            if (currentApplication) {
+                if (![currentApplication terminate]) {
+                    INFO_LOG(@"Force Quitting");
+                    [currentApplication forceTerminate];
+                }
+            }
+            self.currentGame = nil;
+        } else {
+            NSLog(@"%d %@", serverSocket.connected, currentApplication);
+        }
+    });
 }
 
 - (NSString *)currentIP
@@ -252,6 +294,7 @@
     return serverSocket.localPort;
 }
 
+
 #pragma mark - Capturing
 //Eventually pass game pid or path
 - (void)startCaptureFromProcess:(pid_t)pid ToHost:(NSString *)host Port:(uint16_t)port
@@ -260,12 +303,13 @@
     serverSocket.delegate = videoStream;
     
     if (![videoStream beginStreamWithSocket:serverSocket]) {
-        NSLog(@"Unable to start stream");
+        ERROR_LOG(@"Unable to start stream");
+        [self streamClosed];
         return;
         //We should show an error here
     }
     
-    NSLog(@"Stream Started!");
+    INFO_LOG(@"Stream Started!");
 }
 
 @end

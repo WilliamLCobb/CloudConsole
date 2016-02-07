@@ -11,7 +11,9 @@
 #import "CCOVideoStream.h"
 #import "CCNetworkProtocol.h"
 @interface CCOh264Encoder() {
+    CCOh264Encoder *strongSelf;
     VTCompressionSessionRef compressionSession;
+    BOOL closing;
 }
 @end;
 
@@ -19,6 +21,7 @@
 
 - (id)initWithController:(CCOVideoStream *)controller ScreenSize:(CGSize) screenSize {
     if (self = [super init]) {
+        strongSelf = self;
         self.streamController = controller;
         CFMutableDictionaryRef sessionAttributes = CFDictionaryCreateMutable(
                                                                              NULL,
@@ -111,12 +114,18 @@
 
 - (BOOL)encodeFrame:(CGImageRef)captureImage frameNumber:(NSInteger)frameNumber
 {
-    if (!compressionSession) return NO;
     CVPixelBufferRef pixelBuffer = [self pixelBufferFromCGImage:captureImage];
     OSStatus status = VTCompressionSessionEncodeFrame(compressionSession, pixelBuffer, CMTimeMake(frameNumber, self.fps), CMTimeMake(1, self.fps), NULL, (__bridge void *)self, NULL);
     CVPixelBufferRelease(pixelBuffer);
     if (status != noErr) {
         NSLog(@"Error encoding frame: %d", status);
+    }
+    if (closing) {
+        NSLog(@"Closing compression session");
+        VTCompressionSessionInvalidate(compressionSession);
+        compressionSession = nil;
+        strongSelf = nil; //Dealocate ourself
+        return YES;
     }
     VTCompressionSessionCompleteFrames(compressionSession, CMTimeMake(frameNumber, self.fps));
     return status == noErr;
@@ -148,8 +157,7 @@
 {
     NSLog(@"Stopped compression");
     if (compressionSession) {
-        VTCompressionSessionInvalidate(compressionSession);
-        compressionSession = nil;
+        closing = YES;
     }
 }
 

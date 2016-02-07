@@ -13,8 +13,10 @@
 + (AppDelegate*)sharedInstance;
 
 @property (strong, nonatomic) UIWindow *window;
-
 @property (strong, nonatomic) CCINetworkController *networkController;
+
+- (void)showError:(NSString *)error withTitle:(NSString *)title;
+- (void)showWarning:(NSString *)error withTitle:(NSString *)title;
 
 @end
 

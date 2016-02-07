@@ -10,6 +10,7 @@
 
 @interface SimplePingHelper() {
     NSString *address;
+    NSString *retAddress;
 }
 @property(nonatomic,retain) SimplePing* simplePing;
 @property(nonatomic,retain) id target;
@@ -40,6 +41,7 @@
 - (id)initWithAddress:(NSString*)addr target:(id)_target sel:(SEL)_sel {
 	if (self = [self init]) {
         address = addr;
+        retAddress = [addr copy];
 		self.simplePing = [SimplePing simplePingWithHostName:address];
 		self.simplePing.delegate = self;
 		self.target = _target;
@@ -66,7 +68,7 @@
 
 - (void)successPing {
 	[self killPing];
-	[target performSelector:sel withObject:address];
+	[target performSelector:sel withObject:retAddress];
 }
 
 - (void)failPing:(NSString*)reason {

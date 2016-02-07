@@ -43,7 +43,6 @@
 
 - (BOOL) isEqual:(id)object
 {
-    NSLog(@"Comparing");
     NSString *objectClass = NSStringFromClass([object class]);
     if ([objectClass isEqualToString:@"CCIDevice"]) {
         CCIDevice *other = object;

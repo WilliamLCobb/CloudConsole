@@ -46,6 +46,8 @@
 		CAB6768B1C443AB700518E8E /* CCIStreamManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB6768A1C443AB700518E8E /* CCIStreamManager.m */; };
 		CAB676901C443AE500518E8E /* CCINetworkController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB6768F1C443AE500518E8E /* CCINetworkController.m */; };
 		CAB676961C44640B00518E8E /* PortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB676951C44640B00518E8E /* PortMapper.m */; };
+		CAC433EC1C670B6B000D569E /* CloudConsoleIcon-128.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC433EA1C670B6B000D569E /* CloudConsoleIcon-128.png */; };
+		CAC433ED1C670B6B000D569E /* CloudConsoleIcon-128@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC433EB1C670B6B000D569E /* CloudConsoleIcon-128@2x.png */; };
 		CAE404C81C488BB500AD464F /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE404C71C488BB500AD464F /* GameController.framework */; };
 		CAE405DD1C4DE5BF00AD464F /* gcpad_a@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE405911C4DE5BF00AD464F /* gcpad_a@2x.png */; };
 		CAE405DE1C4DE5BF00AD464F /* gcpad_a_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE405921C4DE5BF00AD464F /* gcpad_a_pressed@2x.png */; };
@@ -147,7 +149,6 @@
 		CAE48C491C63F5570085870A /* NewDeviceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE48C481C63F5570085870A /* NewDeviceTableViewController.m */; };
 		CAE48C4C1C64000B0085870A /* Gear.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE48C4A1C64000B0085870A /* Gear.png */; };
 		CAE48C4D1C64000B0085870A /* Gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE48C4B1C64000B0085870A /* Gear@2x.png */; };
-		CAE48C521C6445350085870A /* CloudConsoleIcon-128@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE48C511C6445350085870A /* CloudConsoleIcon-128@2x.png */; };
 		CAFD47FD1C5AD89F00B1BB4D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAFD47FC1C5AD89F00B1BB4D /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
@@ -238,6 +239,8 @@
 		CAB6768F1C443AE500518E8E /* CCINetworkController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCINetworkController.m; sourceTree = "<group>"; };
 		CAB676941C44640B00518E8E /* PortMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PortMapper.h; sourceTree = "<group>"; };
 		CAB676951C44640B00518E8E /* PortMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PortMapper.m; sourceTree = "<group>"; };
+		CAC433EA1C670B6B000D569E /* CloudConsoleIcon-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CloudConsoleIcon-128.png"; path = "../../Image Sets/Icons/App/CloudConsoleIcon-128.png"; sourceTree = "<group>"; };
+		CAC433EB1C670B6B000D569E /* CloudConsoleIcon-128@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CloudConsoleIcon-128@2x.png"; path = "../../Image Sets/Icons/App/CloudConsoleIcon-128@2x.png"; sourceTree = "<group>"; };
 		CAE404C71C488BB500AD464F /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		CAE405911C4DE5BF00AD464F /* gcpad_a@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcpad_a@2x.png"; sourceTree = "<group>"; };
 		CAE405921C4DE5BF00AD464F /* gcpad_a_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcpad_a_pressed@2x.png"; sourceTree = "<group>"; };
@@ -358,7 +361,6 @@
 		CAE48C481C63F5570085870A /* NewDeviceTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewDeviceTableViewController.m; path = CloudConsoleiOS/ViewControllers/NewDeviceTableViewController.m; sourceTree = "<group>"; };
 		CAE48C4A1C64000B0085870A /* Gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gear.png; sourceTree = "<group>"; };
 		CAE48C4B1C64000B0085870A /* Gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Gear@2x.png"; sourceTree = "<group>"; };
-		CAE48C511C6445350085870A /* CloudConsoleIcon-128@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CloudConsoleIcon-128@2x.png"; sourceTree = "<group>"; };
 		CAFD47FC1C5AD89F00B1BB4D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -514,7 +516,8 @@
 				CAB676481C40382300518E8E /* Main.storyboard */,
 				CAB6764B1C40382300518E8E /* Assets.xcassets */,
 				CAB6764D1C40382300518E8E /* LaunchScreen.storyboard */,
-				CAE48C511C6445350085870A /* CloudConsoleIcon-128@2x.png */,
+				CAC433EA1C670B6B000D569E /* CloudConsoleIcon-128.png */,
+				CAC433EB1C670B6B000D569E /* CloudConsoleIcon-128@2x.png */,
 				CAB676501C40382300518E8E /* Info.plist */,
 				CAB6763F1C40382300518E8E /* Supporting Files */,
 				CAE4058D1C4DE5BF00AD464F /* Images */,
@@ -921,7 +924,6 @@
 				CAE406471C4DE60500AD464F /* LTrigger@2x.png in Resources */,
 				CAE4060F1C4DE5BF00AD464F /* gcpad_dpad.png in Resources */,
 				CAE405E51C4DE5BF00AD464F /* gcpad_dpad_pressed_downleft@2x.png in Resources */,
-				CAE48C521C6445350085870A /* CloudConsoleIcon-128@2x.png in Resources */,
 				CAE4060E1C4DE5BF00AD464F /* gcpad_c_pressed.png in Resources */,
 				CAE405E41C4DE5BF00AD464F /* gcpad_dpad_pressed_down@2x.png in Resources */,
 				CAE405EE1C4DE5BF00AD464F /* gcpad_joystick_range@2x.png in Resources */,
@@ -951,6 +953,7 @@
 				CA6E2CB91C585DEB00B70EB1 /* iPad.png in Resources */,
 				CAE4061F1C4DE5BF00AD464F /* gcpad_start.png in Resources */,
 				CA6E2CBD1C585DEB00B70EB1 /* MBP.png in Resources */,
+				CAC433EC1C670B6B000D569E /* CloudConsoleIcon-128.png in Resources */,
 				CAE4064B1C4DE60500AD464F /* Select@2x.png in Resources */,
 				CAE406131C4DE5BF00AD464F /* gcpad_dpad_pressed_left.png in Resources */,
 				CAE406181C4DE5BF00AD464F /* gcpad_joystick.png in Resources */,
@@ -1006,6 +1009,7 @@
 				CAE406461C4DE60500AD464F /* LTrigger.png in Resources */,
 				CAE4061C1C4DE5BF00AD464F /* gcpad_l_pressed.png in Resources */,
 				CAE406241C4DE5BF00AD464F /* gcpad_y_pressed.png in Resources */,
+				CAC433ED1C670B6B000D569E /* CloudConsoleIcon-128@2x.png in Resources */,
 				CAE406211C4DE5BF00AD464F /* gcpad_x.png in Resources */,
 				CAE405F91C4DE5BF00AD464F /* gcpad_z@2x.png in Resources */,
 				CAE406091C4DE5BF00AD464F /* gcpad_a.png in Resources */,

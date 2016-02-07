@@ -27,15 +27,20 @@
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:25.0];
     self.statusItem.image = [NSImage imageNamed:@"menuIconTemplate"];
     NSMenu *menu = [[NSMenu alloc] initWithTitle:@"Cloud Console"];
-    [menu addItemWithTitle:@"Cloud Console: Running" action:nil keyEquivalent:@""];
+    [menu addItemWithTitle:@"Cloud Console: Running" action:@selector(nothing) keyEquivalent:@""];
+    
     NSString *IP = [[CCOServer sharedInstance] currentIP];
-    [menu addItemWithTitle:[NSString stringWithFormat:@"IP: %@", IP] action:@selector(quitApplication) keyEquivalent:@""];
+    [menu addItemWithTitle:[NSString stringWithFormat:@"IP: %@", IP] action:@selector(nothing) keyEquivalent:@""];
     [menu insertItem:[NSMenuItem separatorItem] atIndex:1];
     [menu addItemWithTitle:@"Quit" action:@selector(quitApplication) keyEquivalent:@"Q"];
     self.statusItem.menu = menu;
     
 }
 
+- (void)nothing
+{
+    
+}
 
 
 - (void)quitApplication

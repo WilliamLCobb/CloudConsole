@@ -34,7 +34,8 @@ NSArray *gameNames;
         self.path = path;
         self.name = [[CCGame applicationNameForPath:path] stringByDeletingPathExtension];
         self.icon = [[NSWorkspace sharedWorkspace] iconForFile:path];
-        self.icon.size = NSMakeSize(128,128);
+        self.icon.size = NSMakeSize(32, 32);
+        self.running = NO;
                   //[[NSImage alloc] initWithContentsOfFile:path];
         hasTable = [CCPlugin pluginWithNameHasTable:self.name];
         hasSettings = [CCPlugin pluginWithNameHasSettings:self.name];
@@ -50,6 +51,7 @@ NSArray *gameNames;
     data[@"hasTable"] = [NSNumber numberWithBool:hasTable];
     data[@"hasSettings"] = [NSNumber numberWithBool:hasSettings];
     data[@"path"] = self.path;
+    data[@"running"] = [NSNumber numberWithBool:self.running];
     
     if (self.icon) {
         NSData *pictureData = [CCGame pngDataForImage:self.icon];
@@ -137,5 +139,7 @@ NSArray *gameNames;
     }
     return games;
 }
+
+
 
 @end

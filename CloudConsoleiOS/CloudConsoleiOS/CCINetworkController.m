@@ -35,7 +35,7 @@
         //clientSocket = [[CCUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
         
         [clientSocket setDestinationHost:host port:port]; //
-
+        [clientSocket sendData:[NSData new] withTimeout:-1 CCtag:CCNetworkConnect];
         NSLog(@"Connected to server");
         /*portMapper = [[PortMapper alloc] initWithPort:CCNetworkInternalStreamPort];
         portMapper.mapUDP = YES;
@@ -89,8 +89,7 @@
                 return;
             [self willChangeValueForKey:@"games"];
             [self.games removeAllObjects];
-            
-            
+
             //NSLog(@"%@", gamesArray);
             for (NSDictionary *gameDict in gamesArray) {
                 [self.games addObject:[[CCIGame alloc] initWithDictionairy:gameDict]];
@@ -128,24 +127,40 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Calls To Server
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-- (void)registerDelegate:(id<CCUdpSocketDelegate>)delegate forBuffer:(uint32_t)abuffer
+- (BOOL)registerDelegate:(id<CCUdpSocketDelegate>)delegate forBuffer:(uint32_t)abuffer
 {
+    if (!clientSocket.connected)
+        return NO;
     NSString *bufferTag = [NSString stringWithFormat:@"%u", abuffer];
     __weak id weakDel = delegate;
     socketDelegates[bufferTag] = weakDel;
+    return YES;
 }
 
-- (void)updateAvaliableGames
+- (BOOL)updateAvaliableGames
 {
+    if (!clientSocket.connected) {
+        NSLog(@"Warning: updateAvaliableGames socket not connected");
+        return NO;
+    }
+    
     [clientSocket sendData:[NSData data] withTimeout:-1 CCtag:CCNetworkGetAvaliableGames];
     NSLog(@"%@ Asked for apps", self);
+    return YES;
 }
 
-- (void)getSubGamesForDelegate:(id<CCUdpSocketDelegate>)delegate
+- (BOOL)getSubGamesForDelegate:(id<CCUdpSocketDelegate>)delegate
 {
+    if (!clientSocket.connected)
+        return NO;
     [self registerDelegate:delegate forBuffer:CCNetworkGetSubGames];
     [clientSocket sendData:[NSData data] withTimeout:-1 CCtag:CCNetworkGetSubGames];
+    return YES;
+}
+
+- (BOOL)isConnected
+{
+    return clientSocket.connected;
 }
 
 - (void)dealloc
