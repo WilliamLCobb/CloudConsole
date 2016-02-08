@@ -134,7 +134,9 @@
 - (void)closedStream
 {
     NSLog(@"CLosed stream");
-    [self dismissViewControllerAnimated:YES completion:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    });
 }
 
 @end

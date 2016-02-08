@@ -105,11 +105,10 @@
         for (UITouch *touch in touches) {
             touchPoint = [touch locationInView:self];
             if (CGRectContainsPoint(button.frame, touchPoint)) {
-                //NSLog(@"Pressing Button: %ld", button.tag);
                 _buttonState |= button.tag;
                 added |= button.tag;
                 button.highlighted = YES;
-            } else if (!button & added) {
+            } else if (!(button.tag & added)) {
                 //NSLog(@"%@ not in %@", NSStringFromCGPoint(touchPoint), NSStringFromCGRect(button.frame));
                 _buttonState &= ~button.tag;
                 button.highlighted = NO;

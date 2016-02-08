@@ -27,7 +27,6 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         // Initialization code
-        
         self.backgroundImageView.image = [UIImage imageNamed:@"ABXYPad"];
     }
     return self;

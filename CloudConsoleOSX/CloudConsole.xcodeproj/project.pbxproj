@@ -38,6 +38,9 @@
 		CA8C8FF21C557BEC00FA7B61 /* CCPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8C8FF11C557BEC00FA7B61 /* CCPlugin.m */; };
 		CAB6762F1C4028D100518E8E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAB6762E1C4028D100518E8E /* OpenGL.framework */; };
 		CAB6767E1C422E6000518E8E /* CCOh264Encoder.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB6767D1C422E6000518E8E /* CCOh264Encoder.m */; };
+		CAC433FC1C694611000D569E /* AutoUpdate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAC433F61C691762000D569E /* AutoUpdate.framework */; };
+		CAC433FD1C694615000D569E /* AutoUpdate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAC433F61C691762000D569E /* AutoUpdate.framework */; };
+		CAC433FE1C694615000D569E /* AutoUpdate.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CAC433F61C691762000D569E /* AutoUpdate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CAE122081C5D83AE0073D787 /* CCOServerBroadcaster.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE122071C5D83AE0073D787 /* CCOServerBroadcaster.m */; };
 		CAE404F21C4ADA7000AD464F /* CCGamepadInput.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE404F11C4ADA7000AD464F /* CCGamepadInput.m */; };
 		CAE48BE61C5ECB780085870A /* menuIconTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE48BE41C5ECB780085870A /* menuIconTemplate.png */; };
@@ -60,6 +63,20 @@
 			remoteInfo = CloudConsole;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CAC433FF1C694615000D569E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CAC433FE1C694615000D569E /* AutoUpdate.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3F49888247FF61F1F992D5D7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -122,6 +139,7 @@
 		CAB6762E1C4028D100518E8E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		CAB6767C1C422E6000518E8E /* CCOh264Encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCOh264Encoder.h; sourceTree = "<group>"; };
 		CAB6767D1C422E6000518E8E /* CCOh264Encoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCOh264Encoder.m; sourceTree = "<group>"; };
+		CAC433F61C691762000D569E /* AutoUpdate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AutoUpdate.framework; path = CloudConsole/LocalFrameworks/AutoUpdate.framework; sourceTree = "<group>"; };
 		CAE122061C5D83AE0073D787 /* CCOServerBroadcaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCOServerBroadcaster.h; sourceTree = "<group>"; };
 		CAE122071C5D83AE0073D787 /* CCOServerBroadcaster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCOServerBroadcaster.m; sourceTree = "<group>"; };
 		CAE404F01C4ADA7000AD464F /* CCGamepadInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGamepadInput.h; sourceTree = "<group>"; };
@@ -137,7 +155,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAC433FC1C694611000D569E /* AutoUpdate.framework in Frameworks */,
 				CA8C8F5F1C51A14600FA7B61 /* AudioUnit.framework in Frameworks */,
+				CAC433FD1C694615000D569E /* AutoUpdate.framework in Frameworks */,
 				CA8C8F5D1C51A13C00FA7B61 /* AudioToolbox.framework in Frameworks */,
 				CAB6762F1C4028D100518E8E /* OpenGL.framework in Frameworks */,
 				CA570D031C3E459400918E3A /* CoreMedia.framework in Frameworks */,
@@ -168,6 +188,7 @@
 		9509C481FD64E830A3555C61 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CAC433F61C691762000D569E /* AutoUpdate.framework */,
 				CA8C8F5E1C51A14600FA7B61 /* AudioUnit.framework */,
 				CA8C8F5C1C51A13C00FA7B61 /* AudioToolbox.framework */,
 				CAB6762E1C4028D100518E8E /* OpenGL.framework */,
@@ -281,6 +302,7 @@
 		CA570C241C3C916100918E3A /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				CAC433FB1C6945DF000D569E /* AutoUpdate */,
 				CA8C8FFD1C5590B800FA7B61 /* Bonjour */,
 				CAE48BEB1C5FDCAE0085870A /* CCNetworkProtocol.h */,
 				CA570C251C3C917700918E3A /* CCOServer.h */,
@@ -350,6 +372,13 @@
 			name = Apple;
 			sourceTree = "<group>";
 		};
+		CAC433FB1C6945DF000D569E /* AutoUpdate */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = AutoUpdate;
+			sourceTree = "<group>";
+		};
 		CAE404EF1C49ADC500AD464F /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -406,6 +435,7 @@
 				CA570BAC1C3C713C00918E3A /* Resources */,
 				670108EA94857B9AA3316677 /* Embed Pods Frameworks */,
 				BAB97C3A24F9219B422B51E4 /* Copy Pods Resources */,
+				CAC433FF1C694615000D569E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -463,6 +493,7 @@
 				TargetAttributes = {
 					CA570BAD1C3C713C00918E3A = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = MRGX8T9A4Y;
 					};
 					CA570BC31C3C713E00918E3A = {
 						CreatedOnToolsVersion = 7.2;
@@ -726,7 +757,13 @@
 			baseConfigurationReference = ED22CC64F190C03AC8E86B97 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/CloudConsole/LocalFrameworks",
+				);
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -744,9 +781,10 @@
 					/usr/local/Cellar/ffmpeg/2.8.4/lib,
 					"$(PROJECT_DIR)/FFMpeg",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.WilliamCobb.CloudConsole;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -755,7 +793,13 @@
 			baseConfigurationReference = 3F49888247FF61F1F992D5D7 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/CloudConsole/LocalFrameworks",
+				);
 				GCC_OPTIMIZATION_LEVEL = fast;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -773,9 +817,10 @@
 					/usr/local/Cellar/ffmpeg/2.8.4/lib,
 					"$(PROJECT_DIR)/FFMpeg",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.WilliamCobb.CloudConsole;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

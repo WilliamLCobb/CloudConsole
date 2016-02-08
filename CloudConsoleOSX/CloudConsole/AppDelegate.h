@@ -7,8 +7,9 @@
 //  Kulo9073
 
 #import <Cocoa/Cocoa.h>
+#import "AutoUpdate/AUUpdater.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, AUUpdaterDelegate>
 
 @property (strong) id activity;
 @property (strong, nonatomic) NSStatusItem *statusItem;

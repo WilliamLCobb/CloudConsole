@@ -14,6 +14,7 @@
 
 @optional
 - (void)wrongApplicationState;
+- (void)CCSocketTimedOut;
 @end
 
 @interface CCUdpSocket : GCDAsyncUdpSocket

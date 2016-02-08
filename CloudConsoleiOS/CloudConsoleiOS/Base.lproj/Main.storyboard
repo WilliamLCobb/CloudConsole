@@ -87,7 +87,7 @@
         <!--Nearby-->
         <scene sceneID="WmV-f8-0rQ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TRh-P9-Bv4" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TRh-P9-Bv4" customClass="CCIPortraitNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Nearby" id="grI-HJ-1IY"/>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -183,11 +183,13 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Add Device" id="dKg-3m-r3i">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="I4C-L8-qoE">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="cancel:" destination="20G-bV-dSm" id="69c-21-bRw"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" enabled="NO" style="done" systemItem="save" id="bu2-5K-vhk">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="save:" destination="20G-bV-dSm" id="cg4-4w-wgf"/>
                             </connections>
@@ -279,7 +281,7 @@
         <!--My Devices-->
         <scene sceneID="Shg-Ph-Jj1">
             <objects>
-                <navigationController id="ADB-Qe-3Gs" sceneMemberID="viewController">
+                <navigationController id="ADB-Qe-3Gs" customClass="CCIPortraitNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="My Devices" id="gMe-00-4BB"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="lhq-Ct-nE1">
@@ -297,7 +299,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="k4x-JY-LRS">
             <objects>
-                <tabBarController id="oaT-2j-MHp" sceneMemberID="viewController">
+                <tabBarController id="oaT-2j-MHp" customClass="CCITabBarController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="eLX-I6-eeT"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="VSM-2N-Ys0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -313,14 +315,18 @@
             </objects>
             <point key="canvasLocation" x="-991" y="66"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Portrait Navigation Controller-->
         <scene sceneID="r5O-yI-Rpz">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MsQ-aR-OJh" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MsQ-aR-OJh" customClass="CCIPortraitNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="GPl-0E-g0s">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

@@ -226,6 +226,12 @@
 - (void)udpSocketDidClose:(GCDAsyncUdpSocket *)sock withError:(NSError *)error
 {
     NSLog(@"Stream Socket closed... %@", error);
+    //[self closeStream];
+}
+
+- (void)CCSocketTimedOut
+{
+    NSLog(@"Socket timed out");
     [self closeStream];
 }
 

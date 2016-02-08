@@ -30,7 +30,7 @@
         NSBundle *bundle;
         Class principalClass;
         NSString *pluginPath =[[NSBundle mainBundle] pathForResource:name ofType:@"ccop"];
-        NSLog(@"Plugin Path%@", pluginPath);
+        NSLog(@"Plugin Path: %@", pluginPath);
         bundle = [NSBundle bundleWithPath:pluginPath];
         principalClass = [bundle principalClass];
         self.plugin = [[principalClass alloc] init];

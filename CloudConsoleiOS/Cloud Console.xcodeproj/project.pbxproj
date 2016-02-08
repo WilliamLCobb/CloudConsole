@@ -48,6 +48,8 @@
 		CAB676961C44640B00518E8E /* PortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB676951C44640B00518E8E /* PortMapper.m */; };
 		CAC433EC1C670B6B000D569E /* CloudConsoleIcon-128.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC433EA1C670B6B000D569E /* CloudConsoleIcon-128.png */; };
 		CAC433ED1C670B6B000D569E /* CloudConsoleIcon-128@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC433EB1C670B6B000D569E /* CloudConsoleIcon-128@2x.png */; };
+		CAC433F01C67F2DA000D569E /* CCITabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC433EF1C67F2DA000D569E /* CCITabBarController.m */; };
+		CAC433F31C67F3CB000D569E /* CCIPortraitNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC433F21C67F3CB000D569E /* CCIPortraitNavigationController.m */; };
 		CAE404C81C488BB500AD464F /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE404C71C488BB500AD464F /* GameController.framework */; };
 		CAE405DD1C4DE5BF00AD464F /* gcpad_a@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE405911C4DE5BF00AD464F /* gcpad_a@2x.png */; };
 		CAE405DE1C4DE5BF00AD464F /* gcpad_a_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE405921C4DE5BF00AD464F /* gcpad_a_pressed@2x.png */; };
@@ -241,6 +243,10 @@
 		CAB676951C44640B00518E8E /* PortMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PortMapper.m; sourceTree = "<group>"; };
 		CAC433EA1C670B6B000D569E /* CloudConsoleIcon-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CloudConsoleIcon-128.png"; path = "../../Image Sets/Icons/App/CloudConsoleIcon-128.png"; sourceTree = "<group>"; };
 		CAC433EB1C670B6B000D569E /* CloudConsoleIcon-128@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CloudConsoleIcon-128@2x.png"; path = "../../Image Sets/Icons/App/CloudConsoleIcon-128@2x.png"; sourceTree = "<group>"; };
+		CAC433EE1C67F2DA000D569E /* CCITabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCITabBarController.h; path = CloudConsoleiOS/ViewControllers/CCITabBarController.h; sourceTree = "<group>"; };
+		CAC433EF1C67F2DA000D569E /* CCITabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCITabBarController.m; path = CloudConsoleiOS/ViewControllers/CCITabBarController.m; sourceTree = "<group>"; };
+		CAC433F11C67F3CB000D569E /* CCIPortraitNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIPortraitNavigationController.h; sourceTree = "<group>"; };
+		CAC433F21C67F3CB000D569E /* CCIPortraitNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCIPortraitNavigationController.m; sourceTree = "<group>"; };
 		CAE404C71C488BB500AD464F /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		CAE405911C4DE5BF00AD464F /* gcpad_a@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcpad_a@2x.png"; sourceTree = "<group>"; };
 		CAE405921C4DE5BF00AD464F /* gcpad_a_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcpad_a_pressed@2x.png"; sourceTree = "<group>"; };
@@ -452,6 +458,8 @@
 		CA8C8FD51C547AFB00FA7B61 /* MainViews */ = {
 			isa = PBXGroup;
 			children = (
+				CAC433EE1C67F2DA000D569E /* CCITabBarController.h */,
+				CAC433EF1C67F2DA000D569E /* CCITabBarController.m */,
 				CAB676451C40382300518E8E /* CCIMainViewController.h */,
 				CAB676461C40382300518E8E /* CCIMainViewController.m */,
 				CAE48C431C63F5080085870A /* Main View Options */,
@@ -800,6 +808,8 @@
 			children = (
 				CAE48C471C63F5570085870A /* NewDeviceTableViewController.h */,
 				CAE48C481C63F5570085870A /* NewDeviceTableViewController.m */,
+				CAC433F11C67F3CB000D569E /* CCIPortraitNavigationController.h */,
+				CAC433F21C67F3CB000D569E /* CCIPortraitNavigationController.m */,
 			);
 			name = "Main View Options";
 			sourceTree = "<group>";
@@ -883,7 +893,7 @@
 				TargetAttributes = {
 					CAB6763B1C40382300518E8E = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 43463MM6X8;
+						DevelopmentTeam = MRGX8T9A4Y;
 					};
 					CAB676541C40382300518E8E = {
 						CreatedOnToolsVersion = 7.2;
@@ -1106,6 +1116,7 @@
 				CAE48C421C63F0B90085870A /* SCLTextView.m in Sources */,
 				CAE406581C4DE6F800AD464F /* CCDirectionalControl.m in Sources */,
 				CA8C8FFB1C558D4B00FA7B61 /* Reachability.m in Sources */,
+				CAC433F31C67F3CB000D569E /* CCIPortraitNavigationController.m in Sources */,
 				CAB676871C439DA600518E8E /* CCIStreamViewController.m in Sources */,
 				CAE48C3E1C63F0B90085870A /* SCLButton.m in Sources */,
 				CA140CF71C597D97000B947D /* CCUdpSocket.m in Sources */,
@@ -1122,6 +1133,7 @@
 				CAE48C401C63F0B90085870A /* SCLAlertViewStyleKit.m in Sources */,
 				CA8C8FD81C547B5800FA7B61 /* CCIAppSelectionTableViewController.m in Sources */,
 				CAE406571C4DE6F800AD464F /* CCButtonControl.m in Sources */,
+				CAC433F01C67F2DA000D569E /* CCITabBarController.m in Sources */,
 				CAE48C3D1C63F0B90085870A /* SCLAlertView.m in Sources */,
 				CAB6768B1C443AB700518E8E /* CCIStreamManager.m in Sources */,
 			);
@@ -1270,7 +1282,7 @@
 				INFOPLIST_FILE = CloudConsoleiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.WilliamCobb.CloudConsoleMobile;
+				PRODUCT_BUNDLE_IDENTIFIER = com.WillCobb.CloudConsoleiOS;
 				PRODUCT_NAME = "Cloud Console";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1286,7 +1298,7 @@
 				INFOPLIST_FILE = CloudConsoleiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.WilliamCobb.CloudConsoleMobile;
+				PRODUCT_BUNDLE_IDENTIFIER = com.WillCobb.CloudConsoleiOS;
 				PRODUCT_NAME = "Cloud Console";
 				PROVISIONING_PROFILE = "";
 			};

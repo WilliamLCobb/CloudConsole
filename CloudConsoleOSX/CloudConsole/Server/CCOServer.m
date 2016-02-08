@@ -106,6 +106,7 @@
         }
         case CCNetworkOpenStream: {
             [broadcaster stop];
+            NSLog(@"Launching Game");
             //Switch to JSON later
             
             uint32_t port = message[0];
@@ -117,6 +118,10 @@
                                        ToHost:[GCDAsyncUdpSocket hostFromAddress:address]
                                          Port:port];
                 return;
+            } else {
+                NSLog(@"New Game");
+                NSLog(@"Current %@", self.currentGame.path);
+                NSLog(@"New: %@", applicationPath);
             }
             
             // Launch new game
@@ -294,6 +299,10 @@
     return serverSocket.localPort;
 }
 
+- (BOOL)connected
+{
+    return serverSocket.connected;
+}
 
 #pragma mark - Capturing
 //Eventually pass game pid or path

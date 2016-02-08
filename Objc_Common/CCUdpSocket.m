@@ -123,8 +123,7 @@
 {
     if (CACurrentMediaTime() - lastKeepAlive > timeout) {
         NSLog(@"Udp Socket Disconnected");
-        NSError * error = [NSError errorWithDomain:@"com.WilliamLCobb.CloudConsole" code:-12 userInfo:[NSDictionary dictionaryWithObject:@"Socket failed to respond" forKey:NSLocalizedDescriptionKey]];
-        [self notifyDidCloseWithError:error];
+        [self notifyDidTimeout];
         return NO;
     }
     return YES;
@@ -214,10 +213,10 @@
         [self notifyDidConnectToAddress:address];
     }*/
     //Server socket changed port
-    /*if ([host isEqualToString:[GCDAsyncSocket hostFromAddress:address]] && port != [GCDAsyncSocket portFromAddress:address]) {
+    if ([host isEqualToString:[GCDAsyncSocket hostFromAddress:address]] && port != [GCDAsyncSocket portFromAddress:address]) {
         NSLog(@"Changing Socket port to: %d", [GCDAsyncSocket portFromAddress:address]);
         [self setDestinationHost:[GCDAsyncSocket hostFromAddress:address] port:[GCDAsyncSocket portFromAddress:address]];
-    }*/
+    }
 }
 
 - (void)notifyDidReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag
@@ -229,6 +228,21 @@
         id theDelegate = self.delegate;
         dispatch_async(self.delegateQueue, ^{
             [theDelegate CCSocket:self didReceiveData:data fromAddress:address withTag:tag];
+        });
+    } else {
+        NSLog(@"Warining, CCUdpSocket not notifying");
+    }
+}
+
+- (void)notifyDidTimeout
+{
+    SEL selector = @selector(CCSocketTimedOut);
+    
+    if (self.delegateQueue && [self.delegate respondsToSelector:selector])
+    {
+        id theDelegate = self.delegate;
+        dispatch_async(self.delegateQueue, ^{
+            [theDelegate CCSocketTimedOut];
         });
     } else {
         NSLog(@"Warining, CCUdpSocket not notifying");

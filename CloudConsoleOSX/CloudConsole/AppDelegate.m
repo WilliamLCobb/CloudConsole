@@ -5,6 +5,7 @@
 //  Created by Will Cobb on 1/5/16.
 //  Copyright © 2016 Will Cobb. All rights reserved.
 //
+//  Kext https://developer.apple.com/contact/kext/
 
 #import "AppDelegate.h"
 #import <mach/mach.h>
@@ -20,6 +21,10 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    /*  Auto Update  */
+    
+    [AUUpdater updaterWithBundle:[NSBundle mainBundle] host:@"www.williamlcobb.com" channel:@"release" percentile:0];
+    
     if ([[NSProcessInfo processInfo] respondsToSelector:@selector(beginActivityWithOptions:reason:)]) {
         self.activity = [[NSProcessInfo processInfo] beginActivityWithOptions:0x00FFFFFF reason:@"receiving OSC messages"];
     }
@@ -103,6 +108,19 @@
     CFRelease((__bridge CFTypeRef)(loginItems));
     
     return res;
+}
+
+#pragma mark - Auto Updater Delegate
+
+- (void)updater:(AUUpdater *)updater wantsToInstallUpdateWithCriticalStatus:(BOOL)critical
+{
+    NSLog(@"Wants to install update");
+    if (![[CCOServer sharedInstance] connected]) {
+        NSLog(@"Installing Update");
+        [updater installUpdate];
+    } else {
+        NSLog(@"Not installing update, server is connected");
+    }
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

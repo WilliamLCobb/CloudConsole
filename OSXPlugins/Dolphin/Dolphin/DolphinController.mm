@@ -45,7 +45,54 @@
 
 - (void)reload
 {
-    dolphinSettings = [self settingsFromFile:[[self settingPath] stringByAppendingPathComponent:@"Config/Dolphin.ini"]];
+    [self updateSettings];
+    dolphinSettings = [self settingsFromFile:[[self settingsPath] stringByAppendingPathComponent:@"Config/Dolphin.ini"]];
+}
+
+- (void)updateSettings
+{
+    // Dolphin
+    NSString *dolphinSettingsPath = [[self settingsPath] stringByAppendingPathComponent:@"Config/Dolphin.ini"];
+    NSError *error;
+    NSString *fileData = [[NSString alloc] initWithContentsOfFile:dolphinSettingsPath encoding:NSUTF8StringEncoding error:&error];
+    if (error) {
+        NSLog(@"Error getting file data: %@", [error localizedDescription]);
+        return;
+    }
+    
+    fileData = [self changeSetting:@"Fullscreen" to:@"False" forFileData:fileData];
+    fileData = [self changeSetting:@"ConfirmStop" to:@"False" forFileData:fileData];
+    fileData = [self changeSetting:@"BackgroundInput" to:@"True" forFileData:fileData];
+    [fileData writeToFile:dolphinSettingsPath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    if (error) {
+        NSLog(@"Error writing: %@", [error localizedDescription]);
+        return;
+    }
+    
+    // Game pad
+    NSString *gcpadSettingsPath = [[self settingsPath] stringByAppendingPathComponent:@"Config/GCPadNew.ini"];
+    fileData = @"[GCPad1]\nDevice = Input/0/Cloud Console Gamecube Controller\nButtons/A = `Button 1`\nButtons/B = `Button 2`\nButtons/X = `Button 3`\nButtons/Y = `Button 4`\nButtons/Z = `Button 5`\nButtons/Start = `Button 8`\nMain Stick/Up = `Axis Y+`\nMain Stick/Down = `Axis Y-`\nMain Stick/Left = `Axis X-`\nMain Stick/Right = `Axis X+`\nMain Stick/Modifier/Range = 50.000000000000000\nC-Stick/Up = `Axis Rx+`\nC-Stick/Down = `Axis Rx-`\nC-Stick/Left = `Axis Z-`\nC-Stick/Right = `Axis Z+`\nC-Stick/Modifier = Left Control\nC-Stick/Modifier/Range = 50.000000000000000\nTriggers/L = `Button 7`\nTriggers/R = `Button 6`\nTriggers/L-Analog = `Button 7`\nTriggers/R-Analog = `Button 6`\nD-Pad/Up = `Button 9`\nD-Pad/Down = `Button 10`\nD-Pad/Left = `Button 11`\nD-Pad/Right = `Button 12`";
+    [fileData writeToFile:gcpadSettingsPath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    if (error) {
+        NSLog(@"Error writing pad: %@", [error localizedDescription]);
+        return;
+    }
+}
+
+- (NSString *)changeSetting:(NSString *)setting to:(NSString *)value forFileData:(NSString *)fileData
+{
+    NSString *replacementString = [NSString stringWithFormat:@"%@ = %@\n", setting, value];
+    
+    NSError *error;
+    NSString *pattern = [NSString stringWithFormat:@"%@ = .*\n", setting];
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:&error];
+    if (error) {
+        NSLog(@"Regex Error: %@", error);
+        return fileData;
+    }
+    NSString *modifiedFileData = [regex stringByReplacingMatchesInString:fileData options:0 range:NSMakeRange(0, [fileData length]) withTemplate:replacementString];
+    
+    return modifiedFileData;
 }
 
 - (NSArray *)subGames
@@ -93,7 +140,7 @@
     return [name substringToIndex:name.length-3];
 }
 
-- (NSString *)settingPath
+- (NSString *)settingsPath
 {
     // Dolphin configuration usually lives in ~/Library/Application Support/Dolphin
     return [NSHomeDirectory() stringByAppendingPathComponent:@"/Library/Application Support/Dolphin"];

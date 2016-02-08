@@ -37,7 +37,7 @@
     self.tableView.tableFooterView.backgroundColor = [UIColor whiteColor];
     
     UILabel *searchingLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, self.view.frame.size.width - 40, 20)];
-    searchingLabel.text = [NSString stringWithFormat:@"Searching for devices %@", [self currentWifiSSID]];
+    searchingLabel.text = [NSString stringWithFormat:@"Searching for devices %@\n\n\nMake sure you have downloaded the desktop app from www.williamlcobb.com/CloudConsole.html and verify it's running.", [self currentWifiSSID]];
     searchingLabel.textAlignment = NSTextAlignmentCenter;
     searchingLabel.numberOfLines = 0;
     [searchingLabel sizeToFit];
@@ -62,6 +62,8 @@
 {
     
 }
+
+
 
 #pragma mark - Device Finder Delegate
 
@@ -174,6 +176,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(BOOL)shouldAutorotate {
+    return NO;
 }
 
 @end

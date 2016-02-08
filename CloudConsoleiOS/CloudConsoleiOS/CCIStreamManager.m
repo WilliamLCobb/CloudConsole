@@ -90,7 +90,12 @@
 
 - (void)udpSocketDidClose:(GCDAsyncUdpSocket *)sock withError:(NSError *)error
 {
-    NSLog(@"Socket Disconnected: %@", error);
+    NSLog(@"Warning!!! Socket Disconnected: %@", error);
+}
+
+- (void)CCSocketTimedOut
+{
+    NSLog(@"Socket timed out");
     if (streamDecoder) { //first call
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [AppDelegate.sharedInstance showWarning:@"Lost connection to the server" withTitle:@"Disconnected"];

@@ -24,5 +24,6 @@
 - (NSString *)currentIP;
 - (void)registerDelegate:(id <CCUdpSocketDelegate>) delegate forBuffer:(uint32_t)bufferTag;
 - (NSDictionary *)currentGameInfo;
+- (BOOL)connected;
 
 @end
