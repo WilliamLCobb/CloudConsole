@@ -45,6 +45,7 @@
 		CAE404F21C4ADA7000AD464F /* CCGamepadInput.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE404F11C4ADA7000AD464F /* CCGamepadInput.m */; };
 		CAE48BE61C5ECB780085870A /* menuIconTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE48BE41C5ECB780085870A /* menuIconTemplate.png */; };
 		CAE48BE71C5ECB780085870A /* menuIconTemplate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE48BE51C5ECB780085870A /* menuIconTemplate@2x.png */; };
+		CAF532921C7032A8009B2A72 /* NSImage+Transform.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF532911C7032A8009B2A72 /* NSImage+Transform.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,6 +148,8 @@
 		CAE48BE41C5ECB780085870A /* menuIconTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menuIconTemplate.png; path = "../../Image Sets/Icons/App/menuIconTemplate.png"; sourceTree = "<group>"; };
 		CAE48BE51C5ECB780085870A /* menuIconTemplate@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menuIconTemplate@2x.png"; path = "../../Image Sets/Icons/App/menuIconTemplate@2x.png"; sourceTree = "<group>"; };
 		CAE48BEB1C5FDCAE0085870A /* CCNetworkProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CCNetworkProtocol.h; path = ../../../Common/CCNetworkProtocol.h; sourceTree = "<group>"; };
+		CAF532901C7032A8009B2A72 /* NSImage+Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+Transform.h"; sourceTree = "<group>"; };
+		CAF532911C7032A8009B2A72 /* NSImage+Transform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+Transform.m"; sourceTree = "<group>"; };
 		ED22CC64F190C03AC8E86B97 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -236,6 +239,7 @@
 		CA570BB01C3C713C00918E3A /* CloudConsole */ = {
 			isa = PBXGroup;
 			children = (
+				CAF5328F1C703293009B2A72 /* Utilities */,
 				CAE404EF1C49ADC500AD464F /* Controls */,
 				CA570BB11C3C713C00918E3A /* AppDelegate.h */,
 				CA570BB21C3C713C00918E3A /* AppDelegate.m */,
@@ -420,6 +424,15 @@
 				CAE48BE51C5ECB780085870A /* menuIconTemplate@2x.png */,
 			);
 			name = Icons;
+			sourceTree = "<group>";
+		};
+		CAF5328F1C703293009B2A72 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				CAF532901C7032A8009B2A72 /* NSImage+Transform.h */,
+				CAF532911C7032A8009B2A72 /* NSImage+Transform.m */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -608,6 +621,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA140CFD1C597DAB000B947D /* CCUdpSocket.m in Sources */,
+				CAF532921C7032A8009B2A72 /* NSImage+Transform.m in Sources */,
 				CAE404F21C4ADA7000AD464F /* CCGamepadInput.m in Sources */,
 				CA570BB91C3C713D00918E3A /* MainViewController.m in Sources */,
 				CAE122081C5D83AE0073D787 /* CCOServerBroadcaster.m in Sources */,

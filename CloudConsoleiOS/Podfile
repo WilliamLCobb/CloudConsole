@@ -2,4 +2,7 @@ platform :ios, '8.1'
 pod 'CocoaAsyncSocket'
 pod 'GPUImage'
 pod 'NXOAuth2Client'
-pod 'MBProgressHUD'
+pod 'MRProgress'
+pod 'Shimmer'
+pod 'SpreadButton'
+use_frameworks!

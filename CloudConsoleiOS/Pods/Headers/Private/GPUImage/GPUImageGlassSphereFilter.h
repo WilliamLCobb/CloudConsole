@@ -1,5 +1,1 @@
-#import "GPUImageSphereRefractionFilter.h"
-
-@interface GPUImageGlassSphereFilter : GPUImageSphereRefractionFilter
-
-@end
+../../../GPUImage/framework/Source/GPUImageGlassSphereFilter.h

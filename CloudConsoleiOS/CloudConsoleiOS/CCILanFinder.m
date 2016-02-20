@@ -29,6 +29,7 @@
 - (id)init
 {
     if (self = [super init]) {
+        self.devices = [NSMutableArray new];
         pingSocket = [[CCUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
         lanScanner = [[ScanLAN alloc] initWithDelegate:self];
     }
@@ -37,8 +38,7 @@
 
 - (void)start
 {
-    self.services = [NSMutableArray new];
-    self.devices = [NSMutableArray new];
+    [self.devices removeAllObjects];
     
     // Reset saved
     //[[NSUserDefaults standardUserDefaults] setObject:[NSMutableDictionary new] forKey:@"Devices"];
@@ -50,16 +50,17 @@
         for (NSString *key in deviceDictionairy.allKeys) {
             NSData *deviceData = deviceDictionairy[key];
             CCIDevice *savedDevice =[NSKeyedUnarchiver unarchiveObjectWithData:deviceData];
-            if (savedDevice.discoveryTime > 0 && CACurrentMediaTime() > savedDevice.discoveryTime + 3600) {
-                [keysToRemove addObject:key];
+            if (savedDevice.valid) {
+                [self addDevice:savedDevice];
             } else {
-                [self addDevice:[NSKeyedUnarchiver unarchiveObjectWithData:deviceData]];
+                [keysToRemove addObject:key];
             }
         }
         [self.delegate devicesFound];
     }
     [deviceDictionairy removeObjectsForKeys:keysToRemove];
-   
+    [[NSUserDefaults standardUserDefaults] setObject:deviceDictionairy forKey:@"Devices"];
+    
     if (![lanScanner startScan] && kUseBonjour) {
         NSLog(@"Lan Scanner not working, trying bonjour");
         NSString *name = [NSString stringWithFormat:@"iphone.%@", [[UIDevice currentDevice] name]];
@@ -82,10 +83,9 @@
 
 - (void)addDevice:(CCIDevice *)device
 {
-    device.discoveryTime = CACurrentMediaTime();
     if ([self.devices containsObject:device]) {
-        [self.devices removeObject:device];
-        [self.devices addObject:device]; // This updates the port and host
+        //[self.devices removeObject:device];
+        //[self.devices addObject:device]; // This updates the port and host
     } else {
         [self.devices addObject:device];
     }
@@ -126,7 +126,7 @@
 
 - (void)scanLANDidFindNewAdrress:(NSString *)address havingHostName:(NSString *)hostName
 {
-    [pingSocket sendData:[NSData new] toHost:address port:CCNetworkServerPort withTimeout:10 CCtag:CCNetworkPing];
+    [pingSocket pingHost:address port:CCNetworkServerPort];
 }
 
 - (void)scanLANDidFinishScanning
@@ -140,10 +140,17 @@
 
 - (void)CCSocket:(CCUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag
 {
-    INFO_LOG(@"Got ping respose");
     NSString *host = [CCUdpSocket hostFromAddress:address];
     uint16_t port  = [CCUdpSocket portFromAddress:address];
-    CCIDevice *newDevice = [[CCIDevice alloc] initWithName:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] host:host port:port];
+    //CCIDevice *newDevice = [[CCIDevice alloc] initWithName:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] host:host port:port];
+    NSString *deviceInfo = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSArray  *deviceInfoComponents = [deviceInfo componentsSeparatedByString:@"."];
+    INFO_LOG(@"Pring Response from: %@", deviceInfo);
+    CCIDevice *newDevice = [[CCIDevice alloc] initWithName:deviceInfoComponents[1]
+                                                deviceName:deviceInfoComponents[0]
+                                                      host:host
+                                                      port:port
+                                              discoverType:CCIDeviceDiscoverTypeLAN];
     [self addDevice:newDevice];
 }
 
@@ -173,6 +180,7 @@
 
 - (void)bonjourHandler:(BonjourHandler *)handler recievedData:(NSData *)data
 {
+    /* Does Not Work! */
     NSLog(@"Got data");
     uint32_t *message = (uint32_t*)data.bytes;
     switch (message[0]) {
@@ -193,12 +201,13 @@
                 [self.delegate gotServiceDestination:host port:port];
             } else {
                 NSLog(@"Adding device");
-                CCIDevice *newDevice = [[CCIDevice alloc] initWithName:name host:host port:port];
-                if (deviceDict[@"currentGame"]) {
-                    CCIGame *currentGame = [[CCIGame alloc] initWithDictionairy:deviceDict[@"currentGame"]];
-                    newDevice.currentGame = currentGame;
-                }
-                [self addDevice:newDevice];
+                //Fix this part
+//                CCIDevice *newDevice = [[CCIDevice alloc] initWithName:name host:host port:port];
+//                if (deviceDict[@"currentGame"]) {
+//                    CCIGame *currentGame = [[CCIGame alloc] initWithDictionairy:deviceDict[@"currentGame"]];
+//                    newDevice.currentGame = currentGame;
+//                }
+//                [self addDevice:newDevice];
             }
             break;
         }

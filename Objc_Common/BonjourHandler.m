@@ -115,7 +115,7 @@ static NSString * kCCBonjourType = @"_CloudConsole._tcp.";
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)browser didNotSearch:(NSDictionary *)errorDict
 {
-    NSLog(@"%@", errorDict);
+    NSLog(@"Errw %@", errorDict);
     assert(browser == self.browser);
     assert(errorDict != nil);
     //assert(NO);         // The usual reason for us not searching is a programming error.
@@ -333,7 +333,7 @@ static NSString * kCCBonjourType = @"_CloudConsole._tcp.";
 // happens and then decide how best to handle it.
 {
     NSLog(@"Hard Stop");
-    NSLog(@"%@", errorDict);
+    NSLog(@"Errc %@", errorDict);
     assert(sender == self.server);
     //assert(NO);
 }

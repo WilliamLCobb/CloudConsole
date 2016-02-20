@@ -8,22 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
-@protocol CCPluginProtocol <NSObject>
-/** 
- * Signals for the plugin to reload settings and files.
-**/
-- (void)reload;
-- (NSArray *)subGames;
-- (NSRunningApplication *)launchGameWithPath:(NSString *)path;
-
-@end
 
 @interface CCPlugin : NSObject
 
-@property id <CCPluginProtocol> plugin;
 @property NSString *name;
 
 - (id)initWithName:(NSString *)pluginName;
+
+- (void)reload;
+- (NSArray *)subGames;
+- (NSRunningApplication *)launchGameWithPath:(NSString *)path;
 
 + (BOOL)pluginWithNameExists:(NSString *)pluginName;
 + (BOOL)pluginWithNameHasTable:(NSString *)pluginName;

@@ -8,11 +8,12 @@
 
 #import "CCIGameSelectionTableViewController.h"
 #import "AppDelegate.h"
-#import "CCIStreamViewController.h"
-#import "CCNetworkProtocol.h"
+#import "DALabeledCircularProgressView.h"
 
 @interface CCIGameSelectionTableViewController () {
-    BOOL gamesLoaded;
+    CCINetworkController    *networkController;
+    BOOL currentView;
+    DALabeledCircularProgressView *progressView;
 }
 
 @end
@@ -21,40 +22,59 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.currentGame addObserver:self forKeyPath:@"subGames" options:NSKeyValueObservingOptionNew context:nil];
-    [self.currentGame loadSubgames];
+    
     
     // Set up loading text
     self.tableView.tableFooterView = [UIView new];
     self.tableView.tableFooterView.backgroundColor = [UIColor whiteColor];
     
-    UILabel *searchingLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, self.view.frame.size.width - 40, 20)];
-    searchingLabel.text = @"Loading Games";
-    searchingLabel.textAlignment = NSTextAlignmentCenter;
-    [self.tableView.tableFooterView addSubview:searchingLabel];
-    
-    UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    [activity startAnimating];
-    activity.frame = CGRectMake(self.view.frame.size.width/2 - activity.frame.size.width/2, searchingLabel.frame.size.height + 20, activity.frame.size.width, activity.frame.size.height);
-    [self.tableView.tableFooterView addSubview:activity];
+    progressView = [[DALabeledCircularProgressView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 60, 10, 120, 120)];
+    progressView.progressLabel.text = @"Loading...";
+    progressView.progressTintColor = kAppColor;
+    progressView.thicknessRatio = 0.11;
+    progressView.roundedCorners = 5;
+    [self.tableView.tableFooterView addSubview:progressView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    
     if (!AppDelegate.sharedInstance.networkController.isConnected) {
         [self.navigationController popToRootViewControllerAnimated:YES];
+    } else {
+        networkController = AppDelegate.sharedInstance.networkController;
+        [networkController registerProgressDelegate:self forBuffer:CCNetworkGetSubGames];
+        [self.currentGame addObserver:self forKeyPath:@"subGames" options:NSKeyValueObservingOptionNew context:nil];
+        [self.currentGame loadSubgames];
+        networkController.delegate = self;
     }
+    currentView = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    currentView = NO;
+    [self.currentGame removeObserver:self forKeyPath:@"subGames"];
+    networkController = nil;
+}
+
+- (void)downloadProgress:(float)progress forTag:(uint32_t)tag
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [progressView setProgress:progress animated:YES];
+    });
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"subGames"]) {
-        [self.tableView reloadData];
-        if (!gamesLoaded) {
-            gamesLoaded = YES;
-            self.tableView.tableFooterView = [UIView new];
+        if (self.currentGame.subGames.count == 0) {
+            [AppDelegate.sharedInstance showError:@"No games were found! " withTitle:@"No Games"];
         }
-        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+            self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+        });
     } else {
         NSLog(@"Unknown keypath: %@", keyPath);
     }
@@ -85,7 +105,9 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"game"];
     
     CCIGame *game = [self gameForIndexPath:indexPath];
-    //cell.imageView.image = game.icon;
+    if (game.icon) {
+       cell.imageView.image = game.icon;
+    }
     cell.textLabel.text = game.name;
     
     return cell;
@@ -95,13 +117,7 @@
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     CCIGame *game = [self gameForIndexPath:indexPath];
-    
-    CCIStreamManager *streamManager = [AppDelegate.sharedInstance.networkController startStreamWithGame:game];
-    CCIStreamViewController *streamViewController = (CCIStreamViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CCIStreamViewController"];
-    streamViewController.streamManager = streamManager;
-    
-    streamManager.outputDelegate = streamViewController;
-    [self presentViewController:streamViewController animated:YES completion:nil];
+    [AppDelegate.sharedInstance launchGame:game];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -109,9 +125,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc
-{
-    [self.currentGame removeObserver:self forKeyPath:@"subGames"];
-}
-
 @end
+
+

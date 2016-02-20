@@ -6,7 +6,9 @@
 //  Copyright © 2016 Will Cobb. All rights reserved.
 //
 // https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man8/rpcbind.8.html
+
 #import "CCOServer.h"
+#import "AppDelegate.h"
 #import "CCNetworkProtocol.h"
 #import "CCOServerBroadcaster.h"
 
@@ -28,7 +30,7 @@
     
     CCPlugin            *currentPlugin;
     
-   NSMutableDictionary  *socketDelegates;
+    NSMutableDictionary  *socketDelegates;
 }
 
 @end
@@ -82,7 +84,7 @@
     }
     // Not working
     
-    portMapper = [[PortMapper alloc] initWithPort:serverSocket.localPort];
+    //portMapper = [[PortMapper alloc] initWithPort:serverSocket.localPort];
     /*portMapper.mapTCP=NO;
     portMapper.mapUDP=YES;
     portMapper.desiredPublicPort = 17483;
@@ -92,7 +94,6 @@
                                                  name: PortMapperChangedNotification
                                                object: nil];
      */
-    
 }
 
 #pragma mark - Network
@@ -111,6 +112,10 @@
             
             uint32_t port = message[0];
             NSString *applicationPath = [NSString stringWithCString:(void *)message+8 encoding:NSUTF8StringEncoding];
+            
+            NSString *applicationName = [[CCGame applicationNameForPath:applicationPath] stringByDeletingPathExtension];
+            /*  Load Plugin  */
+            currentPlugin = [[CCPlugin alloc] initWithName:applicationName];
             
             // Reopen running game
             if ([applicationPath isEqualToString:self.currentGame.path]) {
@@ -131,15 +136,17 @@
                     [currentApplication forceTerminate];
                 }
             }
+            
+            currentApplication = nil;
             self.currentGame = nil;
             
             NSLog(@"Launch: %@", applicationPath);
             
             
-            currentApplication = [currentPlugin.plugin launchGameWithPath:applicationPath];
+            currentApplication = [currentPlugin launchGameWithPath:applicationPath];
             if (!currentApplication) {
                 NSLog(@"Plugin couldn't launch game");
-                [serverSocket sendData:[NSData data] withTimeout:-1 CCtag:CCNetworkStreamOpenFailure];
+                [serverSocket sendData:[NSData data] usingMethod:CCUdpSendMethodGuarentee CCtag:CCNetworkStreamOpenFailure];
                 [broadcaster startBroadcastWithName:self.deviceName];
                 return;
             } else {
@@ -165,7 +172,8 @@
                 [self startCaptureFromProcess:currentApplication.processIdentifier
                                        ToHost:[GCDAsyncUdpSocket hostFromAddress:address]
                                          Port:port];
-                [serverSocket sendData:[NSData data] withTimeout:-1 CCtag:CCNetworkStreamOpenSuccess];
+                [serverSocket sendData:[NSData data] usingMethod:CCUdpSendMethodGuarentee CCtag:CCNetworkStreamOpenSuccess];
+                [AppDelegate.sharedInstance preventSleep];
             });
             break;
         }
@@ -185,9 +193,8 @@
                 NSLog(@"Got an error creating json: %@", error);
                 return;
             }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [serverSocket sendData:jsonData withTimeout:-1 CCtag:CCNetworkGetAvaliableGames];
-            });
+            //NSLog(@"Sending: %@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+            [serverSocket sendData:jsonData usingMethod:CCUdpSendMethodGuarentee CCtag:CCNetworkGetAvaliableGames];
             
             break;
         }
@@ -199,7 +206,7 @@
             currentPlugin = [[CCPlugin alloc] initWithName:applicationName];
             
             //Subgames aren't actual CCGames but what the data rep would be
-            NSArray *subGames = [currentPlugin.plugin subGames];
+            NSArray *subGames = [currentPlugin subGames];
             NSMutableArray *gameArray = [NSMutableArray array];
             for (int i = 0; i < subGames.count; i++) {
                 [gameArray addObject:subGames[i]];
@@ -213,7 +220,7 @@
                 NSLog(@"Got an error creating json: %@", error);
                 return;
             }
-            [serverSocket sendData:jsonData withTimeout:-1 CCtag:CCNetworkGetSubGames];
+            [serverSocket sendData:jsonData usingMethod:CCUdpSendMethodGuarentee CCtag:CCNetworkGetSubGames];
             break;
         }
         default:
@@ -251,9 +258,11 @@
     INFO_LOG(@"Socket closed");
 }
 
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didConnectToAddress:(NSData *)address
+- (void)udpSocket:(CCUdpSocket *)sock didConnectToAddress:(NSData *)address
 {
     INFO_LOG(@"Server connected to client");
+    [sock sendData:[NSData new] usingMethod:CCUdpSendMethodGuarentee CCtag:CCNetworkConnect];
+    [[AppDelegate sharedInstance] shake];
 }
 - (void)portMapChanged: (NSNotification*)n
 {
@@ -272,21 +281,17 @@
     serverSocket.applicationState = CCStateHome;
     INFO_LOG(@"Back in CCOServer");
     [broadcaster startBroadcastWithName:self.deviceName];
-    NSRunningApplication *applicationToClose = currentApplication;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 20 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        if (!serverSocket.connected && currentApplication && currentApplication == applicationToClose) {
-            INFO_LOG(@"CLosing App");
-            if (currentApplication) {
-                if (![currentApplication terminate]) {
-                    INFO_LOG(@"Force Quitting");
-                    [currentApplication forceTerminate];
-                }
-            }
-            self.currentGame = nil;
-        } else {
-            NSLog(@"%d %@", serverSocket.connected, currentApplication);
+    
+    INFO_LOG(@"CLosing App");
+    if (currentApplication) {
+        if (![currentApplication terminate]) {
+            INFO_LOG(@"Force Quitting");
+            [currentApplication forceTerminate];
         }
-    });
+    }
+    self.currentGame = nil;
+    
+    [AppDelegate.sharedInstance allowSleep];
 }
 
 - (NSString *)currentIP

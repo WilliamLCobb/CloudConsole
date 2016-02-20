@@ -1,0 +1,11 @@
+package CloudConsole;
+
+message Game {
+  required string name = 1;
+  required string path = 2;
+  optional string icon = 3;
+
+  required bool hasTable = 4;
+  required bool hasSettings = 5;
+
+}

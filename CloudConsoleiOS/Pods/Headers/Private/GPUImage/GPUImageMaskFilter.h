@@ -1,5 +1,1 @@
-#import "GPUImageTwoInputFilter.h"
-
-@interface GPUImageMaskFilter : GPUImageTwoInputFilter
-
-@end
+../../../GPUImage/framework/Source/GPUImageMaskFilter.h

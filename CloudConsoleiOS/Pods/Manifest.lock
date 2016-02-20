@@ -1,16 +1,52 @@
 PODS:
   - CocoaAsyncSocket (7.4.2)
   - GPUImage (0.1.7)
+  - MRProgress (0.8.3):
+    - MRProgress/ActivityIndicator (= 0.8.3)
+    - MRProgress/Blur (= 0.8.3)
+    - MRProgress/Circular (= 0.8.3)
+    - MRProgress/Icons (= 0.8.3)
+    - MRProgress/NavigationBarProgress (= 0.8.3)
+    - MRProgress/Overlay (= 0.8.3)
+  - MRProgress/ActivityIndicator (0.8.3):
+    - MRProgress/Stopable
+  - MRProgress/Blur (0.8.3):
+    - MRProgress/Helper
+  - MRProgress/Circular (0.8.3):
+    - MRProgress/Helper
+    - MRProgress/ProgressBaseClass
+    - MRProgress/Stopable
+  - MRProgress/Helper (0.8.3)
+  - MRProgress/Icons (0.8.3)
+  - MRProgress/NavigationBarProgress (0.8.3):
+    - MRProgress/ProgressBaseClass
+  - MRProgress/Overlay (0.8.3):
+    - MRProgress/ActivityIndicator
+    - MRProgress/Blur
+    - MRProgress/Circular
+    - MRProgress/Helper
+    - MRProgress/Icons
+  - MRProgress/ProgressBaseClass (0.8.3)
+  - MRProgress/Stopable (0.8.3):
+    - MRProgress/Helper
   - NXOAuth2Client (1.2.8)
+  - Shimmer (1.0.2)
+  - SpreadButton (0.1.5)
 
 DEPENDENCIES:
   - CocoaAsyncSocket
   - GPUImage
+  - MRProgress
   - NXOAuth2Client
+  - Shimmer
+  - SpreadButton
 
 SPEC CHECKSUMS:
   CocoaAsyncSocket: f5783bdedd232d91b89769bc4b5a1580aed518ad
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
+  MRProgress: 16de7cc9f347e8846797a770db102a323fe7ef09
   NXOAuth2Client: 98c4d4c594edd2b289cfc34a8928653e1dab7adf
+  Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
+  SpreadButton: 75382225dec6f1b67f632e3bb55d6d92af18224d
 
 COCOAPODS: 0.39.0

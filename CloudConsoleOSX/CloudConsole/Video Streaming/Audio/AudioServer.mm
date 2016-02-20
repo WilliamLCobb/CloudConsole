@@ -86,14 +86,6 @@ static OSStatus recordingCallback(void *inRefCon,
     /*  Select Soundflower  */
     AudioDeviceID inputDeviceID;
     AudioDeviceList *mOutputDeviceList = new AudioDeviceList(true);
-    //    //Sometimes selecting "Airplay" causes empty device list for a while and then
-    //    //changes all DeviceID(CoreAudio Restarted??), In that case we need retart
-    //    while(mOutputDeviceList->GetList().size() == 0){
-    //        restartRequired = true;
-    //        delete mOutputDeviceList;
-    //        [NSThread sleepForTimeInterval:0.1];
-    //        mOutputDeviceList = new AudioDeviceList(false);
-    //        NSLog(@"----------waiting for devices");
     
     // find soundflower devices, store and remove them from our output list
     AudioDeviceList::DeviceList &thelist = mOutputDeviceList->GetList();
@@ -107,6 +99,8 @@ static OSStatus recordingCallback(void *inRefCon,
             NSLog(@"Found Sound Flower! Need to add case when it wasn't found");
         }
     }
+    
+    AudioHardwareSetProperty(kAudioHardwarePropertyDefaultOutputDevice, sizeof(UInt32), &inputDeviceID);
     
     UInt32 one = 1;
     
@@ -198,7 +192,30 @@ static OSStatus recordingCallback(void *inRefCon,
 
 -(void) stop
 {
+    AudioDeviceID inputDeviceID;
+    UInt32 one = 1;
+    
+    AudioDeviceList *mOutputDeviceList = new AudioDeviceList(true);
+    
+    // find soundflower devices, store and remove them from our output list
+    AudioDeviceList::DeviceList &thelist = mOutputDeviceList->GetList();
+    int index = 0;
+    for (AudioDeviceList::DeviceList::iterator i = thelist.begin(); i != thelist.end(); ++i, ++index) {
+        NSLog(@"Name: %s", (*i).mName);
+        if (0 == strcmp("Built-in Output", (*i).mName)) {
+            inputDeviceID = (*i).mID;
+            AudioDeviceList::DeviceList::iterator toerase = i;
+            i--;
+            thelist.erase(toerase);
+        }
+    }
+    
+    //AudioHardwareGetProperty(kAudioHardwarePropertyDefaultSystemOutputDevice, &one, &inputDeviceID );
+    AudioHardwareSetProperty(kAudioHardwarePropertyDefaultOutputDevice, sizeof(UInt32), &inputDeviceID);
+    
     AudioOutputUnitStop(_audioUnit);
+    
+    
 }
 
 -(void) dealloc

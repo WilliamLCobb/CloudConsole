@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "CCILanFinder.h"
-@interface CCIMainViewController : UITableViewController <CCILanDelegate>
+#import "CCINetworkController.h"
+#import "CCIDeviceCollectionViewCell.h"
+#import "CCISpotlight.h"
+@interface CCIMainViewController : UICollectionViewController <CCILanDelegate, CCINetworkControllerDelegate, UICollectionViewDelegateFlowLayout, CCIDeviceCollectionViewCellDelegate, CCISpotlightDelegate>
 
 @end
 

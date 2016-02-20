@@ -1,5 +1,1 @@
-#import "GPUImageFilter.h"
-
-@interface GPUImageCGAColorspaceFilter : GPUImageFilter
-
-@end
+../../../GPUImage/framework/Source/GPUImageCGAColorspaceFilter.h

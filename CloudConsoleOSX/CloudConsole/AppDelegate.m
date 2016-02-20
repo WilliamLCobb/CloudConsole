@@ -11,23 +11,28 @@
 #import <mach/mach.h>
 #import <mach/mach_time.h>
 #import "CCOServer.h"
+#import "NSImage+Transform.h"
 
 @interface AppDelegate () {
-    
+    NSTimer     *ipUpdateTimer;
+    NSMenuItem  *ipItem;
+    NSArray     *shakeImages;
 }
     
 @end
 
 @implementation AppDelegate
 
++ (AppDelegate*)sharedInstance
+{
+    return [[NSApplication sharedApplication] delegate];
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     /*  Auto Update  */
     
-    [AUUpdater updaterWithBundle:[NSBundle mainBundle] host:@"www.williamlcobb.com" channel:@"release" percentile:0];
+    [AUUpdater updaterWithBundle:[NSBundle mainBundle] host:@"www.cloudconsoleapp.com" channel:@"release" percentile:0];
     
-    if ([[NSProcessInfo processInfo] respondsToSelector:@selector(beginActivityWithOptions:reason:)]) {
-        self.activity = [[NSProcessInfo processInfo] beginActivityWithOptions:0x00FFFFFF reason:@"receiving OSC messages"];
-    }
     [[CCOServer sharedInstance] start];
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:25.0];
     self.statusItem.image = [NSImage imageNamed:@"menuIconTemplate"];
@@ -35,23 +40,59 @@
     [menu addItemWithTitle:@"Cloud Console: Running" action:@selector(nothing) keyEquivalent:@""];
     
     NSString *IP = [[CCOServer sharedInstance] currentIP];
-    [menu addItemWithTitle:[NSString stringWithFormat:@"IP: %@", IP] action:@selector(nothing) keyEquivalent:@""];
+    ipItem = [menu addItemWithTitle:[NSString stringWithFormat:@"IP: %@", IP] action:@selector(nothing) keyEquivalent:@""];
     [menu insertItem:[NSMenuItem separatorItem] atIndex:1];
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [menu addItemWithTitle:[NSString stringWithFormat:@"Version: %@", version]
+                    action:@selector(nothing)
+             keyEquivalent:@""];
     [menu addItemWithTitle:@"Quit" action:@selector(quitApplication) keyEquivalent:@"Q"];
     self.statusItem.menu = menu;
+    ipUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(updateIp) userInfo:nil repeats:YES];
     
+    //Start at startup
+    if (![self isLaunchAtStartup]) {
+        [self toggleLaunchAtStartup];
+    }
+    
+    //Enter background mode
+    if ([[NSProcessInfo processInfo] respondsToSelector:@selector(beginActivityWithOptions:reason:)]) {
+        self.activity = [[NSProcessInfo processInfo] beginActivityWithOptions:NSActivityBackground reason:@"Backgrounding"];
+    }
 }
 
-- (void)nothing
+
+- (void)preventSleep
 {
-    
+    //Prevents app nap
+    if ([[NSProcessInfo processInfo] respondsToSelector:@selector(beginActivityWithOptions:reason:)]) {
+        [[NSProcessInfo processInfo] endActivity:self.activity]; //End Background
+        self.activity = [[NSProcessInfo processInfo] beginActivityWithOptions:NSActivityUserInitiated reason:@"Streaming"];
+    }
 }
 
+- (void)allowSleep
+{
+    if ([[NSProcessInfo processInfo] respondsToSelector:@selector(endActivity:)]) {
+        [[NSProcessInfo processInfo] endActivity:self.activity];
+        self.activity = [[NSProcessInfo processInfo] beginActivityWithOptions:NSActivityBackground reason:@"Backgrounding"];
+    }
+}
+     
+- (void)nothing{}
+
+- (void) updateIp
+{
+    NSString *IP = [[CCOServer sharedInstance] currentIP];
+    ipItem.title = [NSString stringWithFormat:@"IP: %@", IP];
+}
 
 - (void)quitApplication
 {
     [NSApp terminate:self];
 }
+
+#pragma mark Launch at Startup
 
 //http://stackoverflow.com/questions/608963/register-as-login-item-with-cocoa/
 - (BOOL)isLaunchAtStartup {
@@ -110,6 +151,33 @@
     return res;
 }
 
+#pragma mark - Shake
+
+- (void)shake
+{
+    if (!shakeImages) {
+        NSImage *baseImage = [NSImage imageNamed:@"menuIconTemplate"];
+        shakeImages = @[[baseImage imageRotatedByDegrees:-8],
+                        [baseImage imageRotatedByDegrees:-16],
+                        [baseImage imageRotatedByDegrees:-8],
+                        baseImage,
+                        [baseImage imageRotatedByDegrees:8],
+                        [baseImage imageRotatedByDegrees:16],
+                        [baseImage imageRotatedByDegrees:8],
+                        baseImage];
+    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (int i = 0; i < 4; i++) {
+            for (NSImage *image in shakeImages) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.statusItem.image = image;
+                });
+                [NSThread sleepForTimeInterval:0.013];
+            }
+        }
+    });
+}
+
 #pragma mark - Auto Updater Delegate
 
 - (void)updater:(AUUpdater *)updater wantsToInstallUpdateWithCriticalStatus:(BOOL)critical
@@ -128,6 +196,13 @@
     self.statusItem.menu = nil;
 }
 
+#pragma mark - Folders
 
++ (NSString *)supportFolder
+{
+    NSError *error;
+    NSURL *appSupportDir = [[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
+    return appSupportDir.path;
+}
 
 @end

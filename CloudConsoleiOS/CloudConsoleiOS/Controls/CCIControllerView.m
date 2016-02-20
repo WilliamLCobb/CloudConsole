@@ -66,6 +66,7 @@
     }
 }
 
+//for testing
 - (NSString *)getBitStringFor32:(uint32_t)value {
     NSString *bits = @"";
     

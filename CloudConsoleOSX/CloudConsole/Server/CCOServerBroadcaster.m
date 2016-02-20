@@ -54,15 +54,14 @@
 
 - (void)CCSocket:(CCUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag
 {
-    NSLog(@"GOT PING");
     if (tag != CCNetworkPing) {
         ERROR_LOG(@"Error, ServerBroadcaster got unknown tag: %u", tag);
         return;
     }
     NSString *host = [GCDAsyncSocket hostFromAddress:address];
     uint16_t  port = [GCDAsyncSocket portFromAddress:address];
-    INFO_LOG(@"Responding from ping to: %@:%u", host, port);
-    [sock sendData:[deviceName dataUsingEncoding:NSUTF8StringEncoding] toHost:host port:port withTimeout:-1 CCtag:CCNetworkPingResponse];
+    NSLog(@"Re: %@", deviceName);
+    [sock respondToPingAtHost:host port:port withData:[deviceName dataUsingEncoding:NSUTF8StringEncoding]];
 }
 
 #pragma mark - Bonjour Delegate

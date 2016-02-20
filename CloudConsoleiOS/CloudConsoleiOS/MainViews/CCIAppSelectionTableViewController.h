@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface CCIAppSelectionTableViewController : UITableViewController
+#import "CCINetworkController.h"
+
+@interface CCIAppSelectionTableViewController : UITableViewController <CCINetworkControllerDelegate>
 
 @end

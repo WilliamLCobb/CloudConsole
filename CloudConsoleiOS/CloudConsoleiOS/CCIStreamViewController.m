@@ -5,10 +5,12 @@
 //  Created by Will Cobb on 1/11/16.
 //  Copyright © 2016 Will Cobb. All rights reserved.
 //
-
+//  https://github.com/liuzhiyi1992/SpreadButton
 #import "CCIStreamViewController.h"
 #import "GPUImage.h"
 #import "CCIHeadTracker.h"
+#import "FBShimmeringView.h"
+@import SpreadButton;
 
 @interface GPUImageMovie ()
 -(void) processMovieFrame:(CVPixelBufferRef)movieFrame withSampleTime:(CMTime)currentSampleTime;
@@ -23,6 +25,8 @@
     CCIHeadTracker      *headTracker;
     
     UIView          *greenLineHider;
+    FBShimmeringView    *shimmerView;
+    SpreadButton    *spreadButton;
 }
 
 
@@ -38,7 +42,7 @@
     moviePlayer = [[GPUImageMovie alloc] initWithAsset:nil];
     
     streamView = [[GPUImageView alloc] init];
-    streamView.backgroundColor = [UIColor blueColor];
+    streamView.alpha = 0;
     [self.view addSubview:streamView];
     [self.view sendSubviewToBack:streamView];
     
@@ -56,9 +60,24 @@
     controlRect.size = [self currentScreenSizeAlwaysLandscape:YES];
     controllerView = [CCIControllerView controllerWithFrame:controlRect Type:CCControllerStyleGamecube];
     controllerView.delegate = self;
+    controllerView.alpha = 0;
     [self.view addSubview:controllerView];
     //headTracker = [[CCIHeadTracker alloc] init];
     
+    shimmerView = [[FBShimmeringView alloc] initWithFrame:CGRectMake(0, 0, 400, 100)];
+    UILabel *loadingLabel = [[UILabel alloc] initWithFrame:shimmerView.bounds];
+    loadingLabel.textAlignment = NSTextAlignmentCenter;
+    loadingLabel.text = @"Connecting";
+    loadingLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:60];
+    loadingLabel.textColor = [UIColor colorWithWhite:0.9 alpha:1];
+    shimmerView.contentView = loadingLabel;
+    shimmerView.center = controllerView.center; //self.view is still potrait
+    // Start shimmering.
+    shimmerView.shimmering = YES;
+    [self.view addSubview:shimmerView];
+    
+    spreadButton = [[SpreadButton alloc] initWithImage:[UIImage imageNamed:@"Gear"] highlightImage:[UIImage imageNamed:@"Gear"] position:CGPointMake(20, 20)];
+    [controllerView addSubview:spreadButton];
 
 }
 
@@ -85,6 +104,20 @@
 
 - (void)displayFrame:(CVImageBufferRef)frame
 {
+    //First frame
+    if (shimmerView.alpha == 1) {
+        shimmerView.alpha = 0.99;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:0.3 animations:^{
+                shimmerView.alpha = 0;
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:0.3 animations:^{
+                    controllerView.alpha = 1;
+                    streamView.alpha = 1;
+                }];
+            }];
+        });
+    }
     [moviePlayer processMovieFrame:frame withSampleTime:kCMTimeZero];
     CGSize streamSize = CVImageBufferGetDisplaySize(frame);
     if (fabs((streamView.frame.size.width/streamView.frame.size.height) -

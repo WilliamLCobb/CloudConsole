@@ -122,7 +122,11 @@
                 romDict[@"path"] = fullPath;
                 romDict[@"hasSettings"] = [NSNumber numberWithBool:NO];
                 romDict[@"hasTable"] = [NSNumber numberWithBool:NO];
-                romDict[@"name"] = [self nameForRomAtPath:fullPath];
+                //Read banner
+                NSFileHandle *handle =[NSFileHandle fileHandleForReadingAtPath:fullPath];
+                uint32_t bannerOffset = [self findBannerOffsetFromHandle:handle];
+                [handle seekToFileOffset:bannerOffset];
+                romDict[@"name"] = [self nameFromBannerWithHandle:handle];
                 [roms addObject:romDict];
             }
         }
@@ -178,32 +182,85 @@
     return paths;
 }
 
-/* Reading Banner Test */
+/* Reading Banner file */
 
-- (void)readEntryFromHandle:(NSFileHandle *)handle
+- (uint32_t)readRootFromHandle:(NSFileHandle *)handle
 {
     uint8_t type = *(uint8_t*)[handle readDataOfLength:0x1].bytes;
-    NSLog(@"  Entry Type: %d", type);
     
-    long fstOffset = CFSwapInt32BigToHost(*(uint32_t*)[handle readDataOfLength:0x3].bytes);
-    //NSLog(@"  Entry Extension offset: %d", [[NSString alloc] initWithData:extData encoding:NSASCIIStringEncoding]);
+    uint32_t stringOffset = *(uint32_t*)[handle readDataOfLength:0x3].bytes;
+    NSLog(@"Entry Type: %d", type);
+    NSLog(@"String Table Offset: %d", stringOffset);
     
-    
-    //uint32_t
+    uint32_t fileOffset = CFSwapInt32BigToHost(*(uint32_t*)[handle readDataOfLength:0x4].bytes);
+    NSLog(@"Root Offset: %u", fileOffset);
+    uint32_t length = CFSwapInt32BigToHost(*(uint32_t*)[handle readDataOfLength:0x4].bytes);
+    NSLog(@"num entries: %u", length);
+    return length;
 }
 
-- (void)dTest
+- (uint32_t)findBNRFromHandle:(NSFileHandle *)handle stringTableOffset:(uint32_t)tableOffset
 {
-    NSFileHandle *handle =[NSFileHandle fileHandleForReadingAtPath:@"/Users/willcobb/Dropbox/Roms/Dolphin/Super Mario Sunshine.iso"];
+    // Simply reads the fst format looking for opening.bnr
+    uint8_t type = *(uint8_t*)[handle readDataOfLength:0x1].bytes;
+    uint32_t stringOffset = CFSwapInt32BigToHost(*(uint32_t*)[handle readDataOfLength:0x3].bytes);
+    stringOffset >>= 8;
+    
+    uint32_t fileOffset = CFSwapInt32BigToHost(*(uint32_t*)[handle readDataOfLength:0x4].bytes);
+    uint32_t length = CFSwapInt32BigToHost(*(uint32_t*)[handle readDataOfLength:0x4].bytes);
+    
+    if (type == 0) {
+        long long currentOffset = handle.offsetInFile;
+        [handle seekToFileOffset:tableOffset + stringOffset];
+        NSData *textData = [handle readDataOfLength:11];
+        NSString *text = [[NSString alloc] initWithData:textData encoding:NSASCIIStringEncoding];
+        if ([text isEqualToString:@"opening.bnr"]) {
+            return fileOffset;
+        }
+        [handle seekToFileOffset:currentOffset];
+    }
+    return 0;
+}
+
+- (uint32_t)findBannerOffsetFromHandle:(NSFileHandle *)handle
+{
+    
     [handle seekToFileOffset:0x424];
-    long fstOffset = CFSwapInt32BigToHost(*(uint32_t*)[handle readDataOfLength:0x4].bytes);
+    uint32_t fstOffset = CFSwapInt32BigToHost(*(uint32_t*)[handle readDataOfLength:0x4].bytes);
     long fstSize = CFSwapInt32BigToHost(*(uint32_t*)[handle readDataOfLength:0x4].bytes);
-    NSLog(@"Offset: %ld", fstOffset);
+    NSLog(@"Offset: %u", fstOffset);
     NSLog(@"Size: %ld", fstSize);
     
     [handle seekToFileOffset:fstOffset];
-    NSLog(@"Reading Root:");
-    [self readEntryFromHandle:handle];
+    uint32_t numberOfEntries = [self readRootFromHandle:handle];
+    NSLog(@"---Begin Reading %u entries---", numberOfEntries);
+    uint32_t BNROffset = 0;
+    for (int i = 0; i < numberOfEntries; i++) {
+        BNROffset = [self findBNRFromHandle:handle stringTableOffset:fstOffset + numberOfEntries * 12];
+        if (BNROffset != 0) {
+            break;
+        }
+    }
+    return BNROffset;
+}
+
+- (NSString *)nameFromBannerWithHandle:(NSFileHandle *)handle
+{
+    uint32_t magic = CFSwapInt32BigToHost(*(uint32_t*)[handle readDataOfLength:0x4].bytes);
+    NSLog(@"m %u", magic);
+    [handle seekToFileOffset:handle.offsetInFile + 0x185C];
+    return [[NSString alloc] initWithData:[handle readDataOfLength:0x40] encoding:NSASCIIStringEncoding];
+}
+
+//96 x 32
+
+- (NSData *)imageFromBannerWithHandle:(NSFileHandle *)handle
+{
+    uint32_t magic = CFSwapInt32BigToHost(*(uint32_t*)[handle readDataOfLength:0x4].bytes);
+    NSLog(@"m %u", magic);
+    [handle seekToFileOffset:handle.offsetInFile + 0x1C];
+    NSData *imageData = [handle readDataOfLength:0x1800];
+    return nil;
 }
 
 @end

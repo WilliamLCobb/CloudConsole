@@ -19,7 +19,7 @@
 - (void)send:(NSData *)data;
 - (void)closeStreams;
 
-@property id<BonjourDelegate> delegate;
+@property (weak) id<BonjourDelegate> delegate;
 @property (nonatomic, strong, readwrite) NSNetService *         server;
 @property (nonatomic, assign, readwrite) BOOL                   isServerStarted;
 @property (nonatomic, copy,   readwrite) NSString *             registeredName;

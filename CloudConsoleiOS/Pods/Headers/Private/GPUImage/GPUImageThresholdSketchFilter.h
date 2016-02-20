@@ -1,5 +1,1 @@
-#import "GPUImageThresholdEdgeDetectionFilter.h"
-
-@interface GPUImageThresholdSketchFilter : GPUImageThresholdEdgeDetectionFilter
-
-@end
+../../../GPUImage/framework/Source/GPUImageThresholdSketchFilter.h

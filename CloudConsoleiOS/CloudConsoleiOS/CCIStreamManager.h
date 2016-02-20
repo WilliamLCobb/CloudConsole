@@ -13,6 +13,7 @@
 
 @protocol CCIStreamManagerDelegate <NSObject>
 
+- (void)streamEnded;
 - (void)streamClosed;
 
 @end
@@ -20,8 +21,8 @@
 @interface CCIStreamManager : NSObject <CCUdpSocketDelegate>
 
 @property (strong) CCUdpSocket  *streamSocket;
-@property (assign, nonatomic) id <CCIStreamManagerDelegate> delegate;
-@property (assign, nonatomic) id <CCIStreamDecoderDisplayDelegate> outputDelegate;
+@property (weak, nonatomic) id <CCIStreamManagerDelegate> delegate;
+@property (weak, nonatomic) id <CCIStreamDecoderDisplayDelegate> outputDelegate;
 
 - (void)sendDirectionalState:(CGPoint)directionalState forJoy:(uint8_t)joyId;
 - (void)sendButtonState:(uint32_t)buttonState;

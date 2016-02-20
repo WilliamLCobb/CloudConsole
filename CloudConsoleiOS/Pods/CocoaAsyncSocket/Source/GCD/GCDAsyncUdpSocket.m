@@ -4231,7 +4231,7 @@ enum GCDAsyncUdpSocketConfig
 	if ((socket4FDBytesAvailable == 0) && (socket6FDBytesAvailable == 0))
 	{
 		LogVerbose(@"No data available to receive...");
-		
+		//NSLog(@"No data available to receive...");
 		if (socket4FDBytesAvailable == 0) {
 			[self resumeReceive4Source];
 		}

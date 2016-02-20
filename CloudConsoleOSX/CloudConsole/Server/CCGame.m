@@ -24,8 +24,6 @@
 
 @end
 
-NSArray *gameNames;
-
 @implementation CCGame
 
 - (id)initWithPath:(NSString *)path
@@ -121,8 +119,10 @@ NSArray *gameNames;
 
 +(NSArray <CCGame *> *)gamesAtPath:(NSString *)path
 {
+    NSArray *gameNames = [[NSUserDefaults standardUserDefaults] arrayForKey:@"games"];
     if (!gameNames) {
-        gameNames = @[@"Dolphin.app"];//, @"Activity Monitor.app", @"Citra.app", @"VLC.app"]; //Load from file!
+        gameNames = @[@"Dolphin.app", @"Citra.app", @"VLC.app"]; //Default games
+        [[NSUserDefaults standardUserDefaults] setObject:gameNames forKey:@"games"];
     }
     NSError *error;
     NSArray * directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:&error];
@@ -140,6 +140,20 @@ NSArray *gameNames;
     return games;
 }
 
-
++(NSArray <CCGame *> *)allApplicationsAtPath:(NSString *)path
+{
+    NSError *error;
+    NSArray * directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:&error];
+    
+    NSMutableArray *apps = [NSMutableArray new];
+    if (error) {
+        NSLog(@"Error <applicationsAtPath:>: %@", error);
+    }
+    for (NSString *appName in directoryContents) {
+        NSString *gamePath = [path stringByAppendingPathComponent:appName];
+        [apps addObject:[[CCGame alloc] initWithPath:gamePath]];
+    }
+    return apps;
+}
 
 @end

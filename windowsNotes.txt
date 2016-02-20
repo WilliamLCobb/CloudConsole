@@ -1,0 +1,15 @@
+- Screen capture
+
+https://www.reddit.com/r/learnprogramming/comments/17fpmd/how_do_utilities_like_fraps_capture_screenshots/
+
+— Video encoding
+https://msdn.microsoft.com/en-us/library/windows/desktop/dd797816%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396
+
+http://stackoverflow.com/questions/3761146/microsoft-media-foundation-decode-h264-samples
+
+Examples: https://msdn.microsoft.com/en-us/library/windows/desktop/aa371827(v=vs.85).aspx#encoding_samples
+
+https://gist.github.com/roxlu/6453908
+
+— Audio
+https://obsproject.com/forum/resources/how-to-use-voicemeeter-banana-and-vac-to-control-audio-feeds-to-obs.158/

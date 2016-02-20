@@ -81,7 +81,7 @@
 //        }
         
         if(err == noErr) {
-            const int v = (8 * 1024) * 300; // KB/sec
+            const int v = (8 * 1024) * 100; // KB/sec
             CFNumberRef ref = CFNumberCreate(NULL, kCFNumberSInt32Type, &v);
             err = VTSessionSetProperty(compressionSession, kVTCompressionPropertyKey_AverageBitRate, ref);
             if (err != noErr) NSLog(@"Setup Error: Average bitrate -> %d", err);
@@ -143,7 +143,9 @@
     size_t height = CGImageGetHeight(image);
     size_t bytesPerRow = CGImageGetBytesPerRow(image);
     
+    //Very high CPU
     CFDataRef  dataFromImageDataProvider = CGDataProviderCopyData(CGImageGetDataProvider(image));
+    
     GLubyte  *imageData = (GLubyte *)CFDataGetBytePtr(dataFromImageDataProvider);
     
     CVPixelBufferCreateWithBytes(kCFAllocatorDefault,width,height,kCVPixelFormatType_32BGRA,imageData,bytesPerRow,NULL,NULL,options,&pxbuffer);
@@ -174,7 +176,6 @@ void vtCallback(void *outputCallbackRefCon,
     // Right now we've converting from AVCC to Anex B and on the client side we're converting back to AVCC
     // It might be possible to save some CPU time by skipping the conversion and adding our own custom headers
     // to packets
-    
     
     // Check if there were any errors encoding
     if (status != noErr) {

@@ -21,7 +21,11 @@
 #define kUseBonjour NO
 #define kEnableAudio YES
 
-// A block can never be more than MTU Size with we can assume is greater than 1024
+// A block can never be more than MTU Size. We can assume MTU is ~1500.
+// We'll leave 100 bytes for headers.
+// On all networks tested 8192 bytes works fine but papers recommend smaller sizes
+//8192
+// 1420
 #define CCNetworkUDPDataSize        8192
 
 //Number of bytes used by tags and options
@@ -48,37 +52,29 @@
 #define CCNetworkCloseStream        (uint32_t)2021
 
 // Stream Options
-#define CCNetworkStreamUseTCP       (uint32_t)1 << 0
+#define CCNetworkStreamUseTCP       (uint32_t)1 << 0 //Place holder
 
 /*  In Stream  */
 #define CCNetworkVideoData          (uint32_t)1008
 #define CCNetworkAudioData          (uint32_t)1009
 #define CCNetworkStreamKeepAlive    (uint32_t)1010
+
+/*  Blocks  */
 #define CCNetworkStreamBeginBlock   (uint32_t)1011
 #define CCNetworkStreamBlockNumber  (uint32_t)1112
+#define CCNetworkStreamAcknowledge  (uint32_t)1113
+#define CCNetworkStreamAcknowledged (uint32_t)1114
 
 /*  Controls  */
-#define CCNetworkButtonState        (uint32_t) 3030
-#define CCNetworkNoButtons          (uint16_t) 0
-#define CCNetworkXButton            (uint16_t) 1 << 0
-#define CCNetworkBButton            (uint16_t) 1 << 1
-#define CCNetworkYButton            (uint16_t) 1 << 2
-#define CCNetworkAButton            (uint16_t) 1 << 3
-#define CCNetworkLButton            (uint16_t) 1 << 4
-#define CCNetworkRButton            (uint16_t) 1 << 5
-#define CCNetworkStartButton        (uint16_t) 1 << 6
-#define CCNetworkSelectButton       (uint16_t) 1 << 7
+#define CCNetworkButtonState        (uint32_t)3030
 
-#define CCNetworkDirectionalState   (uint32_t) 3031
-#define CCNetworkNoDirection        (uint8_t) 0
-#define CCNetworkUp                 (uint8_t) 1 << 0
-#define CCNetworkDown               (uint8_t) 1 << 1
-#define CCNetworkLeft               (uint8_t) 1 << 2
-#define CCNetworkRight              (uint8_t) 1 << 3
+#define CCNetworkDirectionalState   (uint32_t)3031
 
 /*  Application States  */
 #define CCStateHome                 (uint32_t)4001
 #define CCStateInStream             (uint32_t)4002
+
+/*  Enumerations  */
 
 #endif /* NetworkProtocol_h */
 

@@ -46,9 +46,11 @@
     //NSLog(@"Mask: %@", self.netMask);
     NSArray *a = [self.localAddress componentsSeparatedByString:@"."];
     NSArray *b = [self.netMask componentsSeparatedByString:@"."];
-    if ([b[2] integerValue] < 0) { //Search space too big. Not worth wasting the time
+    if ([b[2] integerValue] < 100) { //Search space too big. Not worth wasting the time
         NSLog(@"Search space too big");
         return NO;
+    } else {
+        NSLog(@"Scanning network with mask: %@", self.netMask);
     }
     if ([self isIpAddressValid:self.localAddress] && (a.count == 4) && (b.count == 4)) {
         for (int i = 0; i<4; i++) {
@@ -68,7 +70,6 @@
 }
 
 - (void)stopScan {
-    NSLog(@"stop scan");
     [self.timer invalidate];
 }
 

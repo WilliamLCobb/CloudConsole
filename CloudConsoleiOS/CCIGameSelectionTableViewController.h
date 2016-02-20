@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "CCIGame.h"
-@interface CCIGameSelectionTableViewController : UITableViewController
+#import "CCINetworkController.h"
+@interface CCIGameSelectionTableViewController : UITableViewController <CCINetworkControllerDelegate>
 
 @property CCIGame *currentGame;
 

@@ -68,9 +68,12 @@
         for (NSDictionary *gameDict in gamesArray) {
             [self.subGames addObject:[[CCIGame alloc] initWithDictionairy:gameDict]];
         }
-        
         [self didChangeValueForKey:@"subGames"];
     }
 }
 
 @end
+
+
+
+

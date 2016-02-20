@@ -23,7 +23,7 @@
 
 @interface CCILanFinder : NSObject <BonjourDelegate, CCUdpSocketDelegate, ScanLANDelegate>
 
-@property id <CCILanDelegate>           delegate;
+@property (weak) id <CCILanDelegate>           delegate;
 @property (nonatomic) NSMutableArray    *devices;
 @property (nonatomic) NSMutableArray    *services;
 

@@ -11,6 +11,7 @@
 //  https://developer.apple.com/library/mac/documentation/IOKit/Reference/IOHIDManager_header_reference/#//apple_ref/c/tdef/IOHIDManagerRef
 //  http://eleccelerator.com/tutorial-about-usb-hid-report-descriptors/
 //  http://www.usb.org/developers/hidpage#HID Descriptor Tool
+
 #import "CCGamepadInput.h"
 #include <IOKit/IOKitLib.h>
 #include <IOKit/usb/IOUSBLib.h>
@@ -117,7 +118,7 @@ struct gamepad_report_t
         ret = 0;
         ret = IOConnectCallScalarMethod(connect, FOOHID_CREATE, input, 4, &output, &output_count);
         if (ret != KERN_SUCCESS) {
-            printf("unable to create HID device: %d\n", ret);
+            printf("unable  to create HID device: %d\n", ret);
             //exit(1);
         }
         

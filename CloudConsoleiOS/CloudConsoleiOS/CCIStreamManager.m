@@ -70,7 +70,7 @@
             now = CACurrentMediaTime();
             ///
             dispatch_async(videoDecodeQueue, ^{
-                [streamDecoder receivedRawVideoFrame:data.bytes withSize:data.length];
+                [streamDecoder receivedRawVideoFrame:(void *)data.bytes withSize:(uint32_t)data.length];
             });
             
             break;
@@ -113,7 +113,10 @@
 - (void)streamClosed
 {
     NSLog(@"Stream Closed");
-    [self.outputDelegate closedStream];
+    if (self.outputDelegate && [self.outputDelegate respondsToSelector:@selector(closedStream)]) {
+        [self.outputDelegate closedStream];
+    }
+    [self.delegate streamClosed];
     self.streamSocket.applicationState = CCStateHome;
     [audioClient stop];
     streamDecoder = nil;
@@ -132,12 +135,12 @@
     int8_t data[3] = {joyId, (int8_t)(directionalState.x * 127), (int8_t)(directionalState.y * 127)};
     NSMutableData * directionalData = [NSMutableData data];
     [directionalData appendBytes:data length:3];
-    [self.streamSocket sendData:directionalData withTimeout:10 CCtag:CCNetworkDirectionalState];
+    [self.streamSocket sendData:directionalData usingMethod:CCUdpSendMethodRedundent CCtag:CCNetworkDirectionalState];
 }
 
 - (void)sendButtonState:(uint32_t)buttonState
 {
-    [self.streamSocket sendData:[NSData dataWithBytes:&buttonState length:4] withTimeout:10 CCtag:CCNetworkButtonState];
+    [self.streamSocket sendData:[NSData dataWithBytes:&buttonState length:4] usingMethod:CCUdpSendMethodRedundent CCtag:CCNetworkButtonState];
 }
 
 

@@ -5,7 +5,10 @@
 //  Created by Will Cobb on 1/8/16.
 //  Copyright © 2016 Will Cobb. All rights reserved.
 //
-
+//  https://github.com/romaonthego/REFrostedViewController
+//  https://github.com/TransitApp/SVWebViewController
+//  https://github.com/yukiasai/Gecco
+//  http://cache1.asset-cache.net/gc/165073323-hardware-icons-white-gettyimages.jpg?v=1&c=IWSAsset&k=2&d=iLLR%2FeOet1oeMTS%2BjJBoqjTMwVQ8IBXq6GwF87dIk6Wth2qsG0%2F%2Be2FTdkpTaKtY
 #import "AppDelegate.h"
 #import "CCINetworkController.h"
 
@@ -13,6 +16,9 @@
 #import <mach/mach_time.h>
 
 #import "SCLAlertView.h"
+#import "CCIStreamManager.h"
+#import "CCIStreamViewController.h"
+#import "CCIGame.h"
 
 @interface AppDelegate () {
     mach_timebase_info_data_t _mach_timebase;
@@ -34,6 +40,16 @@
     mach_timebase_info(&_mach_timebase);
     
     return YES;
+}
+
+- (void)launchGame:(CCIGame *)game
+{
+    CCIStreamManager *streamManager = [AppDelegate.sharedInstance.networkController startStreamWithGame:game];
+    CCIStreamViewController *streamViewController = (CCIStreamViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CCIStreamViewController"];
+    streamViewController.streamManager = streamManager;
+    
+    streamManager.outputDelegate = streamViewController;
+    [[self topMostController] presentViewController:streamViewController animated:YES completion:nil];
 }
 
 - (void)showWarning:(NSString *)error withTitle:(NSString *)title

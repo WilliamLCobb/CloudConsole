@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, CCControllerStyle) {
 @interface CCIControllerView : UIView
 
 @property uint32_t  buttonState;
-@property id <CCIControllerViewDelegate> delegate;
+@property (weak) id <CCIControllerViewDelegate> delegate;
 + (id)controllerWithFrame:(CGRect)frame Type:(CCControllerStyle)type;
 - (void)addButtonWithFrame:(CGRect)frame Tag:(NSInteger) tag Image:(NSString *) image PressedImage:(NSString *)pressedImage;
 

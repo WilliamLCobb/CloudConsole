@@ -27,7 +27,7 @@
 //  http://technology.ezeenow.com/posts/2572/Playing_voice_from_server_stream_of_nsdata_using_AudioUnit_IOS
 //  http://stackoverflow.com/questions/17957720/how-to-record-and-play-back-audio-in-real-time-on-os-x
 //  http://stackoverflow.com/questions/31691361/output-is-not-generated-audioconverterfillcomplexbuffer-to-convert-from-aac-to-p
-//  http://stackoverflow.com/questions/28340738/playing-raw-pcm-audio-data-coming-from-nsstream**
+//  http://stackoverflow.com/questions/28340738/playing-raw-pcm-audio-data-coming-from-nsstream **
 //  https://www.yotta.co.za/Blog/2015/5/19/playing-audio-on-ios-from-a-socket-connection **
 
 
@@ -99,8 +99,7 @@
     return self;
 }
 
-#pragma mark - Main Loop`
-
+#pragma mark - Main Loop
 //Assume here the socket has been hole punched and we will be receiving on the sockets port
 - (BOOL)beginStreamWithSocket:(CCUdpSocket *)socket
 {
@@ -114,7 +113,6 @@
     [audioServer start];
     return YES;
 }
-
 
 - (CCUdpSocket *)streamSocket
 {
@@ -191,7 +189,7 @@
 
 - (void)sendEncodedData:(NSData *)frameData type:(uint32_t)dataType
 {
-    [streamSocket sendData:frameData withTimeout:-1 CCtag:dataType];
+    [streamSocket sendData:frameData usingMethod:CCUdpSendMethodStream CCtag:dataType];
 }
 
 - (void)CCSocket:(CCUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag

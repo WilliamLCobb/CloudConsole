@@ -79,7 +79,7 @@
 {
     if (CACurrentMediaTime() - lastRectUpdate > 1) { //Update window rect every second
         CGRect newRect = [self windowRect];
-        if (!CGSizeEqualToSize(newRect.size, _windowRect.size)) {
+        if (!CGSizeEqualToSize(newRect.size, _windowRect.size) || CGPointEqualToPoint(newRect.origin, _windowRect.origin)) {
             _windowRect = newRect;
             [self.delegate windowSizeChanged];
         }

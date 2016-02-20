@@ -14,6 +14,11 @@
 @property (strong) id activity;
 @property (strong, nonatomic) NSStatusItem *statusItem;
 
++ (AppDelegate*)sharedInstance;
+- (void)shake;
+- (void)preventSleep;
+- (void)allowSleep;
 
++ (NSString *)supportFolder;
 @end
 

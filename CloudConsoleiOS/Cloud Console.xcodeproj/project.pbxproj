@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A5D181CB0B616308CA88B238 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7118C35F36CB9E5BA04EFC08 /* libPods.a */; };
 		CA140CDD1C589162000B947D /* CCIDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = CA140CDC1C589162000B947D /* CCIDevice.m */; };
 		CA140CF61C597D97000B947D /* CCUdpBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = CA140CF31C597D97000B947D /* CCUdpBuffer.m */; };
 		CA140CF71C597D97000B947D /* CCUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = CA140CF51C597D97000B947D /* CCUdpSocket.m */; };
 		CA140D031C59B823000B947D /* CCIGameSelectionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA140D021C59B823000B947D /* CCIGameSelectionTableViewController.m */; };
 		CA1901B11C56DCD7002BC8F9 /* BonjourHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = CA1901B01C56DCD7002BC8F9 /* BonjourHandler.m */; };
+		CA247C281C72757A0004FC1A /* CCIDeviceCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA247C271C72757A0004FC1A /* CCIDeviceCollectionViewCell.m */; };
+		CA247C351C73DB110004FC1A /* CCISpotlight.m in Sources */ = {isa = PBXBuildFile; fileRef = CA247C341C73DB110004FC1A /* CCISpotlight.m */; };
 		CA6E2CB91C585DEB00B70EB1 /* iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = CA6E2CB31C585DEB00B70EB1 /* iPad.png */; };
 		CA6E2CBA1C585DEB00B70EB1 /* iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA6E2CB41C585DEB00B70EB1 /* iPad@2x.png */; };
 		CA6E2CBB1C585DEB00B70EB1 /* iPhone_5.png in Resources */ = {isa = PBXBuildFile; fileRef = CA6E2CB51C585DEB00B70EB1 /* iPhone_5.png */; };
@@ -20,6 +21,14 @@
 		CA6E2CBD1C585DEB00B70EB1 /* MBP.png in Resources */ = {isa = PBXBuildFile; fileRef = CA6E2CB71C585DEB00B70EB1 /* MBP.png */; };
 		CA6E2CBE1C585DEB00B70EB1 /* MBP@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA6E2CB81C585DEB00B70EB1 /* MBP@2x.png */; };
 		CA6E2CC11C5885F100B70EB1 /* CCILanFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = CA6E2CC01C5885F100B70EB1 /* CCILanFinder.m */; };
+		CA7798A91C7642E300CDDF08 /* google.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7798A31C7642E300CDDF08 /* google.png */; };
+		CA7798AA1C7642E300CDDF08 /* google@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7798A41C7642E300CDDF08 /* google@2x.png */; };
+		CA7798AB1C7642E300CDDF08 /* magnifying-glass.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7798A51C7642E300CDDF08 /* magnifying-glass.png */; };
+		CA7798AC1C7642E300CDDF08 /* magnifying-glass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7798A61C7642E300CDDF08 /* magnifying-glass@2x.png */; };
+		CA7798AD1C7642E300CDDF08 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7798A71C7642E300CDDF08 /* star.png */; };
+		CA7798AE1C7642E300CDDF08 /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7798A81C7642E300CDDF08 /* star@2x.png */; };
+		CA7798B11C7648E500CDDF08 /* gear12.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7798AF1C7648E500CDDF08 /* gear12.png */; };
+		CA7798B21C7648E500CDDF08 /* gear12@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7798B01C7648E500CDDF08 /* gear12@2x.png */; };
 		CA8C8F571C519FFE00FA7B61 /* TPCircularBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CA8C8F531C519FFE00FA7B61 /* TPCircularBuffer.c */; };
 		CA8C8F581C519FFE00FA7B61 /* TPCircularBuffer+AudioBufferList.c in Sources */ = {isa = PBXBuildFile; fileRef = CA8C8F551C519FFE00FA7B61 /* TPCircularBuffer+AudioBufferList.c */; };
 		CA8C8F621C51A24600FA7B61 /* AudioClient.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8C8F611C51A24600FA7B61 /* AudioClient.m */; };
@@ -48,7 +57,6 @@
 		CAB676961C44640B00518E8E /* PortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB676951C44640B00518E8E /* PortMapper.m */; };
 		CAC433EC1C670B6B000D569E /* CloudConsoleIcon-128.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC433EA1C670B6B000D569E /* CloudConsoleIcon-128.png */; };
 		CAC433ED1C670B6B000D569E /* CloudConsoleIcon-128@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC433EB1C670B6B000D569E /* CloudConsoleIcon-128@2x.png */; };
-		CAC433F01C67F2DA000D569E /* CCITabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC433EF1C67F2DA000D569E /* CCITabBarController.m */; };
 		CAC433F31C67F3CB000D569E /* CCIPortraitNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC433F21C67F3CB000D569E /* CCIPortraitNavigationController.m */; };
 		CAE404C81C488BB500AD464F /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE404C71C488BB500AD464F /* GameController.framework */; };
 		CAE405DD1C4DE5BF00AD464F /* gcpad_a@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE405911C4DE5BF00AD464F /* gcpad_a@2x.png */; };
@@ -148,10 +156,13 @@
 		CAE48C401C63F0B90085870A /* SCLAlertViewStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE48C361C63F0B90085870A /* SCLAlertViewStyleKit.m */; };
 		CAE48C411C63F0B90085870A /* SCLTimerDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE48C391C63F0B90085870A /* SCLTimerDisplay.m */; };
 		CAE48C421C63F0B90085870A /* SCLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE48C3B1C63F0B90085870A /* SCLTextView.m */; };
-		CAE48C491C63F5570085870A /* NewDeviceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE48C481C63F5570085870A /* NewDeviceTableViewController.m */; };
+		CAE48C491C63F5570085870A /* CCINewDeviceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE48C481C63F5570085870A /* CCINewDeviceTableViewController.m */; };
 		CAE48C4C1C64000B0085870A /* Gear.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE48C4A1C64000B0085870A /* Gear.png */; };
 		CAE48C4D1C64000B0085870A /* Gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE48C4B1C64000B0085870A /* Gear@2x.png */; };
+		CAF5329A1C714FC7009B2A72 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF532971C714FC7009B2A72 /* DACircularProgressView.m */; };
+		CAF5329B1C714FC7009B2A72 /* DALabeledCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF532991C714FC7009B2A72 /* DALabeledCircularProgressView.m */; };
 		CAFD47FD1C5AD89F00B1BB4D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAFD47FC1C5AD89F00B1BB4D /* SystemConfiguration.framework */; };
+		DAD1D523B24FDC742834C365 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A51CB10EC8276709EAB2CA8 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,7 +184,7 @@
 
 /* Begin PBXFileReference section */
 		28B95303180175DA2892DD19 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		7118C35F36CB9E5BA04EFC08 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A51CB10EC8276709EAB2CA8 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8242733B34EEB9D45B66CE88 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		CA140CDB1C589162000B947D /* CCIDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIDevice.h; sourceTree = "<group>"; };
 		CA140CDC1C589162000B947D /* CCIDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCIDevice.m; sourceTree = "<group>"; };
@@ -185,6 +196,10 @@
 		CA140D021C59B823000B947D /* CCIGameSelectionTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCIGameSelectionTableViewController.m; sourceTree = "<group>"; };
 		CA1901AF1C56DCD7002BC8F9 /* BonjourHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BonjourHandler.h; path = ../../Objc_Common/BonjourHandler.h; sourceTree = "<group>"; };
 		CA1901B01C56DCD7002BC8F9 /* BonjourHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BonjourHandler.m; path = ../../Objc_Common/BonjourHandler.m; sourceTree = "<group>"; };
+		CA247C261C72757A0004FC1A /* CCIDeviceCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIDeviceCollectionViewCell.h; sourceTree = "<group>"; };
+		CA247C271C72757A0004FC1A /* CCIDeviceCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCIDeviceCollectionViewCell.m; sourceTree = "<group>"; };
+		CA247C331C73DB110004FC1A /* CCISpotlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCISpotlight.h; sourceTree = "<group>"; };
+		CA247C341C73DB110004FC1A /* CCISpotlight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCISpotlight.m; sourceTree = "<group>"; };
 		CA6E2CB31C585DEB00B70EB1 /* iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPad.png; sourceTree = "<group>"; };
 		CA6E2CB41C585DEB00B70EB1 /* iPad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad@2x.png"; sourceTree = "<group>"; };
 		CA6E2CB51C585DEB00B70EB1 /* iPhone_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone_5.png; sourceTree = "<group>"; };
@@ -193,6 +208,14 @@
 		CA6E2CB81C585DEB00B70EB1 /* MBP@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MBP@2x.png"; sourceTree = "<group>"; };
 		CA6E2CBF1C5885F100B70EB1 /* CCILanFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCILanFinder.h; sourceTree = "<group>"; };
 		CA6E2CC01C5885F100B70EB1 /* CCILanFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCILanFinder.m; sourceTree = "<group>"; };
+		CA7798A31C7642E300CDDF08 /* google.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = google.png; sourceTree = "<group>"; };
+		CA7798A41C7642E300CDDF08 /* google@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "google@2x.png"; sourceTree = "<group>"; };
+		CA7798A51C7642E300CDDF08 /* magnifying-glass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "magnifying-glass.png"; sourceTree = "<group>"; };
+		CA7798A61C7642E300CDDF08 /* magnifying-glass@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "magnifying-glass@2x.png"; sourceTree = "<group>"; };
+		CA7798A71C7642E300CDDF08 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		CA7798A81C7642E300CDDF08 /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
+		CA7798AF1C7648E500CDDF08 /* gear12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gear12.png; sourceTree = "<group>"; };
+		CA7798B01C7648E500CDDF08 /* gear12@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear12@2x.png"; sourceTree = "<group>"; };
 		CA8C8F321C51761B00FA7B61 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		CA8C8F341C51765200FA7B61 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		CA8C8F531C519FFE00FA7B61 /* TPCircularBuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TPCircularBuffer.c; sourceTree = "<group>"; };
@@ -243,8 +266,6 @@
 		CAB676951C44640B00518E8E /* PortMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PortMapper.m; sourceTree = "<group>"; };
 		CAC433EA1C670B6B000D569E /* CloudConsoleIcon-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CloudConsoleIcon-128.png"; path = "../../Image Sets/Icons/App/CloudConsoleIcon-128.png"; sourceTree = "<group>"; };
 		CAC433EB1C670B6B000D569E /* CloudConsoleIcon-128@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CloudConsoleIcon-128@2x.png"; path = "../../Image Sets/Icons/App/CloudConsoleIcon-128@2x.png"; sourceTree = "<group>"; };
-		CAC433EE1C67F2DA000D569E /* CCITabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCITabBarController.h; path = CloudConsoleiOS/ViewControllers/CCITabBarController.h; sourceTree = "<group>"; };
-		CAC433EF1C67F2DA000D569E /* CCITabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCITabBarController.m; path = CloudConsoleiOS/ViewControllers/CCITabBarController.m; sourceTree = "<group>"; };
 		CAC433F11C67F3CB000D569E /* CCIPortraitNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIPortraitNavigationController.h; sourceTree = "<group>"; };
 		CAC433F21C67F3CB000D569E /* CCIPortraitNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCIPortraitNavigationController.m; sourceTree = "<group>"; };
 		CAE404C71C488BB500AD464F /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
@@ -363,10 +384,14 @@
 		CAE48C391C63F0B90085870A /* SCLTimerDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLTimerDisplay.m; sourceTree = "<group>"; };
 		CAE48C3A1C63F0B90085870A /* SCLTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLTextView.h; sourceTree = "<group>"; };
 		CAE48C3B1C63F0B90085870A /* SCLTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLTextView.m; sourceTree = "<group>"; };
-		CAE48C471C63F5570085870A /* NewDeviceTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewDeviceTableViewController.h; path = CloudConsoleiOS/ViewControllers/NewDeviceTableViewController.h; sourceTree = "<group>"; };
-		CAE48C481C63F5570085870A /* NewDeviceTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewDeviceTableViewController.m; path = CloudConsoleiOS/ViewControllers/NewDeviceTableViewController.m; sourceTree = "<group>"; };
+		CAE48C471C63F5570085870A /* CCINewDeviceTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCINewDeviceTableViewController.h; path = CloudConsoleiOS/ViewControllers/CCINewDeviceTableViewController.h; sourceTree = "<group>"; };
+		CAE48C481C63F5570085870A /* CCINewDeviceTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCINewDeviceTableViewController.m; path = CloudConsoleiOS/ViewControllers/CCINewDeviceTableViewController.m; sourceTree = "<group>"; };
 		CAE48C4A1C64000B0085870A /* Gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gear.png; sourceTree = "<group>"; };
 		CAE48C4B1C64000B0085870A /* Gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Gear@2x.png"; sourceTree = "<group>"; };
+		CAF532961C714FC7009B2A72 /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
+		CAF532971C714FC7009B2A72 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
+		CAF532981C714FC7009B2A72 /* DALabeledCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DALabeledCircularProgressView.h; sourceTree = "<group>"; };
+		CAF532991C714FC7009B2A72 /* DALabeledCircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DALabeledCircularProgressView.m; sourceTree = "<group>"; };
 		CAFD47FC1C5AD89F00B1BB4D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -383,7 +408,7 @@
 				CAB6767A1C41BD2F00518E8E /* CoreImage.framework in Frameworks */,
 				CAB676781C4047D900518E8E /* AVFoundation.framework in Frameworks */,
 				CAB676761C40475A00518E8E /* VideoToolbox.framework in Frameworks */,
-				A5D181CB0B616308CA88B238 /* libPods.a in Frameworks */,
+				DAD1D523B24FDC742834C365 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,9 +449,30 @@
 				CA8C8F321C51761B00FA7B61 /* MobileCoreServices.framework */,
 				CAE404C71C488BB500AD464F /* GameController.framework */,
 				CAB676791C41BD2F00518E8E /* CoreImage.framework */,
-				7118C35F36CB9E5BA04EFC08 /* libPods.a */,
+				3A51CB10EC8276709EAB2CA8 /* Pods.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CA247C251C7272FA0004FC1A /* Main View */ = {
+			isa = PBXGroup;
+			children = (
+				CAB676451C40382300518E8E /* CCIMainViewController.h */,
+				CAB676461C40382300518E8E /* CCIMainViewController.m */,
+				CA247C261C72757A0004FC1A /* CCIDeviceCollectionViewCell.h */,
+				CA247C271C72757A0004FC1A /* CCIDeviceCollectionViewCell.m */,
+				CAE48C431C63F5080085870A /* Main View Options */,
+			);
+			name = "Main View";
+			sourceTree = "<group>";
+		};
+		CA247C321C73DAE00004FC1A /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				CA247C331C73DB110004FC1A /* CCISpotlight.h */,
+				CA247C341C73DB110004FC1A /* CCISpotlight.m */,
+			);
+			name = Libraries;
 			sourceTree = "<group>";
 		};
 		CA6E2CB21C585DE100B70EB1 /* Devices */ = {
@@ -442,6 +488,22 @@
 			name = Devices;
 			sourceTree = "<group>";
 		};
+		CA7798A21C7642E300CDDF08 /* Discovery */ = {
+			isa = PBXGroup;
+			children = (
+				CA7798A31C7642E300CDDF08 /* google.png */,
+				CA7798A41C7642E300CDDF08 /* google@2x.png */,
+				CA7798A51C7642E300CDDF08 /* magnifying-glass.png */,
+				CA7798A61C7642E300CDDF08 /* magnifying-glass@2x.png */,
+				CA7798A71C7642E300CDDF08 /* star.png */,
+				CA7798A81C7642E300CDDF08 /* star@2x.png */,
+				CA7798AF1C7648E500CDDF08 /* gear12.png */,
+				CA7798B01C7648E500CDDF08 /* gear12@2x.png */,
+			);
+			name = Discovery;
+			path = ../Discovery;
+			sourceTree = "<group>";
+		};
 		CA8C8F281C5175E700FA7B61 /* Audio */ = {
 			isa = PBXGroup;
 			children = (
@@ -455,20 +517,19 @@
 			name = Audio;
 			sourceTree = "<group>";
 		};
-		CA8C8FD51C547AFB00FA7B61 /* MainViews */ = {
+		CA8C8FD51C547AFB00FA7B61 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				CAC433EE1C67F2DA000D569E /* CCITabBarController.h */,
-				CAC433EF1C67F2DA000D569E /* CCITabBarController.m */,
-				CAB676451C40382300518E8E /* CCIMainViewController.h */,
-				CAB676461C40382300518E8E /* CCIMainViewController.m */,
-				CAE48C431C63F5080085870A /* Main View Options */,
+				CAC433F11C67F3CB000D569E /* CCIPortraitNavigationController.h */,
+				CAC433F21C67F3CB000D569E /* CCIPortraitNavigationController.m */,
+				CA247C251C7272FA0004FC1A /* Main View */,
 				CA8C8FD61C547B5800FA7B61 /* CCIAppSelectionTableViewController.h */,
 				CA8C8FD71C547B5800FA7B61 /* CCIAppSelectionTableViewController.m */,
 				CA140D011C59B823000B947D /* CCIGameSelectionTableViewController.h */,
 				CA140D021C59B823000B947D /* CCIGameSelectionTableViewController.m */,
+				CAB676841C439D7D00518E8E /* StreamView */,
 			);
-			name = MainViews;
+			name = "View Controllers";
 			path = ..;
 			sourceTree = "<group>";
 		};
@@ -517,8 +578,8 @@
 			children = (
 				CAB6768C1C443ABC00518E8E /* Network */,
 				CAE404BD1C4884A700AD464F /* Controls */,
-				CAB676841C439D7D00518E8E /* StreamView */,
-				CA8C8FD51C547AFB00FA7B61 /* MainViews */,
+				CA247C321C73DAE00004FC1A /* Libraries */,
+				CA8C8FD51C547AFB00FA7B61 /* View Controllers */,
 				CAB676421C40382300518E8E /* AppDelegate.h */,
 				CAB676431C40382300518E8E /* AppDelegate.m */,
 				CAB676481C40382300518E8E /* Main.storyboard */,
@@ -529,6 +590,7 @@
 				CAB676501C40382300518E8E /* Info.plist */,
 				CAB6763F1C40382300518E8E /* Supporting Files */,
 				CAE4058D1C4DE5BF00AD464F /* Images */,
+				CAF532951C714FC7009B2A72 /* DACircularProgress */,
 				CAE48C2C1C63F0A00085870A /* SCLAlertView */,
 			);
 			path = CloudConsoleiOS;
@@ -576,6 +638,7 @@
 				CAB676861C439DA600518E8E /* CCIStreamViewController.m */,
 			);
 			name = StreamView;
+			path = CloudConsoleiOS;
 			sourceTree = "<group>";
 		};
 		CAB676881C44357200518E8E /* Stream */ = {
@@ -593,13 +656,10 @@
 			isa = PBXGroup;
 			children = (
 				CA8C8FF61C558D2900FA7B61 /* Discovery */,
+				CAF5328B1C6D8748009B2A72 /* CCSocket */,
 				CAE48BEC1C5FDCB90085870A /* CCNetworkProtocol.h */,
 				CAB6768E1C443AE500518E8E /* CCINetworkController.h */,
 				CAB6768F1C443AE500518E8E /* CCINetworkController.m */,
-				CA140CF21C597D97000B947D /* CCUdpBuffer.h */,
-				CA140CF31C597D97000B947D /* CCUdpBuffer.m */,
-				CA140CF41C597D97000B947D /* CCUdpSocket.h */,
-				CA140CF51C597D97000B947D /* CCUdpSocket.m */,
 				CA8C8F711C52DFE600FA7B61 /* CCIGame.h */,
 				CA8C8F721C52DFE600FA7B61 /* CCIGame.m */,
 				CAB676881C44357200518E8E /* Stream */,
@@ -642,6 +702,7 @@
 				CAE48C4E1C6400120085870A /* Navigation */,
 				CA6E2CB21C585DE100B70EB1 /* Devices */,
 				CAE4058E1C4DE5BF00AD464F /* Controllers */,
+				CA7798A21C7642E300CDDF08 /* Discovery */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -806,10 +867,8 @@
 		CAE48C431C63F5080085870A /* Main View Options */ = {
 			isa = PBXGroup;
 			children = (
-				CAE48C471C63F5570085870A /* NewDeviceTableViewController.h */,
-				CAE48C481C63F5570085870A /* NewDeviceTableViewController.m */,
-				CAC433F11C67F3CB000D569E /* CCIPortraitNavigationController.h */,
-				CAC433F21C67F3CB000D569E /* CCIPortraitNavigationController.m */,
+				CAE48C471C63F5570085870A /* CCINewDeviceTableViewController.h */,
+				CAE48C481C63F5570085870A /* CCINewDeviceTableViewController.m */,
 			);
 			name = "Main View Options";
 			sourceTree = "<group>";
@@ -821,6 +880,29 @@
 				CAE48C4B1C64000B0085870A /* Gear@2x.png */,
 			);
 			name = Navigation;
+			sourceTree = "<group>";
+		};
+		CAF5328B1C6D8748009B2A72 /* CCSocket */ = {
+			isa = PBXGroup;
+			children = (
+				CA140CF21C597D97000B947D /* CCUdpBuffer.h */,
+				CA140CF31C597D97000B947D /* CCUdpBuffer.m */,
+				CA140CF41C597D97000B947D /* CCUdpSocket.h */,
+				CA140CF51C597D97000B947D /* CCUdpSocket.m */,
+			);
+			name = CCSocket;
+			sourceTree = "<group>";
+		};
+		CAF532951C714FC7009B2A72 /* DACircularProgress */ = {
+			isa = PBXGroup;
+			children = (
+				CAF532961C714FC7009B2A72 /* DACircularProgressView.h */,
+				CAF532971C714FC7009B2A72 /* DACircularProgressView.m */,
+				CAF532981C714FC7009B2A72 /* DALabeledCircularProgressView.h */,
+				CAF532991C714FC7009B2A72 /* DALabeledCircularProgressView.m */,
+			);
+			name = DACircularProgress;
+			path = ../DACircularProgress;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -937,6 +1019,7 @@
 				CAE4060E1C4DE5BF00AD464F /* gcpad_c_pressed.png in Resources */,
 				CAE405E41C4DE5BF00AD464F /* gcpad_dpad_pressed_down@2x.png in Resources */,
 				CAE405EE1C4DE5BF00AD464F /* gcpad_joystick_range@2x.png in Resources */,
+				CA7798AA1C7642E300CDDF08 /* google@2x.png in Resources */,
 				CAE406271C4DE5BF00AD464F /* ic_date.png in Resources */,
 				CAE406111C4DE5BF00AD464F /* gcpad_dpad_pressed_downleft.png in Resources */,
 				CAE406161C4DE5BF00AD464F /* gcpad_dpad_pressed_upleft.png in Resources */,
@@ -949,8 +1032,10 @@
 				CAE406421C4DE60500AD464F /* JoystickBackground.png in Resources */,
 				CAE406491C4DE60500AD464F /* RTrigger@2x.png in Resources */,
 				CAE405E61C4DE5BF00AD464F /* gcpad_dpad_pressed_downright@2x.png in Resources */,
+				CA7798AD1C7642E300CDDF08 /* star.png in Resources */,
 				CAE4061D1C4DE5BF00AD464F /* gcpad_r.png in Resources */,
 				CAE406121C4DE5BF00AD464F /* gcpad_dpad_pressed_downright.png in Resources */,
+				CA7798AB1C7642E300CDDF08 /* magnifying-glass.png in Resources */,
 				CAE406451C4DE60500AD464F /* JoystickButton@2x.png in Resources */,
 				CAE405E01C4DE5BF00AD464F /* gcpad_b_pressed@2x.png in Resources */,
 				CAE4060A1C4DE5BF00AD464F /* gcpad_a_pressed.png in Resources */,
@@ -993,10 +1078,13 @@
 				CAE4060D1C4DE5BF00AD464F /* gcpad_c.png in Resources */,
 				CAE406481C4DE60500AD464F /* RTrigger.png in Resources */,
 				CAE406141C4DE5BF00AD464F /* gcpad_dpad_pressed_right.png in Resources */,
+				CA7798AE1C7642E300CDDF08 /* star@2x.png in Resources */,
 				CAE405E91C4DE5BF00AD464F /* gcpad_dpad_pressed_up@2x.png in Resources */,
 				CAE405F21C4DE5BF00AD464F /* gcpad_r_pressed@2x.png in Resources */,
 				CAE405EF1C4DE5BF00AD464F /* gcpad_l@2x.png in Resources */,
+				CA7798AC1C7642E300CDDF08 /* magnifying-glass@2x.png in Resources */,
 				CAE405DD1C4DE5BF00AD464F /* gcpad_a@2x.png in Resources */,
+				CA7798B11C7648E500CDDF08 /* gear12.png in Resources */,
 				CAE405F11C4DE5BF00AD464F /* gcpad_r@2x.png in Resources */,
 				CAE405E31C4DE5BF00AD464F /* gcpad_dpad@2x.png in Resources */,
 				CAE405E11C4DE5BF00AD464F /* gcpad_c@2x.png in Resources */,
@@ -1013,6 +1101,7 @@
 				CAE4063F1C4DE60500AD464F /* DPad@2x.png in Resources */,
 				CAE405E71C4DE5BF00AD464F /* gcpad_dpad_pressed_left@2x.png in Resources */,
 				CAE406261C4DE5BF00AD464F /* gcpad_z_pressed.png in Resources */,
+				CA7798A91C7642E300CDDF08 /* google.png in Resources */,
 				CAE406401C4DE60500AD464F /* HideEmulator.png in Resources */,
 				CAE405F31C4DE5BF00AD464F /* gcpad_start@2x.png in Resources */,
 				CAE4060B1C4DE5BF00AD464F /* gcpad_b.png in Resources */,
@@ -1023,6 +1112,7 @@
 				CAE406211C4DE5BF00AD464F /* gcpad_x.png in Resources */,
 				CAE405F91C4DE5BF00AD464F /* gcpad_z@2x.png in Resources */,
 				CAE406091C4DE5BF00AD464F /* gcpad_a.png in Resources */,
+				CA7798B21C7648E500CDDF08 /* gear12@2x.png in Resources */,
 				CAE405DF1C4DE5BF00AD464F /* gcpad_b@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1110,9 +1200,11 @@
 				CAE406501C4DE6DA00AD464F /* CCIControllerView.m in Sources */,
 				CA140CF61C597D97000B947D /* CCUdpBuffer.m in Sources */,
 				CAE48C411C63F0B90085870A /* SCLTimerDisplay.m in Sources */,
+				CA247C281C72757A0004FC1A /* CCIDeviceCollectionViewCell.m in Sources */,
 				CAB676741C40470100518E8E /* CCIStreamDecoder.m in Sources */,
 				CA1901B11C56DCD7002BC8F9 /* BonjourHandler.m in Sources */,
 				CAB676471C40382300518E8E /* CCIMainViewController.m in Sources */,
+				CAF5329A1C714FC7009B2A72 /* DACircularProgressView.m in Sources */,
 				CAE48C421C63F0B90085870A /* SCLTextView.m in Sources */,
 				CAE406581C4DE6F800AD464F /* CCDirectionalControl.m in Sources */,
 				CA8C8FFB1C558D4B00FA7B61 /* Reachability.m in Sources */,
@@ -1120,6 +1212,7 @@
 				CAB676871C439DA600518E8E /* CCIStreamViewController.m in Sources */,
 				CAE48C3E1C63F0B90085870A /* SCLButton.m in Sources */,
 				CA140CF71C597D97000B947D /* CCUdpSocket.m in Sources */,
+				CAF5329B1C714FC7009B2A72 /* DALabeledCircularProgressView.m in Sources */,
 				CAE48C271C627C8F0085870A /* SimplePing.m in Sources */,
 				CAB676441C40382300518E8E /* AppDelegate.m in Sources */,
 				CAB676411C40382300518E8E /* main.m in Sources */,
@@ -1129,11 +1222,11 @@
 				CA8C8F581C519FFE00FA7B61 /* TPCircularBuffer+AudioBufferList.c in Sources */,
 				CAE48C3C1C63F0B90085870A /* UIImage+ImageEffects.m in Sources */,
 				CAE48C3F1C63F0B90085870A /* SCLAlertViewResponder.m in Sources */,
-				CAE48C491C63F5570085870A /* NewDeviceTableViewController.m in Sources */,
+				CAE48C491C63F5570085870A /* CCINewDeviceTableViewController.m in Sources */,
 				CAE48C401C63F0B90085870A /* SCLAlertViewStyleKit.m in Sources */,
 				CA8C8FD81C547B5800FA7B61 /* CCIAppSelectionTableViewController.m in Sources */,
 				CAE406571C4DE6F800AD464F /* CCButtonControl.m in Sources */,
-				CAC433F01C67F2DA000D569E /* CCITabBarController.m in Sources */,
+				CA247C351C73DB110004FC1A /* CCISpotlight.m in Sources */,
 				CAE48C3D1C63F0B90085870A /* SCLAlertView.m in Sources */,
 				CAB6768B1C443AB700518E8E /* CCIStreamManager.m in Sources */,
 			);
@@ -1226,7 +1319,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1264,7 +1357,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1277,6 +1370,7 @@
 			baseConfigurationReference = 8242733B34EEB9D45B66CE88 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = CloudConsoleiOS/Info.plist;
@@ -1285,6 +1379,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.WillCobb.CloudConsoleiOS;
 				PRODUCT_NAME = "Cloud Console";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Cloud Console-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -1293,6 +1389,7 @@
 			baseConfigurationReference = 28B95303180175DA2892DD19 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = CloudConsoleiOS/Info.plist;
@@ -1301,6 +1398,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.WillCobb.CloudConsoleiOS;
 				PRODUCT_NAME = "Cloud Console";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Cloud Console-Bridging-Header.h";
 			};
 			name = Release;
 		};

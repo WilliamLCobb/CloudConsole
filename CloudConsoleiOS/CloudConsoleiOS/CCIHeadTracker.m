@@ -22,7 +22,7 @@
                                                      [self outputAccelertionData:accelerometerData.acceleration];
                                                      if(error){
                                                          
-                                                         NSLog(@"%@", error);
+                                                         NSLog(@"EE %@", error);
                                                      }
                                                  }];
         

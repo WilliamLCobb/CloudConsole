@@ -1,11 +1,1 @@
-
-#import "GPUImageFilter.h"
-
-@interface GPUImageHueFilter : GPUImageFilter
-{
-    GLint hueAdjustUniform;
-    
-}
-@property (nonatomic, readwrite) CGFloat hue;
-
-@end
+../../../GPUImage/framework/Source/GPUImageHueFilter.h

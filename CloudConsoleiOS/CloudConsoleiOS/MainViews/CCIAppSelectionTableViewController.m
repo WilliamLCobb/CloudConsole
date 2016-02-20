@@ -9,18 +9,17 @@
 #import "CCIAppSelectionTableViewController.h"
 
 #import "AppDelegate.h"
-#import "CCINetworkController.h"
-#import "CCIStreamViewController.h"
 #import "CCIGame.h"
 
 #import "CCIGameSelectionTableViewController.h"
+#import "DALabeledCircularProgressView.h"
 
 @interface CCIAppSelectionTableViewController () {
     CCIGame                 *selectedGame;
     CCINetworkController    *networkController;
+    DALabeledCircularProgressView *progressView;
     
     BOOL currentView;
-    BOOL applicationsLoaded;
 }
 
 @end
@@ -29,26 +28,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    networkController = AppDelegate.sharedInstance.networkController;
+    
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    
-    NSLog(@"%@", networkController);
-    
-    [networkController addObserver:self forKeyPath:@"games" options:NSKeyValueObservingOptionNew context:nil];
     
     self.tableView.tableFooterView = [UIView new];
     self.tableView.tableFooterView.backgroundColor = [UIColor whiteColor];
     
-    UILabel *searchingLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, self.view.frame.size.width - 40, 20)];
-    searchingLabel.text = @"Loading Applications";
-    searchingLabel.textAlignment = NSTextAlignmentCenter;
-    [self.tableView.tableFooterView addSubview:searchingLabel];
+//    UILabel *searchingLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, self.view.frame.size.width - 40, 20)];
+//    searchingLabel.text = @"Loading Applications";
+//    searchingLabel.textAlignment = NSTextAlignmentCenter;
+//    [self.tableView.tableFooterView addSubview:searchingLabel];
     
-    UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    [activity startAnimating];
-    activity.frame = CGRectMake(self.view.frame.size.width/2 - activity.frame.size.width/2, searchingLabel.frame.size.height + 20, activity.frame.size.width, activity.frame.size.height);
-    [self.tableView.tableFooterView addSubview:activity];
-    [self loadGames];
+    progressView = [[DALabeledCircularProgressView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 60, 10, 120, 120)];
+    progressView.progressLabel.text = @"Loading...";
+    progressView.progressTintColor = kAppColor;
+    progressView.thicknessRatio = 0.11;
+    progressView.roundedCorners = 5;
+    [self.tableView.tableFooterView addSubview:progressView];
+    
     currentView = YES;
 }
 
@@ -56,39 +53,47 @@
 {
     if (!AppDelegate.sharedInstance.networkController.isConnected) {
         [self.navigationController popToRootViewControllerAnimated:YES];
+    } else {
+        networkController = AppDelegate.sharedInstance.networkController;
+        [networkController registerProgressDelegate:self forBuffer:CCNetworkGetAvaliableGames];
+        [networkController addObserver:self forKeyPath:@"games" options:NSKeyValueObservingOptionNew context:nil];
+        [networkController updateAvaliableGames];
     }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     currentView = NO;
+    [networkController removeObserver:self forKeyPath:@"games"];
+    networkController = nil;
 }
 
-- (void)loadGames
+- (void)pingDevices
 {
-    [networkController updateAvaliableGames];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        if (!applicationsLoaded && currentView) {
-            [self loadGames];
-        }
-    });
+    
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"games"]) {
-        if (applicationsLoaded) {
-            return;
-        } else {
-            applicationsLoaded = YES;
-        }
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-            self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+            [UIView animateWithDuration:0.2 animations:^{
+                self.tableView.tableFooterView.alpha = 0;
+            } completion:^(BOOL finished) {
+                [self.tableView reloadData];
+                self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+            }];
         });
     } else {
         NSLog(@"Unknown keypath: %@", keyPath);
     }
+}
+
+- (void)downloadProgress:(float)progress forTag:(uint32_t)tag
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [progressView setProgress:progress animated:YES];
+    });
 }
 
 #pragma mark - Table view data source
@@ -130,12 +135,8 @@
         selectedGame = game;
         [self performSegueWithIdentifier:@"ToGames" sender:self];
     } else {
-        CCIStreamManager *streamManager = [networkController startStreamWithGame:game];
-        CCIStreamViewController *streamViewController = (CCIStreamViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CCIStreamViewController"];
-        streamViewController.streamManager = streamManager;
-        
-        streamManager.outputDelegate = streamViewController;
-        [self presentViewController:streamViewController animated:YES completion:nil];
+        NSLog(@"Name: %@", game.name);
+        [AppDelegate.sharedInstance launchGame:game];
     }
     
 }
@@ -145,10 +146,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc
-{
-    [networkController removeObserver:self forKeyPath:@"games"];
-}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

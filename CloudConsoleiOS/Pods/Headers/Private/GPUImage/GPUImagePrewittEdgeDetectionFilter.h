@@ -1,5 +1,1 @@
-#import "GPUImageSobelEdgeDetectionFilter.h"
-
-@interface GPUImagePrewittEdgeDetectionFilter : GPUImageSobelEdgeDetectionFilter
-
-@end
+../../../GPUImage/framework/Source/GPUImagePrewittEdgeDetectionFilter.h

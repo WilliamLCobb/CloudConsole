@@ -7,21 +7,31 @@
 //
 
 #import "CCPlugin.h"
-
+#import "CCGame.h"
+#import "AppDelegate.h"
 #define kHasTable @"HasTable"
 #define kHasSettings @"HasSettings"
 
+/*
+ * This is the protocol plugins must follow
+ */
+@protocol CCPluginProtocol <NSObject>
+/**
+ * Signals for the plugin to reload settings and files.
+ **/
+- (void)reload;
+- (NSArray *)subGames;
+- (NSRunningApplication *)launchGameWithPath:(NSString *)path;
+
+@end
+
 @interface CCPlugin () {
+    id <CCPluginProtocol> plugin;
 }
 
 @end
 
 @implementation CCPlugin
-
-- (id)initWithDefaultPlugin
-{
-    return [super init];
-}
 
 - (id)initWithName:(NSString *)name
 {
@@ -29,13 +39,49 @@
         _name = name;
         NSBundle *bundle;
         Class principalClass;
-        NSString *pluginPath =[[NSBundle mainBundle] pathForResource:name ofType:@"ccop"];
+        NSString *pluginPath = [CCPlugin pathToPluginWithName:name];
+        if (!pluginPath) { //Not in bundle, check app support
+            NSLog(@"No plugin, using default");
+            return self;
+        }
         NSLog(@"Plugin Path: %@", pluginPath);
         bundle = [NSBundle bundleWithPath:pluginPath];
         principalClass = [bundle principalClass];
-        self.plugin = [[principalClass alloc] init];
+        plugin = [[principalClass alloc] init];
     }
     return self;
+}
+
+- (void)reload
+{
+    if (plugin && [plugin respondsToSelector:@selector(reload)]) {
+        [plugin reload];
+    }
+}
+- (NSArray *)subGames
+{
+    if (plugin && [plugin respondsToSelector:@selector(subGames)]) {
+        return [plugin subGames];
+    }
+    return nil;
+}
+- (NSRunningApplication *)launchGameWithPath:(NSString *)path
+{
+    if (plugin && [plugin respondsToSelector:@selector(launchGameWithPath:)]) {
+        return [plugin launchGameWithPath:path];
+    } else {
+        if (![[NSWorkspace sharedWorkspace] launchApplication:path]) {
+            NSLog(@"Error launching Game");
+            return nil;
+        }
+        // Loops through open apps looking for our application
+        for (NSRunningApplication *app in [[NSWorkspace sharedWorkspace] runningApplications]) {
+            if ([app.localizedName isEqualToString:[CCGame applicationNameForPath:path]]) {
+                return app;
+            }
+        }
+        return nil;
+    }
 }
 
 #pragma mark - Class Methods
@@ -74,7 +120,18 @@
 
 + (NSString *)pathToPluginWithName:(NSString *)pluginName
 {
-    return [[NSBundle mainBundle] pathForResource:pluginName ofType:@"ccop"];
+    NSString *pluginPath = [[NSBundle mainBundle] pathForResource:pluginName ofType:@"ccop"];
+    if (!pluginPath) { //Not in bundle, check app support
+        pluginPath = [NSString stringWithFormat:@"%@/Plugins/%@.ccop", [AppDelegate supportFolder], pluginName];
+        NSLog(@"Looking in for plugin in: %@", pluginPath);
+        if ([[NSFileManager defaultManager] fileExistsAtPath:pluginPath]) {
+            NSLog(@"Found in alternate path");
+        } else { //Did not find a plugin
+            NSLog(@"No plugin, using default");
+            return nil;
+        }
+    }
+    return pluginPath;
 }
 
 @end
