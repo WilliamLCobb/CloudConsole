@@ -138,20 +138,36 @@
     });
 }
 
+#pragma mark - Socket Delegate
+
 - (void)CCSocket:(CCUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag
 {
+    if (tag != CCNetworkPingResponse) {
+        ERROR_LOG(@"Host sending wrong data");
+        //Send disconnect packet here
+        return;
+    }
     NSString *host = [CCUdpSocket hostFromAddress:address];
     uint16_t port  = [CCUdpSocket portFromAddress:address];
     //CCIDevice *newDevice = [[CCIDevice alloc] initWithName:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] host:host port:port];
     NSString *deviceInfo = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSArray  *deviceInfoComponents = [deviceInfo componentsSeparatedByString:@"."];
-    INFO_LOG(@"Pring Response from: %@", deviceInfo);
+    INFO_LOG(@"Ping Response from: %@", deviceInfo);
+    if (deviceInfoComponents.count != 2) {
+        ERROR_LOG(@"Invalid Ping response");
+        return;
+    }
     CCIDevice *newDevice = [[CCIDevice alloc] initWithName:deviceInfoComponents[1]
                                                 deviceName:deviceInfoComponents[0]
                                                       host:host
                                                       port:port
                                               discoverType:CCIDeviceDiscoverTypeLAN];
     [self addDevice:newDevice];
+}
+
+- (void)wrongApplicationState
+{
+    
 }
 
 #pragma mark - Bonjour Delegate

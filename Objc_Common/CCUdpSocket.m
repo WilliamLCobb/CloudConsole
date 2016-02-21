@@ -193,7 +193,7 @@
                     }
                 } else {
                     wrongStateCount = 0;
-                    timeout = 10;
+                    timeout = 5;
                 }
                 break;
             }
@@ -220,7 +220,7 @@
         }
         
         //Server socket changed port
-        if ([host isEqualToString:[GCDAsyncSocket hostFromAddress:address]] && port != [GCDAsyncSocket portFromAddress:address]) {
+        if ([host isEqualToString:[GCDAsyncSocket hostFromAddress:address]] && port != [GCDAsyncSocket portFromAddress:address] && tag != CCNetworkPing) {
             NSLog(@"Changing Socket port to: %d", [GCDAsyncSocket portFromAddress:address]);
             [self setDestinationHost:[GCDAsyncSocket hostFromAddress:address] port:[GCDAsyncSocket portFromAddress:address]];
         }
@@ -246,15 +246,13 @@
 {
     SEL selector = @selector(CCSocketTimedOut);
     
-    if (self.delegateQueue && [self.delegate respondsToSelector:selector])
-    {
+    //if (self.delegateQueue && [self.delegate respondsToSelector:selector])
+    //{
         id theDelegate = self.delegate;
         dispatch_async(self.delegateQueue, ^{
             [theDelegate CCSocketTimedOut];
         });
-    } else {
-        NSLog(@"Warining, CCUdpSocket not notifying timeout");
-    }
+    // }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

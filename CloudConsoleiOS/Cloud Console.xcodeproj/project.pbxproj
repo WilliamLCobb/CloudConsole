@@ -29,6 +29,13 @@
 		CA7798AE1C7642E300CDDF08 /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7798A81C7642E300CDDF08 /* star@2x.png */; };
 		CA7798B11C7648E500CDDF08 /* gear12.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7798AF1C7648E500CDDF08 /* gear12.png */; };
 		CA7798B21C7648E500CDDF08 /* gear12@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7798B01C7648E500CDDF08 /* gear12@2x.png */; };
+		CA7798EA1C78E3AD00CDDF08 /* ZYSpreadButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CA7798E71C78E3AD00CDDF08 /* ZYSpreadButton.m */; };
+		CA7798EB1C78E3AD00CDDF08 /* ZYSpreadSubButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CA7798E91C78E3AD00CDDF08 /* ZYSpreadSubButton.m */; };
+		CA7798F21C78E46000CDDF08 /* gear35@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7798ED1C78E46000CDDF08 /* gear35@2x.png */; };
+		CA7798F31C78E46000CDDF08 /* lock35@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7798EE1C78E46000CDDF08 /* lock35@2x.png */; };
+		CA7798F41C78E46000CDDF08 /* plus35@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7798EF1C78E46000CDDF08 /* plus35@2x.png */; };
+		CA7798F51C78E46000CDDF08 /* stop35@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7798F01C78E46000CDDF08 /* stop35@2x.png */; };
+		CA7798F61C78E46000CDDF08 /* unlock35@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7798F11C78E46000CDDF08 /* unlock35@2x.png */; };
 		CA8C8F571C519FFE00FA7B61 /* TPCircularBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CA8C8F531C519FFE00FA7B61 /* TPCircularBuffer.c */; };
 		CA8C8F581C519FFE00FA7B61 /* TPCircularBuffer+AudioBufferList.c in Sources */ = {isa = PBXBuildFile; fileRef = CA8C8F551C519FFE00FA7B61 /* TPCircularBuffer+AudioBufferList.c */; };
 		CA8C8F621C51A24600FA7B61 /* AudioClient.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8C8F611C51A24600FA7B61 /* AudioClient.m */; };
@@ -162,7 +169,7 @@
 		CAF5329A1C714FC7009B2A72 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF532971C714FC7009B2A72 /* DACircularProgressView.m */; };
 		CAF5329B1C714FC7009B2A72 /* DALabeledCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF532991C714FC7009B2A72 /* DALabeledCircularProgressView.m */; };
 		CAFD47FD1C5AD89F00B1BB4D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAFD47FC1C5AD89F00B1BB4D /* SystemConfiguration.framework */; };
-		DAD1D523B24FDC742834C365 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A51CB10EC8276709EAB2CA8 /* Pods.framework */; };
+		E4458CAB9D543402FFD87CBA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E530B12489C5373080CED5CC /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,7 +191,6 @@
 
 /* Begin PBXFileReference section */
 		28B95303180175DA2892DD19 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		3A51CB10EC8276709EAB2CA8 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8242733B34EEB9D45B66CE88 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		CA140CDB1C589162000B947D /* CCIDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIDevice.h; sourceTree = "<group>"; };
 		CA140CDC1C589162000B947D /* CCIDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCIDevice.m; sourceTree = "<group>"; };
@@ -216,6 +222,15 @@
 		CA7798A81C7642E300CDDF08 /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
 		CA7798AF1C7648E500CDDF08 /* gear12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gear12.png; sourceTree = "<group>"; };
 		CA7798B01C7648E500CDDF08 /* gear12@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear12@2x.png"; sourceTree = "<group>"; };
+		CA7798E61C78E3AD00CDDF08 /* ZYSpreadButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYSpreadButton.h; sourceTree = "<group>"; };
+		CA7798E71C78E3AD00CDDF08 /* ZYSpreadButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYSpreadButton.m; sourceTree = "<group>"; };
+		CA7798E81C78E3AD00CDDF08 /* ZYSpreadSubButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYSpreadSubButton.h; sourceTree = "<group>"; };
+		CA7798E91C78E3AD00CDDF08 /* ZYSpreadSubButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYSpreadSubButton.m; sourceTree = "<group>"; };
+		CA7798ED1C78E46000CDDF08 /* gear35@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear35@2x.png"; sourceTree = "<group>"; };
+		CA7798EE1C78E46000CDDF08 /* lock35@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock35@2x.png"; sourceTree = "<group>"; };
+		CA7798EF1C78E46000CDDF08 /* plus35@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus35@2x.png"; sourceTree = "<group>"; };
+		CA7798F01C78E46000CDDF08 /* stop35@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stop35@2x.png"; sourceTree = "<group>"; };
+		CA7798F11C78E46000CDDF08 /* unlock35@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unlock35@2x.png"; sourceTree = "<group>"; };
 		CA8C8F321C51761B00FA7B61 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		CA8C8F341C51765200FA7B61 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		CA8C8F531C519FFE00FA7B61 /* TPCircularBuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TPCircularBuffer.c; sourceTree = "<group>"; };
@@ -393,6 +408,7 @@
 		CAF532981C714FC7009B2A72 /* DALabeledCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DALabeledCircularProgressView.h; sourceTree = "<group>"; };
 		CAF532991C714FC7009B2A72 /* DALabeledCircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DALabeledCircularProgressView.m; sourceTree = "<group>"; };
 		CAFD47FC1C5AD89F00B1BB4D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		E530B12489C5373080CED5CC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -408,7 +424,7 @@
 				CAB6767A1C41BD2F00518E8E /* CoreImage.framework in Frameworks */,
 				CAB676781C4047D900518E8E /* AVFoundation.framework in Frameworks */,
 				CAB676761C40475A00518E8E /* VideoToolbox.framework in Frameworks */,
-				DAD1D523B24FDC742834C365 /* Pods.framework in Frameworks */,
+				E4458CAB9D543402FFD87CBA /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,7 +465,7 @@
 				CA8C8F321C51761B00FA7B61 /* MobileCoreServices.framework */,
 				CAE404C71C488BB500AD464F /* GameController.framework */,
 				CAB676791C41BD2F00518E8E /* CoreImage.framework */,
-				3A51CB10EC8276709EAB2CA8 /* Pods.framework */,
+				E530B12489C5373080CED5CC /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -469,8 +485,8 @@
 		CA247C321C73DAE00004FC1A /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				CA247C331C73DB110004FC1A /* CCISpotlight.h */,
-				CA247C341C73DB110004FC1A /* CCISpotlight.m */,
+				CA7798E51C78E39D00CDDF08 /* SpreadButton */,
+				CA7798E41C78E39600CDDF08 /* Spotlight */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -502,6 +518,38 @@
 			);
 			name = Discovery;
 			path = ../Discovery;
+			sourceTree = "<group>";
+		};
+		CA7798E41C78E39600CDDF08 /* Spotlight */ = {
+			isa = PBXGroup;
+			children = (
+				CA247C331C73DB110004FC1A /* CCISpotlight.h */,
+				CA247C341C73DB110004FC1A /* CCISpotlight.m */,
+			);
+			name = Spotlight;
+			sourceTree = "<group>";
+		};
+		CA7798E51C78E39D00CDDF08 /* SpreadButton */ = {
+			isa = PBXGroup;
+			children = (
+				CA7798E61C78E3AD00CDDF08 /* ZYSpreadButton.h */,
+				CA7798E71C78E3AD00CDDF08 /* ZYSpreadButton.m */,
+				CA7798E81C78E3AD00CDDF08 /* ZYSpreadSubButton.h */,
+				CA7798E91C78E3AD00CDDF08 /* ZYSpreadSubButton.m */,
+			);
+			name = SpreadButton;
+			sourceTree = "<group>";
+		};
+		CA7798EC1C78E46000CDDF08 /* SpreadButton */ = {
+			isa = PBXGroup;
+			children = (
+				CA7798ED1C78E46000CDDF08 /* gear35@2x.png */,
+				CA7798EE1C78E46000CDDF08 /* lock35@2x.png */,
+				CA7798EF1C78E46000CDDF08 /* plus35@2x.png */,
+				CA7798F01C78E46000CDDF08 /* stop35@2x.png */,
+				CA7798F11C78E46000CDDF08 /* unlock35@2x.png */,
+			);
+			path = SpreadButton;
 			sourceTree = "<group>";
 		};
 		CA8C8F281C5175E700FA7B61 /* Audio */ = {
@@ -699,6 +747,7 @@
 		CAE4058D1C4DE5BF00AD464F /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CA7798EC1C78E46000CDDF08 /* SpreadButton */,
 				CAE48C4E1C6400120085870A /* Navigation */,
 				CA6E2CB21C585DE100B70EB1 /* Devices */,
 				CAE4058E1C4DE5BF00AD464F /* Controllers */,
@@ -1023,6 +1072,8 @@
 				CAE406271C4DE5BF00AD464F /* ic_date.png in Resources */,
 				CAE406111C4DE5BF00AD464F /* gcpad_dpad_pressed_downleft.png in Resources */,
 				CAE406161C4DE5BF00AD464F /* gcpad_dpad_pressed_upleft.png in Resources */,
+				CA7798F61C78E46000CDDF08 /* unlock35@2x.png in Resources */,
+				CA7798F31C78E46000CDDF08 /* lock35@2x.png in Resources */,
 				CAE405F71C4DE5BF00AD464F /* gcpad_y@2x.png in Resources */,
 				CAB6764F1C40382300518E8E /* LaunchScreen.storyboard in Resources */,
 				CAE48C4C1C64000B0085870A /* Gear.png in Resources */,
@@ -1042,6 +1093,7 @@
 				CAE4063C1C4DE60500AD464F /* ABXYPad.png in Resources */,
 				CAE4060C1C4DE5BF00AD464F /* gcpad_b_pressed.png in Resources */,
 				CAE405F81C4DE5BF00AD464F /* gcpad_y_pressed@2x.png in Resources */,
+				CA7798F41C78E46000CDDF08 /* plus35@2x.png in Resources */,
 				CAE48C4D1C64000B0085870A /* Gear@2x.png in Resources */,
 				CA6E2CBA1C585DEB00B70EB1 /* iPad@2x.png in Resources */,
 				CA6E2CBC1C585DEB00B70EB1 /* iPhone_5@2x.png in Resources */,
@@ -1076,7 +1128,9 @@
 				CAE406201C4DE5BF00AD464F /* gcpad_start_pressed.png in Resources */,
 				CAE406171C4DE5BF00AD464F /* gcpad_dpad_pressed_upright.png in Resources */,
 				CAE4060D1C4DE5BF00AD464F /* gcpad_c.png in Resources */,
+				CA7798F51C78E46000CDDF08 /* stop35@2x.png in Resources */,
 				CAE406481C4DE60500AD464F /* RTrigger.png in Resources */,
+				CA7798F21C78E46000CDDF08 /* gear35@2x.png in Resources */,
 				CAE406141C4DE5BF00AD464F /* gcpad_dpad_pressed_right.png in Resources */,
 				CA7798AE1C7642E300CDDF08 /* star@2x.png in Resources */,
 				CAE405E91C4DE5BF00AD464F /* gcpad_dpad_pressed_up@2x.png in Resources */,
@@ -1186,6 +1240,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA7798EB1C78E3AD00CDDF08 /* ZYSpreadSubButton.m in Sources */,
 				CA140D031C59B823000B947D /* CCIGameSelectionTableViewController.m in Sources */,
 				CAE4065F1C4DEEDD00AD464F /* CCIGameCubeControllerView.m in Sources */,
 				CA8C8F621C51A24600FA7B61 /* AudioClient.m in Sources */,
@@ -1215,6 +1270,7 @@
 				CAF5329B1C714FC7009B2A72 /* DALabeledCircularProgressView.m in Sources */,
 				CAE48C271C627C8F0085870A /* SimplePing.m in Sources */,
 				CAB676441C40382300518E8E /* AppDelegate.m in Sources */,
+				CA7798EA1C78E3AD00CDDF08 /* ZYSpreadButton.m in Sources */,
 				CAB676411C40382300518E8E /* main.m in Sources */,
 				CAE48C281C627C8F0085870A /* SimplePingHelper.m in Sources */,
 				CA6E2CC11C5885F100B70EB1 /* CCILanFinder.m in Sources */,

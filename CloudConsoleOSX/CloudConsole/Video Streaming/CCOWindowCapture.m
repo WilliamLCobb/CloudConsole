@@ -98,7 +98,7 @@
     NSDictionary * windowInfo = [self windowInformation];
     return CGRectMake([windowInfo[@"kCGWindowBounds"][@"X"] integerValue],
                       [windowInfo[@"kCGWindowBounds"][@"Y"] integerValue] + 22,
-                      [windowInfo[@"kCGWindowBounds"][@"Width"] integerValue] -1,
+                      [windowInfo[@"kCGWindowBounds"][@"Width"] integerValue]+1,
                       [windowInfo[@"kCGWindowBounds"][@"Height"] integerValue] - 20);
     
 }

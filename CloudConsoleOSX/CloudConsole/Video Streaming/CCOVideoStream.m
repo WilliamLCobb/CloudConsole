@@ -205,7 +205,9 @@
         case CCNetworkButtonState:
             [controller setButtonState:(uint16_t)message[0]];
             break;
-            
+        case CCNetworkCloseStream:
+            [self closeStream];
+            break;
         default:
             break;
     }

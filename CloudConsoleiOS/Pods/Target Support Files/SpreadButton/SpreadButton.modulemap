@@ -1,6 +1,0 @@
-framework module SpreadButton {
-  umbrella header "SpreadButton-umbrella.h"
-
-  export *
-  module * { export * }
-}

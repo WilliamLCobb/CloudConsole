@@ -274,6 +274,11 @@
     
 }
 
+- (void)CCSocketTimedOut
+{
+    [self streamClosed];
+}
+
 - (void)streamClosed
 {
     serverSocket.delegate = self;

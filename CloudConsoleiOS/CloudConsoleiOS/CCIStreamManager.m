@@ -82,6 +82,10 @@
             });
             break;
         }
+        case CCNetworkCloseStream:
+        {
+            [self streamClosed];
+        }
         default:
             break;
     }
@@ -107,6 +111,7 @@
 - (void)closeStream
 {
     //Should send someting here to server and display a notice to the user
+    [self.streamSocket sendData:[NSData new] usingMethod:CCUdpSendMethodRedundent CCtag:CCNetworkCloseStream];
     [self streamClosed];
 }
 

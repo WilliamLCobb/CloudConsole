@@ -82,20 +82,3 @@ strip_invalid_archs() {
   fi
 }
 
-
-if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "Pods/CocoaAsyncSocket.framework"
-  install_framework "Pods/GPUImage.framework"
-  install_framework "Pods/MRProgress.framework"
-  install_framework "Pods/NXOAuth2Client.framework"
-  install_framework "Pods/Shimmer.framework"
-  install_framework "Pods/SpreadButton.framework"
-fi
-if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "Pods/CocoaAsyncSocket.framework"
-  install_framework "Pods/GPUImage.framework"
-  install_framework "Pods/MRProgress.framework"
-  install_framework "Pods/NXOAuth2Client.framework"
-  install_framework "Pods/Shimmer.framework"
-  install_framework "Pods/SpreadButton.framework"
-fi

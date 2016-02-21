@@ -72,6 +72,7 @@
 {
     [deviceFinder start];
     AppDelegate.sharedInstance.networkController = nil;
+    AppDelegate.sharedInstance.forcePortrait = YES;
     [self pingDevices];
     pingTimer = [NSTimer scheduledTimerWithTimeInterval:5  target:self selector:@selector(pingDevices) userInfo:nil repeats:YES];
     //[spotlight beginPresentation];
@@ -249,8 +250,5 @@
     // Dispose of any resources that can be recreated.
 }
 
--(BOOL)shouldAutorotate {
-    return NO;
-}
 
 @end

@@ -10,11 +10,12 @@
 #import "GPUImage.h"
 #import "CCIHeadTracker.h"
 #import "FBShimmeringView.h"
-@import SpreadButton;
-
+#import "ZYSpreadButton.h"
+#import "AppDelegate.h";
 @interface GPUImageMovie ()
 -(void) processMovieFrame:(CVPixelBufferRef)movieFrame withSampleTime:(CMTime)currentSampleTime;
 @end
+
 
 @interface CCIStreamViewController () {
     GPUImageMovie   *moviePlayer;
@@ -26,7 +27,10 @@
     
     UIView          *greenLineHider;
     FBShimmeringView    *shimmerView;
-    SpreadButton    *spreadButton;
+    ZYSpreadButton    *spreadButton;
+    ZYSpreadSubButton *lock;
+    ZYSpreadSubButton *unlock;
+    
 }
 
 
@@ -37,7 +41,8 @@
 
 - (void)viewDidLoad
 {
-    [[UIDevice currentDevice] setValue:[NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft] forKey:@"orientation"];
+    AppDelegate.sharedInstance.forcePortrait = NO;
+    //[[UIDevice currentDevice] setValue:[NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft] forKey:@"orientation"];
     
     moviePlayer = [[GPUImageMovie alloc] initWithAsset:nil];
     
@@ -71,14 +76,87 @@
     loadingLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:60];
     loadingLabel.textColor = [UIColor colorWithWhite:0.9 alpha:1];
     shimmerView.contentView = loadingLabel;
-    shimmerView.center = controllerView.center; //self.view is still potrait
+    shimmerView.center =  CGPointMake(controllerView.center.x, controllerView.center.y - 20); //self.view is still potrait
     // Start shimmering.
     shimmerView.shimmering = YES;
     [self.view addSubview:shimmerView];
     
-    spreadButton = [[SpreadButton alloc] initWithImage:[UIImage imageNamed:@"Gear"] highlightImage:[UIImage imageNamed:@"Gear"] position:CGPointMake(20, 20)];
+    spreadButton = [[ZYSpreadButton alloc] initWithBackgroundImage:[UIImage imageNamed:@"plus35"]
+                                                    highlightImage:[UIImage imageNamed:@"plus35"]
+                                                          position:CGPointMake(self.view.frame.size.width/2, 30)];
+    spreadButton.powerButton.layer.cornerRadius = spreadButton.powerButton.frame.size.width/2;
+    spreadButton.powerButton.clipsToBounds = YES;
+    spreadButton.radius = 80;
+    spreadButton.positionMode = SpreadPositionModeTouchBorder;
+    NSLog(@"%@", spreadButton.powerButton);
+    spreadButton.alpha = 0.5;
+    spreadButton.mode = SpreadModeFlowerSpread;
+    spreadButton.buttonWillSpreadBlock = ^(ZYSpreadButton *button){
+        [UIView animateWithDuration:0.1 animations:^{
+            button.alpha = 1;
+        }];
+    };
+    spreadButton.buttonDidSpreadBlock = ^(ZYSpreadButton *button){};
+    spreadButton.buttonWillCloseBlock = ^(ZYSpreadButton *button){
+        [UIView animateWithDuration:0.1 animations:^{
+            button.alpha = 0.5;
+        }];
+    };
+    spreadButton.buttonDidCloseBlock = ^(ZYSpreadButton *button){};
+    spreadButton.direction = SpreadDirectionBottom;
+    
+    /*  Settings  */
+    ZYSpreadSubButton *settings = [[ZYSpreadSubButton alloc] initWithBackgroundImage:[UIImage imageNamed:@"gear35"] highlightImage:[UIImage imageNamed:@"gear35"] clickedBlock:^(int index, UIButton *sender) {
+        
+    }];
+    settings.layer.cornerRadius = settings.frame.size.width/2;
+    settings.clipsToBounds = YES;
+    
+    /*  Exit  */
+    ZYSpreadSubButton *exit = [[ZYSpreadSubButton alloc] initWithBackgroundImage:[UIImage imageNamed:@"stop35"] highlightImage:[UIImage imageNamed:@"stop35"] clickedBlock:^(int index, UIButton *sender) {
+        [self.streamManager closeStream];
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+    exit.layer.cornerRadius = exit.frame.size.width/2;
+    exit.clipsToBounds = YES;
+    
+    /*  Lock  */
+    lock = [[ZYSpreadSubButton alloc] initWithBackgroundImage:[UIImage imageNamed:@"lock35"] highlightImage:[UIImage imageNamed:@"lock35"] clickedBlock:^(int index, UIButton *sender) {
+        spreadButton.positionMode = SpreadPositionModeFixed;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [unlock setHidden:NO];
+            [lock setHidden:YES];
+            unlock.alpha = 1;
+            lock.alpha = 0;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [spreadButton setSubButtons:@[settings, unlock, exit]];
+            });
+        });
+        
+    }];
+    lock.layer.cornerRadius = lock.frame.size.width/2;
+    lock.clipsToBounds = YES;
+    
+    /*  Unlock  */
+    unlock = [[ZYSpreadSubButton alloc] initWithBackgroundImage:[UIImage imageNamed:@"unlock35"] highlightImage:[UIImage imageNamed:@"unlock35"] clickedBlock:^(int index, UIButton *sender) {
+        spreadButton.positionMode = SpreadPositionModeTouchBorder;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [unlock setHidden:YES];
+            [lock setHidden:NO];
+            unlock.alpha = 0;
+            lock.alpha = 1;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [spreadButton setSubButtons:@[settings, lock, exit]];
+            });
+        });
+        
+        
+    }];
+    unlock.layer.cornerRadius = lock.frame.size.width/2;
+    unlock.clipsToBounds = YES;
+    
+    [spreadButton setSubButtons:@[settings, unlock, exit]];
     [controllerView addSubview:spreadButton];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -144,10 +222,6 @@
 -(BOOL) isPortrait
 {
     return UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation);
-}
-
--(BOOL)shouldAutorotate {
-    return NO;
 }
 
 #pragma mark - Controls

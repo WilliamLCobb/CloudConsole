@@ -4,5 +4,3 @@ pod 'GPUImage'
 pod 'NXOAuth2Client'
 pod 'MRProgress'
 pod 'Shimmer'
-pod 'SpreadButton'
-use_frameworks!

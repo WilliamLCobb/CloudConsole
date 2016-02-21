@@ -12,11 +12,13 @@
 #import <mach/mach_time.h>
 #import "CCOServer.h"
 #import "NSImage+Transform.h"
+#import <Sparkle/Sparkle.h>
 
-@interface AppDelegate () {
+@interface AppDelegate () <SUUpdaterDelegate> {
     NSTimer     *ipUpdateTimer;
     NSMenuItem  *ipItem;
     NSArray     *shakeImages;
+    SUUpdater   *updater;
 }
     
 @end
@@ -30,8 +32,14 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     /*  Auto Update  */
+    //com.WilliamCobb.CloudConsole
     
-    [AUUpdater updaterWithBundle:[NSBundle mainBundle] host:@"www.cloudconsoleapp.com" channel:@"release" percentile:0];
+    updater = [SUUpdater updaterForBundle:[NSBundle bundleForClass:[self class]]];
+    updater.delegate = self;
+    updater.automaticallyChecksForUpdates = YES;
+    updater.automaticallyDownloadsUpdates = YES;
+    [updater checkForUpdatesInBackground];
+    [updater resetUpdateCycle];
     
     [[CCOServer sharedInstance] start];
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:25.0];
@@ -90,6 +98,24 @@
 - (void)quitApplication
 {
     [NSApp terminate:self];
+}
+
+#pragma mark - Update Delegate
+
+- (void)updater:(SUUpdater *)updater didFindValidUpdate:(SUAppcastItem *)item
+{
+    NSLog(@"Found update");
+}
+
+- (void)updaterDidNotFindUpdate:(SUUpdater *)updater
+{
+    NSLog(@"Did not find update");
+}
+
+- (NSString *)feedURLStringForUpdater:(SUUpdater *)updater
+{
+    NSLog(@"Asked for URL");
+    return @"10.0.1.16";
 }
 
 #pragma mark Launch at Startup
@@ -176,19 +202,6 @@
             }
         }
     });
-}
-
-#pragma mark - Auto Updater Delegate
-
-- (void)updater:(AUUpdater *)updater wantsToInstallUpdateWithCriticalStatus:(BOOL)critical
-{
-    NSLog(@"Wants to install update");
-    if (![[CCOServer sharedInstance] connected]) {
-        NSLog(@"Installing Update");
-        [updater installUpdate];
-    } else {
-        NSLog(@"Not installing update, server is connected");
-    }
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

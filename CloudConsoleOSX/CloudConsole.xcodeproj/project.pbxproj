@@ -27,6 +27,9 @@
 		CA570CEA1C3DED5900918E3A /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA570CE91C3DED5900918E3A /* CoreVideo.framework */; };
 		CA570CEC1C3DED5F00918E3A /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA570CEB1C3DED5F00918E3A /* VideoToolbox.framework */; };
 		CA570D031C3E459400918E3A /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA570D021C3E459400918E3A /* CoreMedia.framework */; };
+		CA7798DD1C78385D00CDDF08 /* CSIOSurfaceLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CA7798DC1C78385D00CDDF08 /* CSIOSurfaceLayer.m */; };
+		CA7798E01C783BCD00CDDF08 /* DesktopCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = CA7798DF1C783BCD00CDDF08 /* DesktopCapture.m */; };
+		CA7798E31C78C2A200CDDF08 /* ISSoundAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CA7798E21C78C2A200CDDF08 /* ISSoundAdditions.m */; };
 		CA8C8F511C519FE700FA7B61 /* TPCircularBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CA8C8F4D1C519FE700FA7B61 /* TPCircularBuffer.c */; };
 		CA8C8F521C519FE700FA7B61 /* TPCircularBuffer+AudioBufferList.c in Sources */ = {isa = PBXBuildFile; fileRef = CA8C8F4F1C519FE700FA7B61 /* TPCircularBuffer+AudioBufferList.c */; };
 		CA8C8F5B1C51A0D300FA7B61 /* AudioServer.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA8C8F5A1C51A0D300FA7B61 /* AudioServer.mm */; };
@@ -121,6 +124,12 @@
 		CA570D131C3EEEC600918E3A /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavfilter.a; sourceTree = "<group>"; };
 		CA570D141C3EEEC600918E3A /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavformat.a; sourceTree = "<group>"; };
 		CA570D151C3EEEC600918E3A /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavutil.a; sourceTree = "<group>"; };
+		CA7798DB1C78385D00CDDF08 /* CSIOSurfaceLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSIOSurfaceLayer.h; sourceTree = "<group>"; };
+		CA7798DC1C78385D00CDDF08 /* CSIOSurfaceLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSIOSurfaceLayer.m; sourceTree = "<group>"; };
+		CA7798DE1C783BCD00CDDF08 /* DesktopCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DesktopCapture.h; sourceTree = "<group>"; };
+		CA7798DF1C783BCD00CDDF08 /* DesktopCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DesktopCapture.m; sourceTree = "<group>"; };
+		CA7798E11C78C2A200CDDF08 /* ISSoundAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISSoundAdditions.h; sourceTree = "<group>"; };
+		CA7798E21C78C2A200CDDF08 /* ISSoundAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISSoundAdditions.m; sourceTree = "<group>"; };
 		CA8C8F4D1C519FE700FA7B61 /* TPCircularBuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TPCircularBuffer.c; sourceTree = "<group>"; };
 		CA8C8F4E1C519FE700FA7B61 /* TPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCircularBuffer.h; sourceTree = "<group>"; };
 		CA8C8F4F1C519FE700FA7B61 /* TPCircularBuffer+AudioBufferList.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "TPCircularBuffer+AudioBufferList.c"; sourceTree = "<group>"; };
@@ -296,6 +305,10 @@
 			children = (
 				CAE406741C4F2B2300AD464F /* Audio */,
 				CAB6767B1C422E4A00518E8E /* Apple */,
+				CA7798DB1C78385D00CDDF08 /* CSIOSurfaceLayer.h */,
+				CA7798DC1C78385D00CDDF08 /* CSIOSurfaceLayer.m */,
+				CA7798DE1C783BCD00CDDF08 /* DesktopCapture.h */,
+				CA7798DF1C783BCD00CDDF08 /* DesktopCapture.m */,
 				CA570C1A1C3C7F0900918E3A /* CCOWindowCapture.h */,
 				CA570C1B1C3C7F0900918E3A /* CCOWindowCapture.m */,
 			);
@@ -306,7 +319,6 @@
 		CA570C241C3C916100918E3A /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				CAC433FB1C6945DF000D569E /* AutoUpdate */,
 				CA8C8FFD1C5590B800FA7B61 /* Bonjour */,
 				CAE48BEB1C5FDCAE0085870A /* CCNetworkProtocol.h */,
 				CA570C251C3C917700918E3A /* CCOServer.h */,
@@ -376,13 +388,6 @@
 			name = Apple;
 			sourceTree = "<group>";
 		};
-		CAC433FB1C6945DF000D569E /* AutoUpdate */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = AutoUpdate;
-			sourceTree = "<group>";
-		};
 		CAE404EF1C49ADC500AD464F /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,6 +400,8 @@
 		CAE406741C4F2B2300AD464F /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				CA7798E11C78C2A200CDDF08 /* ISSoundAdditions.h */,
+				CA7798E21C78C2A200CDDF08 /* ISSoundAdditions.m */,
 				CA8C8F591C51A0D300FA7B61 /* AudioServer.h */,
 				CA8C8F5A1C51A0D300FA7B61 /* AudioServer.mm */,
 				CA8C8F4D1C519FE700FA7B61 /* TPCircularBuffer.c */,
@@ -633,11 +640,14 @@
 				CA8C8F521C519FE700FA7B61 /* TPCircularBuffer+AudioBufferList.c in Sources */,
 				CA570C2B1C3CCA8600918E3A /* PortMapper.m in Sources */,
 				CA570BB61C3C713C00918E3A /* main.m in Sources */,
+				CA7798DD1C78385D00CDDF08 /* CSIOSurfaceLayer.m in Sources */,
 				CA8C8FF21C557BEC00FA7B61 /* CCPlugin.m in Sources */,
 				CAB6767E1C422E6000518E8E /* CCOh264Encoder.m in Sources */,
 				CA570BB31C3C713C00918E3A /* AppDelegate.m in Sources */,
+				CA7798E31C78C2A200CDDF08 /* ISSoundAdditions.m in Sources */,
 				CA8C8F701C52CB6E00FA7B61 /* CCGame.m in Sources */,
 				CA8C8F5B1C51A0D300FA7B61 /* AudioServer.mm in Sources */,
+				CA7798E01C783BCD00CDDF08 /* DesktopCapture.m in Sources */,
 				CA8C8F6D1C51E7DE00FA7B61 /* AudioDeviceList.cpp in Sources */,
 				CA1901AE1C56DCC4002BC8F9 /* BonjourHandler.m in Sources */,
 				CA140CFC1C597DAB000B947D /* CCUdpBuffer.m in Sources */,

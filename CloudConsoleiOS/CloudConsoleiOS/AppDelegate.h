@@ -18,6 +18,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) CCINetworkController *networkController;
+@property BOOL  forcePortrait;
 
 + (AppDelegate*)sharedInstance;
 - (void)launchGame:(CCIGame *)game;

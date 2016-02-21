@@ -38,7 +38,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    
+    AppDelegate.sharedInstance.forcePortrait = YES;
+    [[UIDevice currentDevice] setValue:[NSNumber numberWithInt:UIInterfaceOrientationPortrait] forKey:@"orientation"];
     if (!AppDelegate.sharedInstance.networkController.isConnected) {
         [self.navigationController popToRootViewControllerAnimated:YES];
     } else {

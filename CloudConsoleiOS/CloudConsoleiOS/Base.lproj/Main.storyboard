@@ -125,7 +125,7 @@
                             <tableViewSection id="IDo-KK-F9G">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="fG6-gb-YMh" rowHeight="57" style="IBUITableViewCellStyleDefault" id="HbX-Pu-jKN">
-                                        <rect key="frame" x="0.0" y="99" width="375" height="57"/>
+                                        <rect key="frame" x="0.0" y="35" width="375" height="57"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HbX-Pu-jKN" id="bL9-gM-Z8K">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="56.5"/>
@@ -152,7 +152,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="OZ5-ki-xno" rowHeight="57" style="IBUITableViewCellStyleDefault" id="evW-Lx-HP7">
-                                        <rect key="frame" x="0.0" y="156" width="375" height="57"/>
+                                        <rect key="frame" x="0.0" y="92" width="375" height="57"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="evW-Lx-HP7" id="3xF-Sd-Rk6">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="56.5"/>
@@ -179,7 +179,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="57" id="gib-ci-U8z">
-                                        <rect key="frame" x="0.0" y="213" width="375" height="57"/>
+                                        <rect key="frame" x="0.0" y="149" width="375" height="57"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gib-ci-U8z" id="IjG-el-g77">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="56.5"/>
@@ -249,7 +249,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="sDQ-gl-rhv">
-                                <rect key="frame" x="0.0" y="64" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>

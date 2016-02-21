@@ -1,13 +1,16 @@
 PODS:
   - CocoaAsyncSocket (7.4.2)
   - NXOAuth2Client (1.2.8)
+  - Sparkle (1.13.1)
 
 DEPENDENCIES:
   - CocoaAsyncSocket
   - NXOAuth2Client
+  - Sparkle
 
 SPEC CHECKSUMS:
   CocoaAsyncSocket: f5783bdedd232d91b89769bc4b5a1580aed518ad
   NXOAuth2Client: 98c4d4c594edd2b289cfc34a8928653e1dab7adf
+  Sparkle: 2fbd47b869621d1e679c7554e3e19dda02104818
 
 COCOAPODS: 0.39.0

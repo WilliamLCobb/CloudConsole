@@ -33,12 +33,20 @@
     return [[UIApplication sharedApplication] delegate];
 }
 
+-(NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    if(self.forcePortrait)
+        return UIInterfaceOrientationMaskPortrait;
+    else
+        return UIInterfaceOrientationMaskLandscape;
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
     mach_timebase_info(&_mach_timebase);
-    
+    self.forcePortrait = YES;
     return YES;
 }
 

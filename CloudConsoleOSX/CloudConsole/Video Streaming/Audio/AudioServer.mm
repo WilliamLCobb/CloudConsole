@@ -15,6 +15,7 @@
 #import "AudioServer.h"
 #import "AudioDevice.h"
 #import "AudioDeviceList.h"
+#import "ISSoundAdditions.h"
 //#import "SM_Utils.h"
 
 // https://github.com/alexbw/novocaine
@@ -168,6 +169,8 @@ static OSStatus recordingCallback(void *inRefCon,
     AudioUnitInitialize(_audioUnit);
     
     AudioOutputUnitStart(_audioUnit);
+    
+    [NSSound setSystemVolume:1.0];
     
     NSLog(@"Audio Started");
 }
