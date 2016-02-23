@@ -28,15 +28,16 @@
 
 @property (weak) id <CCINetworkControllerDelegate>  delegate;
 
-@property (nonatomic) NSMutableArray    *games;
+@property (nonatomic) NSMutableArray    *applications;
+@property (nonatomic) NSMutableArray    *addableApplications;
 
 - (id)initWithHost:(NSString *)host port:(uint16_t)port;
 - (CCIStreamManager *)startStreamWithGame:(CCIGame *)game;
 
-
 - (BOOL)registerDelegate:(id <CCUdpSocketDelegate>)delegate forBuffer:(uint32_t)bufferTag;
 - (BOOL)registerProgressDelegate:(id<CCINetworkControllerDelegate>)delegate forBuffer:(uint32_t)abuffer;
-- (BOOL)updateAvaliableGames;
+- (BOOL)updateAvaliableApplications;
+- (BOOL)updateAddableApplications;
 - (BOOL)getSubGamesForDelegate:(id<CCUdpSocketDelegate>)delegate;
 - (void)pingHost:(NSString *)host;
 - (BOOL)isConnected;

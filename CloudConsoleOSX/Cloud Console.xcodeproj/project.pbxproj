@@ -41,9 +41,6 @@
 		CA8C8FF21C557BEC00FA7B61 /* CCPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8C8FF11C557BEC00FA7B61 /* CCPlugin.m */; };
 		CAB6762F1C4028D100518E8E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAB6762E1C4028D100518E8E /* OpenGL.framework */; };
 		CAB6767E1C422E6000518E8E /* CCOh264Encoder.m in Sources */ = {isa = PBXBuildFile; fileRef = CAB6767D1C422E6000518E8E /* CCOh264Encoder.m */; };
-		CAC433FC1C694611000D569E /* AutoUpdate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAC433F61C691762000D569E /* AutoUpdate.framework */; };
-		CAC433FD1C694615000D569E /* AutoUpdate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAC433F61C691762000D569E /* AutoUpdate.framework */; };
-		CAC433FE1C694615000D569E /* AutoUpdate.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CAC433F61C691762000D569E /* AutoUpdate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CAE122081C5D83AE0073D787 /* CCOServerBroadcaster.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE122071C5D83AE0073D787 /* CCOServerBroadcaster.m */; };
 		CAE404F21C4ADA7000AD464F /* CCGamepadInput.m in Sources */ = {isa = PBXBuildFile; fileRef = CAE404F11C4ADA7000AD464F /* CCGamepadInput.m */; };
 		CAE48BE61C5ECB780085870A /* menuIconTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE48BE41C5ECB780085870A /* menuIconTemplate.png */; };
@@ -75,7 +72,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CAC433FE1C694615000D569E /* AutoUpdate.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -92,7 +88,7 @@
 		CA140D071C59CA6E000B947D /* Dolphin.ccop */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Dolphin.ccop; path = Plugins/Dolphin.ccop; sourceTree = "<group>"; };
 		CA1901AC1C56DCC4002BC8F9 /* BonjourHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BonjourHandler.h; path = ../../../Objc_Common/BonjourHandler.h; sourceTree = "<group>"; };
 		CA1901AD1C56DCC4002BC8F9 /* BonjourHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BonjourHandler.m; path = ../../../Objc_Common/BonjourHandler.m; sourceTree = "<group>"; };
-		CA570BAE1C3C713C00918E3A /* CloudConsole.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CloudConsole.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA570BAE1C3C713C00918E3A /* Cloud Console.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cloud Console.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA570BB11C3C713C00918E3A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CA570BB21C3C713C00918E3A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		CA570BB51C3C713C00918E3A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -101,10 +97,10 @@
 		CA570BBA1C3C713D00918E3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA570BBD1C3C713D00918E3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CA570BBF1C3C713D00918E3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CA570BC41C3C713E00918E3A /* CloudConsoleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CloudConsoleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA570BC41C3C713E00918E3A /* Cloud Console.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Cloud Console.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA570BC81C3C713E00918E3A /* CloudConsoleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudConsoleTests.m; sourceTree = "<group>"; };
 		CA570BCA1C3C713E00918E3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CA570BCF1C3C713E00918E3A /* CloudConsoleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CloudConsoleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA570BCF1C3C713E00918E3A /* Cloud Console.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Cloud Console.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA570BD31C3C713E00918E3A /* CloudConsoleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudConsoleUITests.m; sourceTree = "<group>"; };
 		CA570BD51C3C713F00918E3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA570C1A1C3C7F0900918E3A /* CCOWindowCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCOWindowCapture.h; sourceTree = "<group>"; };
@@ -167,9 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CAC433FC1C694611000D569E /* AutoUpdate.framework in Frameworks */,
 				CA8C8F5F1C51A14600FA7B61 /* AudioUnit.framework in Frameworks */,
-				CAC433FD1C694615000D569E /* AutoUpdate.framework in Frameworks */,
 				CA8C8F5D1C51A13C00FA7B61 /* AudioToolbox.framework in Frameworks */,
 				CAB6762F1C4028D100518E8E /* OpenGL.framework in Frameworks */,
 				CA570D031C3E459400918E3A /* CoreMedia.framework in Frameworks */,
@@ -238,9 +232,9 @@
 		CA570BAF1C3C713C00918E3A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CA570BAE1C3C713C00918E3A /* CloudConsole.app */,
-				CA570BC41C3C713E00918E3A /* CloudConsoleTests.xctest */,
-				CA570BCF1C3C713E00918E3A /* CloudConsoleUITests.xctest */,
+				CA570BAE1C3C713C00918E3A /* Cloud Console.app */,
+				CA570BC41C3C713E00918E3A /* Cloud Console.xctest */,
+				CA570BCF1C3C713E00918E3A /* Cloud Console.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -445,9 +439,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CA570BAD1C3C713C00918E3A /* CloudConsole */ = {
+		CA570BAD1C3C713C00918E3A /* Cloud Console */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CA570BD81C3C713F00918E3A /* Build configuration list for PBXNativeTarget "CloudConsole" */;
+			buildConfigurationList = CA570BD81C3C713F00918E3A /* Build configuration list for PBXNativeTarget "Cloud Console" */;
 			buildPhases = (
 				715A4ECB499ACA77DABD2532 /* Check Pods Manifest.lock */,
 				CA570BAA1C3C713C00918E3A /* Sources */,
@@ -461,14 +455,14 @@
 			);
 			dependencies = (
 			);
-			name = CloudConsole;
+			name = "Cloud Console";
 			productName = CloudConsole;
-			productReference = CA570BAE1C3C713C00918E3A /* CloudConsole.app */;
+			productReference = CA570BAE1C3C713C00918E3A /* Cloud Console.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CA570BC31C3C713E00918E3A /* CloudConsoleTests */ = {
+		CA570BC31C3C713E00918E3A /* Cloud ConsoleTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CA570BDB1C3C713F00918E3A /* Build configuration list for PBXNativeTarget "CloudConsoleTests" */;
+			buildConfigurationList = CA570BDB1C3C713F00918E3A /* Build configuration list for PBXNativeTarget "Cloud ConsoleTests" */;
 			buildPhases = (
 				CA570BC01C3C713E00918E3A /* Sources */,
 				CA570BC11C3C713E00918E3A /* Frameworks */,
@@ -479,14 +473,14 @@
 			dependencies = (
 				CA570BC61C3C713E00918E3A /* PBXTargetDependency */,
 			);
-			name = CloudConsoleTests;
+			name = "Cloud ConsoleTests";
 			productName = CloudConsoleTests;
-			productReference = CA570BC41C3C713E00918E3A /* CloudConsoleTests.xctest */;
+			productReference = CA570BC41C3C713E00918E3A /* Cloud Console.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		CA570BCE1C3C713E00918E3A /* CloudConsoleUITests */ = {
+		CA570BCE1C3C713E00918E3A /* Cloud ConsoleUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CA570BDE1C3C713F00918E3A /* Build configuration list for PBXNativeTarget "CloudConsoleUITests" */;
+			buildConfigurationList = CA570BDE1C3C713F00918E3A /* Build configuration list for PBXNativeTarget "Cloud ConsoleUITests" */;
 			buildPhases = (
 				CA570BCB1C3C713E00918E3A /* Sources */,
 				CA570BCC1C3C713E00918E3A /* Frameworks */,
@@ -497,9 +491,9 @@
 			dependencies = (
 				CA570BD11C3C713E00918E3A /* PBXTargetDependency */,
 			);
-			name = CloudConsoleUITests;
+			name = "Cloud ConsoleUITests";
 			productName = CloudConsoleUITests;
-			productReference = CA570BCF1C3C713E00918E3A /* CloudConsoleUITests.xctest */;
+			productReference = CA570BCF1C3C713E00918E3A /* Cloud Console.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -525,7 +519,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CA570BA91C3C713C00918E3A /* Build configuration list for PBXProject "CloudConsole" */;
+			buildConfigurationList = CA570BA91C3C713C00918E3A /* Build configuration list for PBXProject "Cloud Console" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -538,9 +532,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CA570BAD1C3C713C00918E3A /* CloudConsole */,
-				CA570BC31C3C713E00918E3A /* CloudConsoleTests */,
-				CA570BCE1C3C713E00918E3A /* CloudConsoleUITests */,
+				CA570BAD1C3C713C00918E3A /* Cloud Console */,
+				CA570BC31C3C713E00918E3A /* Cloud ConsoleTests */,
+				CA570BCE1C3C713E00918E3A /* Cloud ConsoleUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -675,12 +669,12 @@
 /* Begin PBXTargetDependency section */
 		CA570BC61C3C713E00918E3A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CA570BAD1C3C713C00918E3A /* CloudConsole */;
+			target = CA570BAD1C3C713C00918E3A /* Cloud Console */;
 			targetProxy = CA570BC51C3C713E00918E3A /* PBXContainerItemProxy */;
 		};
 		CA570BD11C3C713E00918E3A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CA570BAD1C3C713C00918E3A /* CloudConsole */;
+			target = CA570BAD1C3C713C00918E3A /* Cloud Console */;
 			targetProxy = CA570BD01C3C713E00918E3A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -733,7 +727,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -770,7 +764,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -807,7 +801,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.WilliamCobb.CloudConsole;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Cloud Console";
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -843,7 +837,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.WilliamCobb.CloudConsole;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Cloud Console";
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
@@ -856,8 +850,8 @@
 				INFOPLIST_FILE = CloudConsoleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.WilliamCobb.CloudConsoleTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CloudConsole.app/Contents/MacOS/CloudConsole";
+				PRODUCT_NAME = "Cloud Console";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Cloud Console.app/Contents/MacOS/Cloud Console";
 			};
 			name = Debug;
 		};
@@ -869,8 +863,8 @@
 				INFOPLIST_FILE = CloudConsoleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.WilliamCobb.CloudConsoleTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CloudConsole.app/Contents/MacOS/CloudConsole";
+				PRODUCT_NAME = "Cloud Console";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Cloud Console.app/Contents/MacOS/Cloud Console";
 			};
 			name = Release;
 		};
@@ -881,7 +875,7 @@
 				INFOPLIST_FILE = CloudConsoleUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.WilliamCobb.CloudConsoleUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Cloud Console";
 				TEST_TARGET_NAME = CloudConsole;
 				USES_XCTRUNNER = YES;
 			};
@@ -894,7 +888,7 @@
 				INFOPLIST_FILE = CloudConsoleUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.WilliamCobb.CloudConsoleUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Cloud Console";
 				TEST_TARGET_NAME = CloudConsole;
 				USES_XCTRUNNER = YES;
 			};
@@ -903,7 +897,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CA570BA91C3C713C00918E3A /* Build configuration list for PBXProject "CloudConsole" */ = {
+		CA570BA91C3C713C00918E3A /* Build configuration list for PBXProject "Cloud Console" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA570BD61C3C713F00918E3A /* Debug */,
@@ -912,7 +906,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CA570BD81C3C713F00918E3A /* Build configuration list for PBXNativeTarget "CloudConsole" */ = {
+		CA570BD81C3C713F00918E3A /* Build configuration list for PBXNativeTarget "Cloud Console" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA570BD91C3C713F00918E3A /* Debug */,
@@ -921,7 +915,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CA570BDB1C3C713F00918E3A /* Build configuration list for PBXNativeTarget "CloudConsoleTests" */ = {
+		CA570BDB1C3C713F00918E3A /* Build configuration list for PBXNativeTarget "Cloud ConsoleTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA570BDC1C3C713F00918E3A /* Debug */,
@@ -930,7 +924,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CA570BDE1C3C713F00918E3A /* Build configuration list for PBXNativeTarget "CloudConsoleUITests" */ = {
+		CA570BDE1C3C713F00918E3A /* Build configuration list for PBXNativeTarget "Cloud ConsoleUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA570BDF1C3C713F00918E3A /* Debug */,

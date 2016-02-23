@@ -78,6 +78,15 @@
     });
 }
 
+- (void)showInfo:(NSString *)error withTitle:(NSString *)title
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        SCLAlertView * alertView = [[SCLAlertView alloc] init];
+        alertView.shouldDismissOnTapOutside = YES;
+        [alertView showInfo:[self topMostController] title:title subTitle:error closeButtonTitle:@"Okay" duration:0.0];
+    });
+}
+
 - (UIViewController*) topMostController
 {
     UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;

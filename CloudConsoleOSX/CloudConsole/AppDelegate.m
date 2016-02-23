@@ -19,6 +19,8 @@
     NSMenuItem  *ipItem;
     NSArray     *shakeImages;
     SUUpdater   *updater;
+    
+    BOOL        canSleep;
 }
     
 @end
@@ -33,6 +35,8 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     /*  Auto Update  */
     //com.WilliamCobb.CloudConsole
+    
+    canSleep = YES;
     
     updater = [SUUpdater updaterForBundle:[NSBundle bundleForClass:[self class]]];
     updater.delegate = self;
@@ -76,6 +80,7 @@
     if ([[NSProcessInfo processInfo] respondsToSelector:@selector(beginActivityWithOptions:reason:)]) {
         [[NSProcessInfo processInfo] endActivity:self.activity]; //End Background
         self.activity = [[NSProcessInfo processInfo] beginActivityWithOptions:NSActivityUserInitiated reason:@"Streaming"];
+        canSleep = NO;
     }
 }
 
@@ -84,6 +89,7 @@
     if ([[NSProcessInfo processInfo] respondsToSelector:@selector(endActivity:)]) {
         [[NSProcessInfo processInfo] endActivity:self.activity];
         self.activity = [[NSProcessInfo processInfo] beginActivityWithOptions:NSActivityBackground reason:@"Backgrounding"];
+        canSleep = YES;
     }
 }
      
@@ -105,6 +111,7 @@
 - (void)updater:(SUUpdater *)updater didFindValidUpdate:(SUAppcastItem *)item
 {
     NSLog(@"Found update");
+    
 }
 
 - (void)updaterDidNotFindUpdate:(SUUpdater *)updater
@@ -112,10 +119,51 @@
     NSLog(@"Did not find update");
 }
 
+- (void)updater:(SUUpdater *)updater willDownloadUpdate:(SUAppcastItem *)item withRequest:(NSMutableURLRequest *)request
+{
+    NSLog(@"Downloading Update");
+}
+
+- (void)updater:(SUUpdater *)updater willInstallUpdateOnQuit:(SUAppcastItem *)item immediateInstallationInvocation:(NSInvocation *)invocation
+{
+    NSLog(@"Installing on quit");
+    [self relaunchAfterDelay:1];
+}
+
+- (void)updater:(SUUpdater *)updater willInstallUpdate:(SUAppcastItem *)item
+{
+    NSLog(@"Installing Update");
+}
+
+- (void)updater:(SUUpdater *)updater didAbortWithError:(NSError *)error
+{
+    NSLog(@"Instller aborted: %@", error);
+}
+
 - (NSString *)feedURLStringForUpdater:(SUUpdater *)updater
 {
     NSLog(@"Asked for URL");
-    return @"10.0.1.16";
+    return @"http://www.cloudconsoleapp.com/CloudConsole/update.xml";
+}
+
+- (void)relaunchAfterDelay:(float)seconds
+{
+    if (canSleep) {
+        NSTask *task = [[NSTask alloc] init];
+        NSMutableArray *args = [NSMutableArray array];
+        [args addObject:@"-c"];
+        [args addObject:[NSString stringWithFormat:@"sleep %f; open \"%@\"", seconds, [[NSBundle mainBundle] bundlePath]]];
+        [task setLaunchPath:@"/bin/sh"];
+        [task setArguments:args];
+        [task launch];
+        
+        [[NSApplication sharedApplication] terminate:self];
+    } else {
+        //Instream so relaunch when possible
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self relaunchAfterDelay:seconds];
+        });
+    }
 }
 
 #pragma mark Launch at Startup

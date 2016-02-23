@@ -102,28 +102,30 @@
     return [newRep representationUsingType:NSPNGFileType properties:nil];
 }
 
-+(NSArray <CCGame *> *)gamesAtPaths:(NSArray *)searchPaths
-{
-    NSMutableArray *games = [NSMutableArray new];
-    for (NSString *path in searchPaths) {
-        [games addObjectsFromArray:[self gamesAtPath:path]];
-    }
-    
-    return games;
-}
 
 +(NSArray <NSString *> *)defaultPaths
 {
     return @[@"/Applications"];
 }
 
-+(NSArray <CCGame *> *)gamesAtPath:(NSString *)path
++(NSArray <CCGame *> *)applicationsAtPaths:(NSArray *)searchPaths
 {
-    NSArray *gameNames = [[NSUserDefaults standardUserDefaults] arrayForKey:@"games"];
-    if (!gameNames) {
-        gameNames = @[@"Dolphin.app", @"Citra.app", @"VLC.app"]; //Default games
-        [[NSUserDefaults standardUserDefaults] setObject:gameNames forKey:@"games"];
+    NSMutableArray *games = [NSMutableArray new];
+    NSArray *validNames = [[NSUserDefaults standardUserDefaults] arrayForKey:@"validApplicationNames"];
+    if (!validNames) {
+        validNames = @[@"Dolphin.app", @"Citra.app", @"VLC.app"]; //Default games
+        [[NSUserDefaults standardUserDefaults] setObject:validNames forKey:@"validApplicationNames"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
+    for (NSString *path in searchPaths) {
+        [games addObjectsFromArray:[self applicationsAtPath:path validNames:validNames]];
+    }
+    return games;
+}
+
++(NSArray <CCGame *> *)applicationsAtPath:(NSString *)path validNames:(NSArray *)validNames;
+{
+    
     NSError *error;
     NSArray * directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:&error];
     
@@ -132,7 +134,7 @@
         NSLog(@"Error <applicationsAtPath:>: %@", error);
     }
     for (NSString *appName in directoryContents) {
-        if ([gameNames containsObject:appName]) {
+        if ((!validNames || [validNames containsObject:appName]) && [appName.pathExtension.lowercaseString isEqualToString:@"app"]) {
             NSString *gamePath = [path stringByAppendingPathComponent:appName];
             [games addObject:[[CCGame alloc] initWithPath:gamePath]];
         }
@@ -140,20 +142,12 @@
     return games;
 }
 
-+(NSArray <CCGame *> *)allApplicationsAtPath:(NSString *)path
++(NSArray <CCGame *> *)allApplicationsAtPaths:(NSArray *)searchPaths
 {
-    NSError *error;
-    NSArray * directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:&error];
-    
-    NSMutableArray *apps = [NSMutableArray new];
-    if (error) {
-        NSLog(@"Error <applicationsAtPath:>: %@", error);
+    NSMutableArray *games = [NSMutableArray new];
+    for (NSString *path in searchPaths) {
+        [games addObjectsFromArray:[self applicationsAtPath:path validNames:nil]];
     }
-    for (NSString *appName in directoryContents) {
-        NSString *gamePath = [path stringByAppendingPathComponent:appName];
-        [apps addObject:[[CCGame alloc] initWithPath:gamePath]];
-    }
-    return apps;
+    return games;
 }
-
 @end

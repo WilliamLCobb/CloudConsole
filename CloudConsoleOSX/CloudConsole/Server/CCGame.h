@@ -14,8 +14,8 @@
 @property (strong)  NSString    *name;
 @property (strong)  NSImage     *icon;
 @property BOOL running;
-+(NSArray <CCGame *> *)gamesAtPaths:(NSArray *)plusPaths;
-+(NSArray <CCGame *> *)allApplicationsAtPath:(NSString *)path;
++(NSArray <CCGame *> *)applicationsAtPaths:(NSArray *)searchPaths;
++(NSArray <CCGame *> *)allApplicationsAtPaths:(NSArray *)searchPaths;
 +(NSArray <NSString *> *)defaultPaths;
 +(NSString *)applicationNameForPath:(NSString *)path;
 +(NSString *)processPathFromPid:(pid_t)apid;

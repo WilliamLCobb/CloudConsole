@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 #import "CCUdpSocket.h"
 
-@interface CCIDevice () {
+@interface CCIDevice() <CCUdpSocketDelegate>{
     CCUdpSocket     *pingSocket;
     NSTimer         *pingTimer;
     BOOL            gotPingResponse;
@@ -106,6 +106,11 @@
 {
     gotPingResponse = YES;
     self.availability = CCIDeviceavailabilityAvaliable;
+}
+
+- (void)wrongApplicationState
+{
+    
 }
 
 -(void)dealloc

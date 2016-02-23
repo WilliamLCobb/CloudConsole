@@ -68,6 +68,9 @@
     CCGamepadInput      *controller;
     //Audio
     AudioServer         *audioServer;
+    
+    pid_t               appPid;
+    
 }
 
 @end
@@ -83,12 +86,16 @@
             return nil;
         }
         
+        appPid = pid;
+        
         mach_timebase_info(&_mach_timebase);
         self.captureFPS = 30;
+        self.bitrate = 500;
         self.delegate = delegate;
         
         encoder = [[CCOh264Encoder alloc] initWithController:self ScreenSize:[windowCapture windowSize]];
         encoder.fps = self.captureFPS;
+        encoder.bitrate = self.bitrate;
         
         controller = [[CCGamepadInput alloc] init];
         
@@ -173,6 +180,23 @@
     return;
 }
 
+- (void)pauseAppWithPid:(pid_t)pid
+{
+    [encoder setFps:1];
+    NSTask* task = [[NSTask alloc] init];
+    [task setLaunchPath: @"/bin/sh"];
+    [task setArguments:@[@"-c", [NSString stringWithFormat:@"kill -STOP %d", pid]]];
+    [task launch];
+}
+
+- (void)resumeAppWithPid:(pid_t)pid
+{
+    NSTask* task = [[NSTask alloc] init];
+    [task setLaunchPath: @"/bin/sh"];
+    [task setArguments:@[@"-c", [NSString stringWithFormat:@"kill -CONT %d", pid]]];
+    [task launch];
+}
+
 #pragma mark - Window Capture Delegate
 
 - (void)windowSizeChanged
@@ -208,6 +232,15 @@
         case CCNetworkCloseStream:
             [self closeStream];
             break;
+        case CCNetworkPauseStream:
+        {
+            if (message[0]) {
+               [self pauseAppWithPid:appPid];
+            } else {
+                [self resumeAppWithPid:appPid];
+            }
+            
+        }
         default:
             break;
     }

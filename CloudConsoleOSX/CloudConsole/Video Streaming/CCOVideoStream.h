@@ -22,9 +22,10 @@
 
 @interface CCOVideoStream : NSObject <CCOWindowCaptureDelegate, AVCaptureAudioDataOutputSampleBufferDelegate>
 
-@property (strong) NSString *host;
-@property (assign) NSInteger port;
-@property (assign) double   captureFPS;
+@property (strong) NSString     *host;
+@property (assign) NSInteger    port;
+@property (assign) double       captureFPS;
+@property (assign) uint32_t     bitrate;
 @property id <CCVideoStreamDelegate> delegate;
 
 - (id)initWithGamePid:(pid_t)pid delegate:(id <CCVideoStreamDelegate>)delegate;

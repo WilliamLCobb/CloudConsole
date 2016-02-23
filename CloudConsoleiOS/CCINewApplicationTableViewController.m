@@ -1,30 +1,25 @@
 //
-//  CCIGameSelectionTableViewController.m
-//  CloudConsoleiOS
+//  CCINewApplicationTableViewController.m
+//  Cloud Console
 //
-//  Created by Will Cobb on 1/23/16.
+//  Created by Will Cobb on 2/22/16.
 //  Copyright © 2016 Will Cobb. All rights reserved.
 //
 
-#import "CCIAppSelectionTableViewController.h"
-
+#import "CCINewApplicationTableViewController.h"
+#import "CCINetworkController.h"
+#import "DALabeledCircularProgressView.h"
 #import "AppDelegate.h"
 #import "CCIGame.h"
-
-#import "CCIGameSelectionTableViewController.h"
-#import "DALabeledCircularProgressView.h"
-
-@interface CCIAppSelectionTableViewController () {
-    CCIGame                 *selectedGame;
-    CCINetworkController    *networkController;
-    DALabeledCircularProgressView *progressView;
-    
-    BOOL currentView;
+@interface CCINewApplicationTableViewController () <CCINetworkControllerDelegate> {
+    NSArray *addableGames;
+    DALabeledCircularProgressView   *progressView;
+    CCINetworkController            *networkController;
 }
 
 @end
 
-@implementation CCIAppSelectionTableViewController
+@implementation CCINewApplicationTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,45 +29,41 @@
     self.tableView.tableFooterView = [UIView new];
     self.tableView.tableFooterView.backgroundColor = [UIColor whiteColor];
     
+    //    UILabel *searchingLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, self.view.frame.size.width - 40, 20)];
+    //    searchingLabel.text = @"Loading Applications";
+    //    searchingLabel.textAlignment = NSTextAlignmentCenter;
+    //    [self.tableView.tableFooterView addSubview:searchingLabel];
+    
     progressView = [[DALabeledCircularProgressView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 60, 10, 120, 120)];
     progressView.progressLabel.text = @"Loading...";
     progressView.progressTintColor = kAppColor;
     progressView.thicknessRatio = 0.11;
     progressView.roundedCorners = 5;
     [self.tableView.tableFooterView addSubview:progressView];
-    
-    currentView = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    AppDelegate.sharedInstance.forcePortrait = YES;
-    [[UIDevice currentDevice] setValue:[NSNumber numberWithInt:UIInterfaceOrientationPortrait] forKey:@"orientation"];
-    if (!AppDelegate.sharedInstance.networkController.isConnected) {
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    } else {
-        networkController = AppDelegate.sharedInstance.networkController;
-        [networkController registerProgressDelegate:self forBuffer:CCNetworkGetApplications];
-        [networkController addObserver:self forKeyPath:@"applications" options:NSKeyValueObservingOptionNew context:nil];
-        [networkController updateAvaliableApplications];
-    }
+    networkController = AppDelegate.sharedInstance.networkController;
+    [networkController registerProgressDelegate:self forBuffer:CCNetworkGetNewApplications];
+    [networkController addObserver:self forKeyPath:@"addableApplications" options:NSKeyValueObservingOptionNew context:nil];
+    [networkController updateAddableApplications];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    currentView = NO;
-    [networkController removeObserver:self forKeyPath:@"applications"];
+    [networkController removeObserver:self forKeyPath:@"addableApplications"];
     networkController = nil;
 }
 
-- (void)pingDevices
+- (IBAction)back:(id)sender
 {
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:@"applications"]) {
+    if ([keyPath isEqualToString:@"addableApplications"]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIView animateWithDuration:0.2 animations:^{
                 self.tableView.tableFooterView.alpha = 0;
@@ -105,12 +96,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return networkController.applications.count;
+    return networkController.addableApplications.count;
 }
 
 - (CCIGame *)gameForIndexPath:(NSIndexPath *)indexPath
 {
-    return networkController.applications[indexPath.row];
+    return networkController.addableApplications[indexPath.row];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -128,28 +119,7 @@
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     CCIGame *game = [self gameForIndexPath:indexPath];
-    if (game.hasTable) {
-        selectedGame = game;
-        [self performSegueWithIdentifier:@"ToGames" sender:self];
-    } else {
-        NSLog(@"Name: %@", game.name);
-        [AppDelegate.sharedInstance launchGame:game];
-    }
-    
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"ToGames"]) {
-        CCIGameSelectionTableViewController *destination = segue.destinationViewController;
-        destination.currentGame = selectedGame;
-    }
+    //Add game
 }
 
 @end

@@ -40,8 +40,11 @@
 #define CCBonjourServerAddress      (uint32_t)10101
 
 /*  Information  */
-#define CCNetworkGetAvaliableGames  (uint32_t)5001
-#define CCNetworkGetSubGames        (uint32_t)5002
+//Applications
+#define CCNetworkGetApplications    (uint32_t)5001
+#define CCNetworkGetGames           (uint32_t)5002
+#define CCNetworkGetNewApplications (uint32_t)5003
+#define CCNetworkSetNewApplication  (uint32_t)5004
 
 /*  Stream Start */
 #define CCNetworkOpenStream         (uint32_t)2010
@@ -50,6 +53,7 @@
 #define CCNetworkStreamOpenFailure  (uint32_t)2013
 #define CCNetworkStreamReceivePort  (uint32_t)2020
 #define CCNetworkCloseStream        (uint32_t)2021
+#define CCNetworkPauseStream        (uint32_t)2022
 
 // Stream Options
 #define CCNetworkStreamUseTCP       (uint32_t)1 << 0 //Place holder
@@ -67,7 +71,6 @@
 
 /*  Controls  */
 #define CCNetworkButtonState        (uint32_t)3030
-
 #define CCNetworkDirectionalState   (uint32_t)3031
 
 /*  Application States  */

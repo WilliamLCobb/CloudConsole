@@ -123,11 +123,7 @@
     NSString *pluginPath = [[NSBundle mainBundle] pathForResource:pluginName ofType:@"ccop"];
     if (!pluginPath) { //Not in bundle, check app support
         pluginPath = [NSString stringWithFormat:@"%@/Plugins/%@.ccop", [AppDelegate supportFolder], pluginName];
-        NSLog(@"Looking in for plugin in: %@", pluginPath);
-        if ([[NSFileManager defaultManager] fileExistsAtPath:pluginPath]) {
-            NSLog(@"Found in alternate path");
-        } else { //Did not find a plugin
-            NSLog(@"No plugin, using default");
+        if (![[NSFileManager defaultManager] fileExistsAtPath:pluginPath]) {
             return nil;
         }
     }

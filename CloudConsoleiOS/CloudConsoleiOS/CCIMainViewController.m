@@ -76,7 +76,11 @@
     [self pingDevices];
     pingTimer = [NSTimer scheduledTimerWithTimeInterval:5  target:self selector:@selector(pingDevices) userInfo:nil repeats:YES];
     //[spotlight beginPresentation];
-
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"ShowDL"]) {
+        [AppDelegate.sharedInstance showInfo:@"Download the newest version of CloudConsole from\n   "
+                                   withTitle:@"Update"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"ShowDL"];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated

@@ -148,5 +148,17 @@
     [self.streamSocket sendData:[NSData dataWithBytes:&buttonState length:4] usingMethod:CCUdpSendMethodRedundent CCtag:CCNetworkButtonState];
 }
 
+- (void)pause
+{
+    uint32_t t = 1;
+    [self.streamSocket sendData:[NSData dataWithBytes:&t length:4] usingMethod:CCUdpSendMethodGuarentee CCtag:CCNetworkPauseStream];
+}
+
+- (void)resume
+{
+    uint32_t f = 0;
+    [self.streamSocket sendData:[NSData dataWithBytes:&f length:4] usingMethod:CCUdpSendMethodGuarentee CCtag:CCNetworkPauseStream];
+}
+
 
 @end

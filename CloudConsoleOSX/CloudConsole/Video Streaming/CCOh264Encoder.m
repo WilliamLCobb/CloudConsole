@@ -74,18 +74,9 @@
             NSLog(@"Compression setup Error 3");
         }
         
-//        if(err == noErr) {
-//            err = VTSessionSetProperty(compressionSession , kVTVideoDecoderSpecification_RequireHardwareAcceleratedVideoDecoder, kCFBooleanFalse);
-//        } else {
-//            NSLog(@"Compression setup Error 4");
-//        }
-        
         if(err == noErr) {
-            const int v = (8 * 1024) * 100; // KB/sec
-            CFNumberRef ref = CFNumberCreate(NULL, kCFNumberSInt32Type, &v);
-            err = VTSessionSetProperty(compressionSession, kVTCompressionPropertyKey_AverageBitRate, ref);
-            if (err != noErr) NSLog(@"Setup Error: Average bitrate -> %d", err);
-            CFRelease(ref);
+            err = VTSessionSetProperty(compressionSession, kVTCompressionPropertyKey_AverageBitRate, (__bridge CFTypeRef _Nonnull)(@(self.bitrate)));
+            
         } else {
             NSLog(@"Compression setup Error 5");
         }
@@ -110,6 +101,32 @@
         }
     }
     return self;
+}
+
+- (void)setCaptureSize:(CGSize)size
+{
+    //VTSessionSetProperty(compressionSession, kVTCompressionPropertyKey, kVTH264EntropyMode_CAVLC);
+}
+
+- (void)setBitrate:(int32_t)bitrate
+{
+    _bitrate = bitrate * 8 * 1024;
+    if (compressionSession) {
+        VTSessionSetProperty(compressionSession, kVTCompressionPropertyKey_AverageBitRate, (__bridge CFTypeRef _Nonnull)(@(_bitrate)));
+    }
+}
+
+- (void)setFps:(int32_t)fps
+{
+    _fps = fps;
+    if (compressionSession) {
+        VTSessionSetProperty(compressionSession,
+                             kVTCompressionPropertyKey_MaxKeyFrameInterval,
+                             (__bridge CFTypeRef)(@(fps*2)));
+        VTSessionSetProperty(compressionSession,
+                             kVTCompressionPropertyKey_ExpectedFrameRate,
+                             (__bridge CFTypeRef)(@(fps)));
+    }
 }
 
 - (BOOL)encodeFrame:(CGImageRef)captureImage frameNumber:(NSInteger)frameNumber

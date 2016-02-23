@@ -44,7 +44,7 @@
         [self.navigationController popToRootViewControllerAnimated:YES];
     } else {
         networkController = AppDelegate.sharedInstance.networkController;
-        [networkController registerProgressDelegate:self forBuffer:CCNetworkGetSubGames];
+        [networkController registerProgressDelegate:self forBuffer:CCNetworkGetGames];
         [self.currentGame addObserver:self forKeyPath:@"subGames" options:NSKeyValueObservingOptionNew context:nil];
         [self.currentGame loadSubgames];
         networkController.delegate = self;

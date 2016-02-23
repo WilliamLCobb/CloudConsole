@@ -13,6 +13,7 @@
 #import "CCIStreamManager.h"
 #import "PortMapper.h"
 #import "CCIGame.h"
+#import "AppDelegate.h"
 
 @interface CCINetworkController () {
     CCUdpSocket         *clientSocket;
@@ -24,6 +25,7 @@
     NSMutableDictionary *progressDelegates;
     
     BOOL                connected;
+    BOOL                notifiedUpdate;
 }
 
 @end
@@ -37,7 +39,6 @@
         progressDelegates = [NSMutableDictionary dictionary];
         socketQueue = dispatch_queue_create("Socket Delegate Queue", NULL);
         clientSocket = [[CCUdpSocket alloc] initWithDelegate:self delegateQueue:socketQueue];
-        //clientSocket = [[CCUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
         
         [clientSocket setDestinationHost:host port:port]; //
         [clientSocket sendData:[NSData new] usingMethod:CCUdpSendMethodStream CCtag:CCNetworkConnect];
@@ -50,7 +51,8 @@
                                                      name: PortMapperChangedNotification
                                                    object: nil];
         */
-        self.games = [NSMutableArray new];
+        self.applications = [NSMutableArray new];
+        self.addableApplications = [NSMutableArray new];
     }
     
     return self;
@@ -85,28 +87,46 @@
 - (void)CCSocket:(CCUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag
 {
     switch (tag) {
-        case CCNetworkGetAvaliableGames:
+        case CCNetworkGetApplications:
         {
             NSError *error;
             NSArray *gamesArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
             if (error) {
                 NSLog(@"Avaliable games json error: %@", [error description]);
-                //NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
                 return;
             }
-            [self willChangeValueForKey:@"games"];
-            [self.games removeAllObjects];
+            [self willChangeValueForKey:@"applications"];
+            [self.applications removeAllObjects];
             
             for (NSDictionary *gameDict in gamesArray) {
-                [self.games addObject:[[CCIGame alloc] initWithDictionairy:gameDict]];
+                [self.applications addObject:[[CCIGame alloc] initWithDictionairy:gameDict]];
             }
             
             if (error) {
                 NSLog(@"Error loading games: %@", [error description]);
             }
+            [self didChangeValueForKey:@"applications"];
+            break;
+        }
+        case CCNetworkGetNewApplications:
+        {
+            NSError *error;
+            NSArray *gamesArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+            if (error) {
+                NSLog(@"Avaliable games json error: %@", [error description]);
+                return;
+            }
+            [self willChangeValueForKey:@"addableApplications"];
+            [self.addableApplications removeAllObjects];
             
-            NSLog(@"Got %lu games (%ld)", (unsigned long)gamesArray.count, self.games.count);
-            [self didChangeValueForKey:@"games"];
+            for (NSDictionary *gameDict in gamesArray) {
+                [self.addableApplications addObject:[[CCIGame alloc] initWithDictionairy:gameDict]];
+            }
+            
+            if (error) {
+                NSLog(@"Error loading games: %@", [error description]);
+            }
+            [self didChangeValueForKey:@"addableApplications"];
             break;
         }
             
@@ -126,7 +146,11 @@
 
 - (void)wrongApplicationState
 {
-    NSLog(@"Socket client not in home state");
+    if (!notifiedUpdate) {
+        [AppDelegate.sharedInstance showInfo:@"Download the newest version of Cloud Console for your Desktop at\ngoo.gl/U98vzy"
+                                   withTitle:@"Out Of Data"];
+        notifiedUpdate = YES;
+    }
 }
 
 - (void)CCSocketTimedOut
@@ -202,24 +226,38 @@
     return YES;
 }
 
-- (BOOL)updateAvaliableGames
+- (BOOL)updateAvaliableApplications
 {
     if (!clientSocket.connected) {
         NSLog(@"Warning: updateAvaliableGames socket not connected");
         return NO;
     }
-    
-    [clientSocket sendData:[NSData data] usingMethod:CCUdpSendMethodGuarentee CCtag:CCNetworkGetAvaliableGames];
-    NSLog(@"%@ Asked for apps", self);
+    [clientSocket sendData:[NSData data] usingMethod:CCUdpSendMethodGuarentee CCtag:CCNetworkGetApplications];
     return YES;
+}
+
+- (BOOL)updateAddableApplications
+{
+    if (!clientSocket.connected) {
+        NSLog(@"Warning: updateAddableGames socket not connected");
+        return NO;
+    }
+    
+    [clientSocket sendData:[NSData data] usingMethod:CCUdpSendMethodGuarentee CCtag:CCNetworkGetNewApplications];
+    return YES;
+}
+
+- (void)addGame:(CCIGame *)game
+{
+    
 }
 
 - (BOOL)getSubGamesForDelegate:(id<CCUdpSocketDelegate>)delegate
 {
     if (!clientSocket.connected)
         return NO;
-    [self registerDelegate:delegate forBuffer:CCNetworkGetSubGames];
-    [clientSocket sendData:[NSData data] usingMethod:CCUdpSendMethodGuarentee CCtag:CCNetworkGetSubGames];
+    [self registerDelegate:delegate forBuffer:CCNetworkGetGames];
+    [clientSocket sendData:[NSData data] usingMethod:CCUdpSendMethodGuarentee CCtag:CCNetworkGetGames];
     return YES;
 }
 

@@ -65,6 +65,7 @@
 		CAC433EC1C670B6B000D569E /* CloudConsoleIcon-128.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC433EA1C670B6B000D569E /* CloudConsoleIcon-128.png */; };
 		CAC433ED1C670B6B000D569E /* CloudConsoleIcon-128@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC433EB1C670B6B000D569E /* CloudConsoleIcon-128@2x.png */; };
 		CAC433F31C67F3CB000D569E /* CCIPortraitNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC433F21C67F3CB000D569E /* CCIPortraitNavigationController.m */; };
+		CADE3CBF1C7BB0FB00AE796C /* CCINewApplicationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CADE3CBE1C7BB0FB00AE796C /* CCINewApplicationTableViewController.m */; };
 		CAE404C81C488BB500AD464F /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE404C71C488BB500AD464F /* GameController.framework */; };
 		CAE405DD1C4DE5BF00AD464F /* gcpad_a@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE405911C4DE5BF00AD464F /* gcpad_a@2x.png */; };
 		CAE405DE1C4DE5BF00AD464F /* gcpad_a_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAE405921C4DE5BF00AD464F /* gcpad_a_pressed@2x.png */; };
@@ -283,6 +284,8 @@
 		CAC433EB1C670B6B000D569E /* CloudConsoleIcon-128@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CloudConsoleIcon-128@2x.png"; path = "../../Image Sets/Icons/App/CloudConsoleIcon-128@2x.png"; sourceTree = "<group>"; };
 		CAC433F11C67F3CB000D569E /* CCIPortraitNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIPortraitNavigationController.h; sourceTree = "<group>"; };
 		CAC433F21C67F3CB000D569E /* CCIPortraitNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCIPortraitNavigationController.m; sourceTree = "<group>"; };
+		CADE3CBD1C7BB0FB00AE796C /* CCINewApplicationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCINewApplicationTableViewController.h; sourceTree = "<group>"; };
+		CADE3CBE1C7BB0FB00AE796C /* CCINewApplicationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCINewApplicationTableViewController.m; sourceTree = "<group>"; };
 		CAE404C71C488BB500AD464F /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		CAE405911C4DE5BF00AD464F /* gcpad_a@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcpad_a@2x.png"; sourceTree = "<group>"; };
 		CAE405921C4DE5BF00AD464F /* gcpad_a_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gcpad_a_pressed@2x.png"; sourceTree = "<group>"; };
@@ -477,7 +480,8 @@
 				CAB676461C40382300518E8E /* CCIMainViewController.m */,
 				CA247C261C72757A0004FC1A /* CCIDeviceCollectionViewCell.h */,
 				CA247C271C72757A0004FC1A /* CCIDeviceCollectionViewCell.m */,
-				CAE48C431C63F5080085870A /* Main View Options */,
+				CAE48C471C63F5570085870A /* CCINewDeviceTableViewController.h */,
+				CAE48C481C63F5570085870A /* CCINewDeviceTableViewController.m */,
 			);
 			name = "Main View";
 			sourceTree = "<group>";
@@ -571,8 +575,7 @@
 				CAC433F11C67F3CB000D569E /* CCIPortraitNavigationController.h */,
 				CAC433F21C67F3CB000D569E /* CCIPortraitNavigationController.m */,
 				CA247C251C7272FA0004FC1A /* Main View */,
-				CA8C8FD61C547B5800FA7B61 /* CCIAppSelectionTableViewController.h */,
-				CA8C8FD71C547B5800FA7B61 /* CCIAppSelectionTableViewController.m */,
+				CADE3CBC1C7BB0D200AE796C /* App View */,
 				CA140D011C59B823000B947D /* CCIGameSelectionTableViewController.h */,
 				CA140D021C59B823000B947D /* CCIGameSelectionTableViewController.m */,
 				CAB676841C439D7D00518E8E /* StreamView */,
@@ -723,6 +726,17 @@
 				CAB676951C44640B00518E8E /* PortMapper.m */,
 			);
 			name = PortForwarding;
+			sourceTree = "<group>";
+		};
+		CADE3CBC1C7BB0D200AE796C /* App View */ = {
+			isa = PBXGroup;
+			children = (
+				CA8C8FD61C547B5800FA7B61 /* CCIAppSelectionTableViewController.h */,
+				CA8C8FD71C547B5800FA7B61 /* CCIAppSelectionTableViewController.m */,
+				CADE3CBD1C7BB0FB00AE796C /* CCINewApplicationTableViewController.h */,
+				CADE3CBE1C7BB0FB00AE796C /* CCINewApplicationTableViewController.m */,
+			);
+			name = "App View";
 			sourceTree = "<group>";
 		};
 		CAE404BD1C4884A700AD464F /* Controls */ = {
@@ -911,15 +925,6 @@
 				CAE48C3B1C63F0B90085870A /* SCLTextView.m */,
 			);
 			name = SCLAlertView;
-			sourceTree = "<group>";
-		};
-		CAE48C431C63F5080085870A /* Main View Options */ = {
-			isa = PBXGroup;
-			children = (
-				CAE48C471C63F5570085870A /* CCINewDeviceTableViewController.h */,
-				CAE48C481C63F5570085870A /* CCINewDeviceTableViewController.m */,
-			);
-			name = "Main View Options";
 			sourceTree = "<group>";
 		};
 		CAE48C4E1C6400120085870A /* Navigation */ = {
@@ -1277,6 +1282,7 @@
 				CA140CDD1C589162000B947D /* CCIDevice.m in Sources */,
 				CA8C8F581C519FFE00FA7B61 /* TPCircularBuffer+AudioBufferList.c in Sources */,
 				CAE48C3C1C63F0B90085870A /* UIImage+ImageEffects.m in Sources */,
+				CADE3CBF1C7BB0FB00AE796C /* CCINewApplicationTableViewController.m in Sources */,
 				CAE48C3F1C63F0B90085870A /* SCLAlertViewResponder.m in Sources */,
 				CAE48C491C63F5570085870A /* CCINewDeviceTableViewController.m in Sources */,
 				CAE48C401C63F0B90085870A /* SCLAlertViewStyleKit.m in Sources */,

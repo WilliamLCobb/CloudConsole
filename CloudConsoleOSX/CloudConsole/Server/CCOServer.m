@@ -51,7 +51,7 @@
     if (self = [super init]) {
         self.deviceName = [NSString stringWithFormat:@"mac.%@", [[NSHost currentHost] localizedName]];
         socketDelegates = [NSMutableDictionary dictionary];
-        currentGames = [CCGame gamesAtPaths:[CCGame defaultPaths]];
+        currentGames = [CCGame applicationsAtPaths:[CCGame defaultPaths]];
     }
     return self;
 }
@@ -75,6 +75,7 @@
     [serverSocket bindToPort:CCNetworkServerPort error:&error];
     if (error) {
         NSLog(@"Error starting server (bind): %@", error);
+        [self retryPortBind];
         return;
     }
     [serverSocket beginReceiving:&error];
@@ -96,27 +97,34 @@
      */
 }
 
+- (void)retryPortBind
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(20 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSError *error = nil;
+        [serverSocket bindToPort:CCNetworkServerPort error:&error];
+        if (error) {
+            NSLog(@"Error starting server (bind): %@", error);
+            [self retryPortBind];
+        } else {
+            [serverSocket beginReceiving:nil];
+        }
+    });
+}
+
 #pragma mark - Network
 - (void) CCSocket:(CCUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag
 {
     uint32_t *message = (uint32_t *)data.bytes;
     switch (tag) {
-        case CCNetworkReopenStream: {
-            [broadcaster stop];
-            NSLog(@"Reopening not supported");
-        }
         case CCNetworkOpenStream: {
             [broadcaster stop];
             NSLog(@"Launching Game");
-            //Switch to JSON later
             
             uint32_t port = message[0];
             NSString *applicationPath = [NSString stringWithCString:(void *)message+8 encoding:NSUTF8StringEncoding];
-            
             NSString *applicationName = [[CCGame applicationNameForPath:applicationPath] stringByDeletingPathExtension];
             /*  Load Plugin  */
             currentPlugin = [[CCPlugin alloc] initWithName:applicationName];
-            
             // Reopen running game
             if ([applicationPath isEqualToString:self.currentGame.path]) {
                 [self startCaptureFromProcess:currentApplication.processIdentifier
@@ -140,9 +148,6 @@
             currentApplication = nil;
             self.currentGame = nil;
             
-            NSLog(@"Launch: %@", applicationPath);
-            
-            
             currentApplication = [currentPlugin launchGameWithPath:applicationPath];
             if (!currentApplication) {
                 NSLog(@"Plugin couldn't launch game");
@@ -160,13 +165,12 @@
             serverSocket.applicationState = CCStateInStream;
             
             // Wait for app to start
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                NSLog(@"Waiting for game to start");
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{\
                 for (int i = 0; i < 10 && !currentApplication.finishedLaunching; i++) {
                     [NSThread sleepForTimeInterval:1];
                 }
                 
-                [NSThread sleepForTimeInterval:3]; //Just some assurance that the game has launched
+                [NSThread sleepForTimeInterval:2]; //Just some assurance that the game has launched
                 
                 NSLog(@"Open Stream to %@:%d", [GCDAsyncUdpSocket hostFromAddress:address], port);
                 [self startCaptureFromProcess:currentApplication.processIdentifier
@@ -177,8 +181,8 @@
             });
             break;
         }
-        case CCNetworkGetAvaliableGames: {
-            currentGames = [CCGame gamesAtPaths:[CCGame defaultPaths]];
+        case CCNetworkGetApplications: {
+            currentGames = [CCGame applicationsAtPaths:[CCGame defaultPaths]];
             NSLog(@"Found Games: %@", currentGames);
             NSMutableArray *gameArray = [NSMutableArray array];
             for (int i = 0; i < currentGames.count; i++) {
@@ -186,19 +190,15 @@
             }
             
             NSError *error;
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:gameArray
-                                                               options:0
-                                                                 error:&error];
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:gameArray options:0 error:&error];
             if (!jsonData) {
                 NSLog(@"Got an error creating json: %@", error);
                 return;
             }
-            //NSLog(@"Sending: %@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
-            [serverSocket sendData:jsonData usingMethod:CCUdpSendMethodGuarentee CCtag:CCNetworkGetAvaliableGames];
-            
+            [serverSocket sendData:jsonData usingMethod:CCUdpSendMethodGuarentee CCtag:CCNetworkGetApplications];
             break;
         }
-        case CCNetworkGetSubGames: {
+        case CCNetworkGetGames: {
             //Switch to JSON
             NSString *applicationPath = [NSString stringWithCString:(void *)message+4 encoding:NSUTF8StringEncoding];
             NSString *applicationName = [[CCGame applicationNameForPath:applicationPath] stringByDeletingPathExtension];
@@ -213,18 +213,43 @@
             }
             
             NSError *error;
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:gameArray
-                                                               options:0
-                                                                 error:&error];
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:gameArray options:0 error:&error];
             if (!jsonData) {
                 NSLog(@"Got an error creating json: %@", error);
                 return;
             }
-            [serverSocket sendData:jsonData usingMethod:CCUdpSendMethodGuarentee CCtag:CCNetworkGetSubGames];
+            [serverSocket sendData:jsonData usingMethod:CCUdpSendMethodGuarentee CCtag:CCNetworkGetGames];
             break;
         }
-        default:
-        {
+        case CCNetworkGetNewApplications: {
+            NSArray *allApplications = [CCGame allApplicationsAtPaths:[CCGame defaultPaths]];
+            NSLog(@"Found New Games: %@", allApplications);
+            NSMutableArray *gameArray = [NSMutableArray array];
+            for (int i = 0; i < allApplications.count; i++) {
+                [gameArray addObject:[allApplications[i] dataRepresentation]];
+            }
+            
+            NSError *error;
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:gameArray options:0 error:&error];
+            if (!jsonData) {
+                NSLog(@"Got an error creating json: %@", error);
+                return;
+            }
+            [serverSocket sendData:jsonData usingMethod:CCUdpSendMethodGuarentee CCtag:CCNetworkGetNewApplications];
+            break;
+        }
+        case CCNetworkSetNewApplication: {
+            NSString *newName = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSMutableArray *validNames = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"validApplicationNames"] mutableCopy];
+            if (!validNames) {
+                validNames = [NSMutableArray new];
+            }
+            [validNames addObject:newName];
+            [[NSUserDefaults standardUserDefaults] setObject:validNames forKey:@"validApplicationNames"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            break;
+        }
+        default: {
             NSString *bufferTag = [NSString stringWithFormat:@"%u", tag];
             id <CCUdpSocketDelegate> delegate = [socketDelegates objectForKey:bufferTag];
             if (delegate) {

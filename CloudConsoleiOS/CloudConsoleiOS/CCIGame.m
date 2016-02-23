@@ -58,7 +58,7 @@
 
 - (void)CCSocket:(CCUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withTag:(uint32_t)tag
 {
-    if (tag == CCNetworkGetSubGames) {
+    if (tag == CCNetworkGetGames) {
         [self willChangeValueForKey:@"subGames"];
         [self.subGames removeAllObjects];
         

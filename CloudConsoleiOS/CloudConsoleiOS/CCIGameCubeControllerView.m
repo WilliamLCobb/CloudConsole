@@ -51,7 +51,7 @@
         
         //Z
         [self addButtonWithFrame:CGRectMake(frame.size.width - 120,
-                                            frame.size.height - 145,
+                                            frame.size.height - 125,
                                             50,
                                             50)
                              Tag:1 << 4

@@ -25,11 +25,11 @@
     CCIControllerView   *controllerView;
     CCIHeadTracker      *headTracker;
     
-    UIView          *greenLineHider;
+    UIView              *greenLineHider;
     FBShimmeringView    *shimmerView;
-    ZYSpreadButton    *spreadButton;
-    ZYSpreadSubButton *lock;
-    ZYSpreadSubButton *unlock;
+    ZYSpreadButton      *spreadButton;
+    ZYSpreadSubButton   *lock;
+    ZYSpreadSubButton   *unlock;
     
 }
 
@@ -42,7 +42,8 @@
 - (void)viewDidLoad
 {
     AppDelegate.sharedInstance.forcePortrait = NO;
-    //[[UIDevice currentDevice] setValue:[NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft] forKey:@"orientation"];
+    
+    __weak CCIStreamViewController *weakSelf = self;
     
     moviePlayer = [[GPUImageMovie alloc] initWithAsset:nil];
     
@@ -88,19 +89,20 @@
     spreadButton.powerButton.clipsToBounds = YES;
     spreadButton.radius = 80;
     spreadButton.positionMode = SpreadPositionModeTouchBorder;
-    NSLog(@"%@", spreadButton.powerButton);
     spreadButton.alpha = 0.5;
     spreadButton.mode = SpreadModeFlowerSpread;
     spreadButton.buttonWillSpreadBlock = ^(ZYSpreadButton *button){
         [UIView animateWithDuration:0.1 animations:^{
             button.alpha = 1;
         }];
+        [weakSelf.streamManager pause];
     };
     spreadButton.buttonDidSpreadBlock = ^(ZYSpreadButton *button){};
     spreadButton.buttonWillCloseBlock = ^(ZYSpreadButton *button){
         [UIView animateWithDuration:0.1 animations:^{
             button.alpha = 0.5;
         }];
+        [weakSelf.streamManager resume];
     };
     spreadButton.buttonDidCloseBlock = ^(ZYSpreadButton *button){};
     spreadButton.direction = SpreadDirectionBottom;

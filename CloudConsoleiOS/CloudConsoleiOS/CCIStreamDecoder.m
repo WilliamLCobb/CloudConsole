@@ -175,7 +175,7 @@ NSString * const naluTypesStrings[] =
     if (!blockBuffer) {
         uint8_t *data = malloc(size);
         memcpy(data, block, size);
-        //Convert Anex B to AVCC :http://aviadr1.blogspot.com/2010/05/h264-extradata-partially-explained-for.html
+        //Convert Anex B to AVCC: http://aviadr1.blogspot.com/2010/05/h264-extradata-partially-explained-for.html
         uint32_t dataLength32 = htonl(size - 4);
         memcpy(data, &dataLength32, 4);
         status = CMBlockBufferCreateWithMemoryBlock(NULL, data,  // memoryBlock to hold buffered data
@@ -204,34 +204,35 @@ NSString * const naluTypesStrings[] =
 
 - (BOOL)storeNonIDRFrame:(uint8_t *)block size:(uint32_t)size
 {
-    OSStatus status;
-    if (!blockBuffer) {
-        uint8_t *data = malloc(size);
-        memcpy(data, block, size);
-        uint32_t dataLength32 = htonl(size - 4);
-        memcpy(data, &dataLength32, 4);
-        status = CMBlockBufferCreateWithMemoryBlock(NULL, data,  // memoryBlock to hold buffered data
-                                                    size,  // block length of the mem block in bytes.
-                                                    kCFAllocatorDefault, NULL,
-                                                    0, // offsetToData
-                                                    size,   // dataLength of relevant bytes, starting at offsetToData
-                                                    0,
-                                                    &blockBuffer);
-    } else {
-        uint8_t *data = malloc(size);
-        memcpy(data, block, size);
-        
-        uint32_t dataLength32 = htonl(size - 4);
-        memcpy(data, &dataLength32, 4);
-        status = CMBlockBufferAppendMemoryBlock(blockBuffer, data, size, kCFAllocatorDefault, NULL, 0, size, 0);
-    }
-    
-    //NSLog(@"Non IDR Frame Creation: \t %@", (status == kCMBlockBufferNoErr) ? @"successful!" : @"failed...");
-    if (status != kCMBlockBufferNoErr) {
-        NSLog(@"Error: %d", status);
-    }
-    //free(data);
-    return status == kCMBlockBufferNoErr;
+    return [self storeIDRFrame:block size:size];
+//    OSStatus status;
+//    if (!blockBuffer) {
+//        uint8_t *data = malloc(size);
+//        memcpy(data, block, size);
+//        uint32_t dataLength32 = htonl(size - 4);
+//        memcpy(data, &dataLength32, 4);
+//        status = CMBlockBufferCreateWithMemoryBlock(NULL, data,  // memoryBlock to hold buffered data
+//                                                    size,  // block length of the mem block in bytes.
+//                                                    kCFAllocatorDefault, NULL,
+//                                                    0, // offsetToData
+//                                                    size,   // dataLength of relevant bytes, starting at offsetToData
+//                                                    0,
+//                                                    &blockBuffer);
+//    } else {
+//        uint8_t *data = malloc(size);
+//        memcpy(data, block, size);
+//        
+//        uint32_t dataLength32 = htonl(size - 4);
+//        memcpy(data, &dataLength32, 4);
+//        status = CMBlockBufferAppendMemoryBlock(blockBuffer, data, size, kCFAllocatorDefault, NULL, 0, size, 0);
+//    }
+//    
+//    //NSLog(@"Non IDR Frame Creation: \t %@", (status == kCMBlockBufferNoErr) ? @"successful!" : @"failed...");
+//    if (status != kCMBlockBufferNoErr) {
+//        NSLog(@"Error: %d", status);
+//    }
+//    //free(data);
+//    return status == kCMBlockBufferNoErr;
 }
 
 - (void)decodeBlock
@@ -311,6 +312,7 @@ void decompressionSessionDecodeFrameCallback(void *decompressionOutputRefCon,
 
 - (void)dealloc
 {
+    NSLog(@"Deallocating decoder");
     VTDecompressionSessionInvalidate(_decompressionSession);
 }
 

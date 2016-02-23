@@ -24,6 +24,7 @@
 - (void)launchGame:(CCIGame *)game;
 - (void)showError:(NSString *)error withTitle:(NSString *)title;
 - (void)showWarning:(NSString *)error withTitle:(NSString *)title;
+- (void)showInfo:(NSString *)error withTitle:(NSString *)title;
 
 @end
 

@@ -26,5 +26,7 @@
 
 - (void)sendDirectionalState:(CGPoint)directionalState forJoy:(uint8_t)joyId;
 - (void)sendButtonState:(uint32_t)buttonState;
+- (void)pause;
+- (void)resume;
 - (void)closeStream;
 @end
